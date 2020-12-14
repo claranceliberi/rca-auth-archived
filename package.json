@@ -6,7 +6,7 @@
   "author": "Ntwari Clarance Liberiste",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "nodemon index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
