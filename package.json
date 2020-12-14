@@ -1,0 +1,20 @@
+{
+  "name": "rca-auth",
+  "version": "1.0.0",
+  "description": "RCA authentication system that helps user to authenticate base on RCA credentials",
+  "main": "index.js",
+  "author": "Ntwari Clarance Liberiste",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  }
+}
