@@ -6,7 +6,7 @@
   "author": "Ntwari Clarance Liberiste",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon index.ts",
+    "dev": "nodemon app.ts",
     "build": "tsc --project ./",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
