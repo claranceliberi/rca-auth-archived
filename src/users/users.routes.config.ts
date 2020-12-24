@@ -6,4 +6,9 @@ export class UsersRoutes extends CommonRoutesConfig{
     constructor(app:Application) {
         super(app,"UsersRoutes");
     }
+
+    configureRoutes(): Application {
+
+        return this.app;
+    }
 }
