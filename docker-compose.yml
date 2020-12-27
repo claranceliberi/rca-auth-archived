@@ -1,0 +1,15 @@
+version: "3"
+services:
+  app:
+    container_name: rca_auth_node
+    restart: always
+    build: .
+    ports:
+      - "3001:3000"
+    links:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+    - "27018:27017"
