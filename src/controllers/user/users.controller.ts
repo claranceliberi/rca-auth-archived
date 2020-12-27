@@ -1,17 +1,17 @@
 import {Request,Response} from "express";
 import {BackendIUser, IUser, User} from "../../models/user.model";
-import {DocumentQuery} from "mongoose";
 import debug,{IDebugger} from 'debug'
 import {Types} from "mongoose";
 import {CommonControllerConfig} from "../common/common.controller.config";
+import Joi,{Schema} from 'joi'
 
 
 
+// initiating debugger
+const d:IDebugger = debug("UserController")
 
 
 export class UsersController extends CommonControllerConfig{
-    // initiating debugger
-    d:IDebugger = debug(this.getName())
 
     constructor() {
         super('UserController');
@@ -19,57 +19,92 @@ export class UsersController extends CommonControllerConfig{
 
     //get all users
     all(req:Request,res:Response){
-        let users: DocumentQuery<any,any> = User.find((err:any,users:any) =>{
+        const s = super.s
+
+        let users = User.find((err:any,users:any) =>{
             if(err)
-                res.send(this.s('not created',err,500))
+                res.send(s('not found',err,500))
+            else if(users === null)
+                res.send(s('no users',users,404))
             else
-                res.send(this.s('created',users))
+                res.send(s('found',users))
         } )
     }
 
     //create user
     create(req:Request,res:Response){
+        const s = super.s
 
-        let createdUser: void = User.create(req.body,(err:any,user:IUser) => {
-            if(err)
-                res.send(this.s('not created',err,500))
-            else
-                res.send(this.s('created',user))
+        //validator format
+        const schema:Schema = Joi.object({
+            first_name:Joi.string().required().min(2),
+            second_name:Joi.string().required().min(2),
+            email:Joi.string().email().required().min(5),
+            password:Joi.string().required(),
         })
+
+            const {error} = schema.validate(req.body)
+
+        if(error)
+            res.send(s('not created',error.details[0].message,500))
+
+        else {
+            let createdUser: void = User.create(req.body,(err:any,user:IUser) => {
+
+
+                if(err)
+                    res.send(s('not created',err,500))
+                else
+                    res.send(s('created',user))
+            })
+
+        }
+
     }
 
     //get user with id
     get(req:Request,res:Response){
+        const s = super.s
 
-        let user:DocumentQuery<any, any> = User.findById(req.params.userId,(err:any,user:IUser|null) => {
+        let user = User.findById(req.params.userId,(err:any,user:IUser|null) => {
             if(err)
-                res.send(this.s('not created',err,500))
+                res.send(s('server error',err,500))
+            else if(user === null)
+                res.send(s('no found',user,404))
             else
-                res.send(this.s('created',user))
+                res.send(s('found',user))
         })
     }
 
     // update user
-    udpate(req:Request,res:Response){
+    update(req:Request,res:Response){
+        const s = super.s
 
         const id:Types.ObjectId = req.body.id //get id from body
         delete req.body.id //delete id in body
-        User.findByIdAndUpdate(id,req.body,(err:any,user:IUser|null) => {
+
+        let user = User.findByIdAndUpdate(id,req.body,{new:true},(err:any,user:IUser|null) => {
             if(err)
-                res.send(this.s('not created',err,500))
+                res.send(s('not updated',err,500))
+            else if(user === null)
+                res.send(s('no user found',user,404))
             else
-                res.send(this.s('created',user))
+                res.send(s('found',user))
         })
     }
 
 
     // delete user
     delete(req:Request,res:Response){
-        User.findByIdAndDelete(req.params.userId,(err:any,user:IUser|null) => {
+        const s = super.s
+
+        let user = User.findByIdAndDelete(req.params.userId,{},(err:any,user:IUser|null) => {
             if(err)
-                res.send(this.s('not created',err,500))
+                res.send(s('not deleted',err,500))
+           else if(user === null)
+                res.send(s('no user found',user,404))
             else
-                res.send(this.s('created',user))
+                res.send(s('deleted',user))
         })
     }
 
