@@ -1,6 +1,9 @@
 import {CommonRoutesConfig} from "../common/common.routes.config";
 import {Application,Request,Response,NextFunction} from 'express'
+import {UsersController} from "../../controllers/user/users.controller";
 
+//initiating user controller
+const users = new UsersController()
 
 export class UsersRoutes extends CommonRoutesConfig{
     constructor(app:Application) {
@@ -11,12 +14,10 @@ export class UsersRoutes extends CommonRoutesConfig{
 
         //user route
         this.app.route('/users')
-            .get((req: Request, res: Response) => {
-                res.status(200).send('list of all users')
-            })
-            .post((req: Request, res: Response) => {
-                res.status(200).send("a created user")
-            })
+            .get(users.all)
+            .post(users.create)
+            .put(users.udpate)
+
 
 
         //user with id
@@ -27,19 +28,10 @@ export class UsersRoutes extends CommonRoutesConfig{
                 // it simply passes control to the next applicable function below using next()
                 next();
             })
-            .get((req: Request, res: Response) => {
-                res.status(200).send(`GET requested for id ${req.params.userId}`);
-            })
-            .put((req: Request, res: Response) => {
-                res.status(200).send(`PUT requested for id ${req.params.userId}`);
-            })
-            .patch((req: Request, res: Response) => {
-                res.status(200).send(`PATCH requested for id ${req.params.userId}`);
-            })
-            .delete((req: Request, res: Response) => {
-                res.status(200).send(`DELETE requested for id ${req.params.userId}`);
-            });
+            .get(users.get)
+            .delete(users.delete);
 
-        return this.app;
+
+            return this.app;
     }
 }
