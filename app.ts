@@ -10,6 +10,7 @@ import {CommonRoutesConfig} from "./src/routes/common/common.routes.config";
 import {UsersRoutes} from "./src/routes/users/users.routes.config";
 import mongo from './src/database/mongo'
 
+
 //initializing mongo connection
 mongo()
 
@@ -19,7 +20,7 @@ config({path:__dirname+'/.env'})
 
 const app:Application = express();
 const server:http.Server = http.createServer(app)
-const port: Number = Number(process.env.PORT) || 5000;
+const port: Number = Number(process.env.PORT) || 3000;
 const routes: Array<CommonRoutesConfig> = []
 const debugLog: debug.IDebugger = debug('app');
 
