@@ -24,16 +24,16 @@ export class UsersController extends CommonControllerConfig{
 
         let users = User.find((err:any,users:any) =>{
             if(err)
-                res.send(s('not found',err,500))
+                res.send(s('failed',err,500))
             else if(users === null)
-                res.send(s('no users',users,404))
+                res.send(s('success',users,404))
             else
-                res.send(s('found',users))
+                res.send(s('success',users))
         } )
     }
 
     //create user
-    create(req:Request,res:Response){
+    async create(req:Request,res:Response){
         const s = super.s
 
         //validator format
@@ -46,21 +46,31 @@ export class UsersController extends CommonControllerConfig{
 
         const {error} = schema.validate(req.body)
 
+        //checking error
         if(error)
-            res.send(s('not created',error.details[0].message,500))
+            res.send(s('failed',error.details[0].message,409))
 
         else {
-            const salt = bcrypt.genSaltSync(10)
-            req.body.password = bcrypt.hashSync(req.body.password,salt)
+            //checking if user exists
+            let user:IUser|null =await User.findOne({email:req.body.email})
 
-            let createdUser: void = User.create(req.body,(err:any,user:IUser) => {
+            if(user)
+                res.send(s('failed','user already exists with that email',409))
+            else {
+
+                const salt = bcrypt.genSaltSync(10)
+                req.body.password = bcrypt.hashSync(req.body.password,salt)
+
+                let createdUser: void = User.create(req.body,(err:any,user:IUser) => {
 
 
-                if(err)
-                    res.send(s('not created',err,500))
-                else
-                    res.send(s('created',user))
-            })
+                    if(err)
+                        res.send(s('failed',err,500))
+                    else
+                        res.send(s('success',user))
+                })
+
+            }
 
         }
 
