@@ -7,8 +7,9 @@ import cors from 'cors'
 import debug from "debug";
 
 import {CommonRoutesConfig} from "./src/routes/common/common.routes.config";
-import {UsersRoutes} from "./src/routes/users/users.routes.config";
+import {UsersRoutes} from "./src/routes/users/users.routes";
 import mongo from './src/database/mongo'
+import {AuthenticationRoutes} from "./src/routes/Authentication/authentication.routes";
 
 
 //initializing mongo connection
@@ -35,6 +36,7 @@ app.use(bodyParser.json())
 //adding the UserRoutes to our array,
 // after sending the Express.js application object to have the routes added to our app!
 routes.push(new UsersRoutes(app))
+routes.push(new AuthenticationRoutes(app))
 
 
 
