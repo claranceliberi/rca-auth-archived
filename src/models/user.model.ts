@@ -20,7 +20,7 @@ const userSchema: Schema = new Schema({
     password:{type:String,required:true},
 })
 
-const User: Model<IUser> = model('User',userSchema)
+const User= model<IUser>('User',userSchema)
 
 export {
     User,
