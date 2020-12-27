@@ -4,6 +4,7 @@ import debug,{IDebugger} from 'debug'
 import {Types} from "mongoose";
 import {CommonControllerConfig} from "../common/common.controller.config";
 import Joi,{Schema} from 'joi'
+import bcrypt from 'bcryptjs'
 
 
 
@@ -43,12 +44,15 @@ export class UsersController extends CommonControllerConfig{
             password:Joi.string().required(),
         })
 
-            const {error} = schema.validate(req.body)
+        const {error} = schema.validate(req.body)
 
         if(error)
             res.send(s('not created',error.details[0].message,500))
 
         else {
+            const salt = bcrypt.genSaltSync(10)
+            req.body.password = bcrypt.hashSync(req.body.password,salt)
+
             let createdUser: void = User.create(req.body,(err:any,user:IUser) => {
 
 
@@ -107,6 +111,8 @@ export class UsersController extends CommonControllerConfig{
                 res.send(s('deleted',user))
         })
     }
+
+
 
 
 }
