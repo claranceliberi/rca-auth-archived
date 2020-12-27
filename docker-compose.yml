@@ -8,8 +8,17 @@ services:
       - "3001:3000"
     links:
       - mongo
+      - psg
   mongo:
     container_name: mongo
     image: mongo
     ports:
     - "27018:27017"
+  psg:
+    container_name: postgress
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: pass
+    ports:
+    - "5433:5432"
