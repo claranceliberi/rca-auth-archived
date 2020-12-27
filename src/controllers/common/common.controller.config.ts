@@ -23,13 +23,4 @@ export abstract class CommonControllerConfig{
         return {message:msg,data:data,status:status}
     }
 
-    abstract get(req:Request,res:Response,next:NextFunction):void
-
-    abstract create(req:Request,res:Response,next:NextFunction):void
-
-    abstract delete(req:Request,res:Response,next:NextFunction):void
-
-    abstract update(req:Request,res:Response,next:NextFunction):void
-
-    abstract all(req:Request,res:Response,next:NextFunction):void
 }
