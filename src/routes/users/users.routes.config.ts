@@ -16,7 +16,7 @@ export class UsersRoutes extends CommonRoutesConfig{
         this.app.route('/users')
             .get(users.all)
             .post(users.create)
-            .put(users.udpate)
+            .put(users.update)
 
 
 
