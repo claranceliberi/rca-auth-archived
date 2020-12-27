@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon",
+    "start": "tsc && node build/app.js",
     "debug": "export DEBUG=app && yarn dev",
     "build": "tsc --project ./",
     "test": "echo \"Error: no test specified\" && exit 1"
