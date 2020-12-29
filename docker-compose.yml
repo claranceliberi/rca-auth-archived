@@ -8,17 +8,42 @@ services:
       - "3003:3000"
     links:
       - mongo
-      - psg
+      - postgres
+    depends_on:
+      - mongo
+      - postgres
   mongo:
     container_name: mongo
     image: mongo
     ports:
     - "27018:27017"
-  psg:
-    container_name: postgress
+  postgres:
+    container_name: postgres
     image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgresdata:/var/lib/postgresql/data:Z
+      - ./src/migrations/dbinit.sql:/docker-entrypoint-initdb.d/dbinit.sql
     restart: always
     environment:
-      POSTGRES_PASSWORD: pass
+      POSTGRES_USER: liberi
+      POSTGRES_PASSWORD: liberI@111
+      POSTGRES_DB: rca-auth
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ntwaricliberi@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: ntwari@C232_2
+      PGADMIN_LISTEN_PORT: 50
     ports:
-    - "5433:5432"
+      - "5050:50"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin:Z
+    depends_on:
+      - postgres
+volumes:
+  db-data:
+  pgadmin-data:
