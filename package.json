@@ -14,6 +14,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@prisma/client": "^2.13.1",
     "@types/bcryptjs": "^2.4.2",
     "@types/mongoose": "^5.10.3",
     "bcryptjs": "^2.4.3",
@@ -28,6 +29,7 @@
     "pg": "^8.5.1"
   },
   "devDependencies": {
+    "@prisma/cli": "^2.13.1",
     "@types/body-parser": "^1.19.0",
     "@types/cors": "^2.8.9",
     "@types/debug": "^4.1.5",

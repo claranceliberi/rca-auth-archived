@@ -7,5 +7,6 @@
     <schema id="2" parent="1" name="admin"/>
     <schema id="3" parent="1" name="config"/>
     <schema id="4" parent="1" name="local"/>
+    <schema id="5" parent="1" name="rca_auth"/>
   </database-model>
 </dataSource>
