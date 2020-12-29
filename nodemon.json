@@ -1,5 +1,0 @@
-{
-    "watch": ["src/","app.ts","logger.ts"],
-    "exec": "ts-node app.ts" ,
-    "ext": "js, json, ts, proto"
-}
