@@ -11,6 +11,7 @@ import {CommonRoutesConfig} from "./routes/common/common.routes.config";
 import {UsersRoutes} from "./routes/users/users.routes";
 import {AuthenticationRoutes} from "./routes/Authentication/authentication.routes";
 import connectMongo from './database/mongo'
+import {ClientsRoutes} from "./routes/clients/clients.routes";
 
 
 export class Server{
@@ -54,6 +55,7 @@ export class Server{
         // after sending the Express.js application object to have the routes added to our app!
         this.routes.push(new UsersRoutes(this.app))
         this.routes.push(new AuthenticationRoutes(this.app))
+        this.routes.push(new ClientsRoutes(this.app))
     }
 
     initiateMainServerRoute = () => {
