@@ -1,22 +1,22 @@
 import express,{Application,Response,Request} from 'express'
 import * as http from 'http'
 import * as bodyParser from "body-parser";
-import {config} from    'dotenv'
+import dotenv from    'dotenv'
 
 import cors from 'cors'
 import debug from "debug";
 
 import {CommonRoutesConfig} from "./src/routes/common/common.routes.config";
 import {UsersRoutes} from "./src/routes/users/users.routes";
-import mongo from './src/database/mongo'
 import {AuthenticationRoutes} from "./src/routes/Authentication/authentication.routes";
+import mongo from './src/database/mongo'
 
 
 //initializing mongo connection
 mongo()
 
 //configuring dot env
-config({path:__dirname+'/.env'})
+dotenv.config({path:__dirname+'/.env'})
 
 
 const app:Application = express();
@@ -37,7 +37,6 @@ app.use(bodyParser.json())
 // after sending the Express.js application object to have the routes added to our app!
 routes.push(new UsersRoutes(app))
 routes.push(new AuthenticationRoutes(app))
-
 
 
 // this is a simple route to make sure everything is working properly
