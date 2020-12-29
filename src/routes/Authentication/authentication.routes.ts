@@ -12,6 +12,7 @@ export class AuthenticationRoutes extends CommonRoutesConfig{
         const auth = new AuthenticationController()
 
         this.app.post('/auth/login',auth.login)
+        this.app.get('/auth/current',auth.currentUser)
 
         return this.app
     }
