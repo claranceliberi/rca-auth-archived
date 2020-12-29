@@ -6,6 +6,11 @@ build/
 
 # Logs
 logs
+
+
+#prisma migrations
+src/prisma/migrations
+
 *.log
 
 # TypeScript cache
