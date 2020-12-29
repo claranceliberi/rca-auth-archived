@@ -18,7 +18,7 @@ export class UsersRoutes extends CommonRoutesConfig{
 
     }
 
-    configureRoutes = (): Application => {
+    configureRoutes (): Application {
 
         //user route
         this.app.route('/users')
