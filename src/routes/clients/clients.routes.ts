@@ -12,7 +12,7 @@ export class ClientsRoutes extends CommonRoutesConfig{
         this.cc = new ClientsController()
     }
 
-    configureRoutes(): Application {
+    configureRoutes = (): Application => {
 
         //creating app
         this.app.route('/clients')
