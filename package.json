@@ -7,7 +7,6 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon --watch ./ src/app.ts",
-    "devjs": "node build/src/app.js",
     "start": "tsc && node build/src/app.js",
     "debug": "export DEBUG=* && yarn dev",
     "build": "tsc --project ./",
