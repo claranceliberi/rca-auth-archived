@@ -20,6 +20,10 @@ export class ClientsRoutes extends CommonRoutesConfig{
             .get(cc.all)
 
 
+        this.app.route('clients/{clientsId}')
+            .get(cc.get)
+
+
 
         return this.app;
     }
