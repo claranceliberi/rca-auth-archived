@@ -12,6 +12,7 @@ import {UsersRoutes} from "./routes/users/users.routes";
 import {AuthenticationRoutes} from "./routes/Authentication/authentication.routes";
 import connectMongo from './database/mongo'
 import {ClientsRoutes} from "./routes/clients/clients.routes";
+import {SwaggerConfig} from "./swagger/swagger.config";
 
 
 export class Server{
@@ -30,6 +31,8 @@ export class Server{
 
         this.initiateMainServerRoute()
 
+        //initiating swagger
+        new SwaggerConfig(this.app).initiateSwagger()
     }
 
     connectMongo = () => {
@@ -41,6 +44,9 @@ export class Server{
     initiateConfigs = () => {
         //parse all incoming requests as JSON
         this.app.use(bodyParser.json())
+
+        //serve static dir
+        this.app.use(express.static("public"))
 
         // here we are adding middleware to allow cross-origin requests
         // app.use(cors());
