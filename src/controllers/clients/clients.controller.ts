@@ -16,16 +16,26 @@ export class ClientsController extends CommonControllerConfig{
         const {firstName,secondName,email,password} = req.body
 
         try{
-            const result = await this.prisma.client.create({
-                data:{
-                    firstName,
-                    secondName,
-                    email,
-                    password
-                }
-            })
+            const userExist = await this.prisma.client.findUnique({where:{email}})
 
-            res.json(this.s('success',result))
+
+            //check if user exists
+            if( userExist !== null && userExist.hasOwnProperty('email'))
+                res.send(this.s('failed',"email already exists",500))
+
+            else{
+                const result = await this.prisma.client.create({
+                    data:{
+                        firstName,
+                        secondName,
+                        email,
+                        password
+                    }
+                })
+
+                res.json(this.s('success',result))
+            }
+
         }catch (e) {
             res.json(this.s('failed',e,500))
         }
