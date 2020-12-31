@@ -27,4 +27,13 @@ export class ClientsSwaggerConfig{
     public async create(@Body() data:Client){
 
     }
+
+    /**
+     * Get client by id
+     */
+    @Tags('Clients')
+    @Get('{clientId}')
+    public async getOne(@Path() clientId:number){
+
+    }
 }
