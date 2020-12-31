@@ -17,6 +17,9 @@ export class ClientsRoutes extends CommonRoutesConfig{
         //creating app
         this.app.route('/clients')
             .post(cc.create)
+            .get(cc.all)
+
+
 
         return this.app;
     }
