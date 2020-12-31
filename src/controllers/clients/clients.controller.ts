@@ -12,6 +12,16 @@ export class ClientsController extends CommonControllerConfig{
         this.prisma = new PrismaClient()
     }
 
+    all = async (req:Request, res:Response) => {
+            try{
+                const clients = await this.prisma.client.findMany()
+
+                res.send(this.s('success',clients))
+            }catch (e) {
+                res.send(this.s('failed',e,500))
+            }
+    }
+
     create = async (req:Request, res:Response) => {
         const {firstName,secondName,email,password} = req.body
 
