@@ -6,11 +6,19 @@
   "author": "Ntwari Clarance Liberiste",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon --watch ./ src/app.ts",
+    "dev": "nodemon",
+    "swagger": "tsoa spec",
     "start": "tsc && node build/src/app.js",
-    "debug": "export DEBUG=* && yarn dev",
-    "build": "tsc --project ./",
+    "debug": "export DEBUG=* && yarn swagger && yarn dev",
+    "build": "yarn swagger && tsc --project ./",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "ext": "ts",
+    "exec": "ts-node src/app.ts"
   },
   "dependencies": {
     "@prisma/client": "^2.13.1",
@@ -25,7 +33,9 @@
     "joi": "^17.3.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.8",
-    "pg": "^8.5.1"
+    "pg": "^8.5.1",
+    "swagger-ui-express": "^4.1.6",
+    "tsoa": "^3.4.0"
   },
   "devDependencies": {
     "@prisma/cli": "^2.13.1",
@@ -38,6 +48,7 @@
     "@types/node": "^14.14.13",
     "@types/pg": "^7.14.7",
     "@types/pg-types": "^1.11.5",
+    "@types/swagger-ui-express": "^4.1.2",
     "source-map-support": "^0.5.19",
     "ts-node": "^9.1.1",
     "tslint": "^6.1.3",
