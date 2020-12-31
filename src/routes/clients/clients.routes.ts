@@ -26,6 +26,10 @@ export class ClientsRoutes extends CommonRoutesConfig{
             .delete(cc.delete)
 
 
+        this.app.route('clients/{email}')
+            .get(cc.getByEmail)
+
+
 
         return this.app;
     }
