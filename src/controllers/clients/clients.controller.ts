@@ -95,4 +95,16 @@ export class ClientsController extends CommonControllerConfig{
             res.send(this.s('failed',e,500))
         }
     }
+
+
+    delete = async (req:Request, res:Response) => {
+
+        try{
+            const deletedUser = await this.prisma.client.delete({where:{id:+req.params.clientId}})
+
+            res.send(this.s('success',deletedUser))
+        }catch (e) {
+            res.send(this.s('failed',e))
+        }
+    }
 }
