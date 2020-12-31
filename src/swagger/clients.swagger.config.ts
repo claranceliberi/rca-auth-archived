@@ -36,4 +36,16 @@ export class ClientsSwaggerConfig{
     public async getOne(@Path() clientId:number){
 
     }
+
+    /**
+     * Update client by id
+     */
+    @Tags('Clients')
+    @Put('{clientId}')
+    public async update(@Path() clientId:number){
+
+    }
+
+
+
 }
