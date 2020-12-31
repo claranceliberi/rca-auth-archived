@@ -9,7 +9,7 @@
     "dev": "nodemon",
     "swagger": "tsoa spec",
     "start": "tsc && node build/src/app.js",
-    "debug": "export DEBUG=* && yarn swagger && yarn dev",
+    "debug": "export DEBUG=* && yarn dev",
     "build": "yarn swagger && tsc --project ./",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,7 +18,7 @@
       "src"
     ],
     "ext": "ts",
-    "exec": "ts-node src/app.ts"
+    "exec": "tsoa spec && ts-node src/app.ts"
   },
   "dependencies": {
     "@prisma/client": "^2.13.1",
