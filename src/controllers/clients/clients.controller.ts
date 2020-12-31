@@ -50,4 +50,17 @@ export class ClientsController extends CommonControllerConfig{
             res.json(this.s('failed',e,500))
         }
     }
+
+    get = async (req:Request, res:Response) => {
+
+        try{
+
+            const client = await this.prisma.client.findUnique({where:{id:+req.params.clientId}})
+
+            res.send(this.s('success',client))
+
+        }catch (e) {
+            res.send(this.s('failed',e,500))
+        }
+    }
 }
