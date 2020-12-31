@@ -46,6 +46,18 @@ export class ClientsSwaggerConfig{
 
     }
 
+    /**
+     * Delete client by id
+     */
+    @Tags('Clients')
+    @Delete('{clientId}')
+    public async delete(@Path() clientId:number){
+
+    }
+
+
+
+
 
 
 }
