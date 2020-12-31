@@ -5,12 +5,15 @@ import bcrypt from 'bcryptjs'
 import jwt,{Secret} from 'jsonwebtoken'
 import debug,{IDebugger} from 'debug'
 import {Query} from "mongoose";
+import {AuthenticationSwaggerConfig} from "../../swagger/authentication.swagger.config";
 
 const d:IDebugger = debug('AuthController')
 
 export class AuthenticationController extends CommonControllerConfig{
     constructor() {
         super("AuthenticationController");
+
+        new AuthenticationSwaggerConfig()
     }
 
 
