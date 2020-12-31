@@ -63,4 +63,37 @@ export class ClientsController extends CommonControllerConfig{
             res.send(this.s('failed',e,500))
         }
     }
+
+
+    put = async (req:Request,res:Response) => {
+
+        try{
+            //extract user object
+            const {firstName,secondName,email,password} = req.body
+
+            //check if user already exists
+             const client = await this.prisma.client.findUnique({where:{id:+req.params.clientId}})
+
+            if(client && client.hasOwnProperty('email')){
+
+                //update user
+                const updatedUser = await this.prisma.client.update(
+                    {
+                        where: {id: +req.params.clientId},
+                        data: {
+                            firstName,
+                            secondName,
+                            email,
+                            password
+                        }
+                    })
+
+            }else{
+                res.send(this.s('failed','user does not exists'))
+            }
+
+        }catch (e) {
+            res.send(this.s('failed',e,500))
+        }
+    }
 }
