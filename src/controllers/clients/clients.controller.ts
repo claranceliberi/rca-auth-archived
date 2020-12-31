@@ -64,6 +64,18 @@ export class ClientsController extends CommonControllerConfig{
         }
     }
 
+    getByEmail = async (req:Request, res:Response) => {
+
+        try {
+            const client = await this.prisma.client.findUnique({where:{email:req.params.email}})
+
+            res.send(this.s('success',client))
+        }catch (e) {
+            res.send(this.s('failed', e, 500))
+        }
+    }
+
+
 
     put = async (req:Request,res:Response) => {
 
