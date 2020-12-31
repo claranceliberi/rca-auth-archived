@@ -33,7 +33,16 @@ export class ClientsSwaggerConfig{
      */
     @Tags('Clients')
     @Get('{clientId}')
-    public async getOne(@Path() clientId:number){
+    public async getOneById(@Path() clientId:number){
+
+    }
+
+    /**
+     * Get client by email
+     */
+    @Tags('Clients')
+    @Get('{clientId}')
+    public async getOneByEmail(@Path() clientId:number){
 
     }
 
