@@ -1,4 +1,4 @@
-import {Post, Route, Tags, Get} from "tsoa";
+import {Post, Route,Body,Security, Tags, Get, Path,Put, Delete} from "tsoa";
 
 
 interface User{
@@ -21,15 +21,52 @@ export class UserSwaggerConfig{
             password:""
     }
 
-    @Tags('users')
+    /**
+     * Get all user
+     */
+    @Tags('Users')
+    @Security('BearerAuth')
     @Get('/')
-    public async getAllUsers():Promise<User>{
-            return this.userObject
+    public async getAllUsers(){
     }
 
-    @Tags('users')
+    /**
+     * Create users
+     * @param data
+     */
+    @Tags('Users')
+    @Security('BearerAuth')
     @Post('/')
-    public async createUser():Promise<User>{
-            return this.userObject
+    public async createUser(@Body() data:User){
     }
+
+    /**
+     * Get user based on Id
+     */
+    @Tags('Users')
+    @Security('BearerAuth')
+    @Get('{userId}')
+    public async getUser(@Path() userId:string){
+    }
+
+
+    /**
+     * Update user based on Id
+     */
+    @Tags('Users')
+    @Security('BearerAuth')
+    @Put('{userId}')
+    public async updateUser(@Path() userId:string){
+    }
+
+
+    /**
+     * Delete user based on Id
+     */
+    @Tags('Users')
+    @Security('BearerAuth')
+    @Delete('{userId}')
+    public async deleteUser(@Path() userId:string){
+    }
+
 }
