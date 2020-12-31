@@ -3,6 +3,17 @@
   "noImplicitAdditionalProperties": "throw-on-extras",
   "spec": {
     "outputDirectory": "public",
-    "specVersion": 3
+    "specVersion": 3,
+    "securityDefinitions": {
+        "api_key": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        },
+       "BearerAuth":{
+          "type": "http",
+          "scheme": "bearer"
+       }
+    }
   }
 }

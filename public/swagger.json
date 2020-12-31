@@ -6,8 +6,11 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"CUser": {
+			"User": {
 				"properties": {
+					"_id": {
+						"type": "string"
+					},
 					"first_name": {
 						"type": "string"
 					},
@@ -23,9 +26,6 @@
 					"__v": {
 						"type": "number",
 						"format": "double"
-					},
-					"_id": {
-						"type": "string"
 					}
 				},
 				"required": [
@@ -36,9 +36,35 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"Authentication": {
+				"properties": {
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"email",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
-		"securitySchemes": {}
+		"securitySchemes": {
+			"api_key": {
+				"type": "apiKey",
+				"name": "Authorization",
+				"in": "header"
+			},
+			"BearerAuth": {
+				"type": "http",
+				"scheme": "bearer"
+			}
+		}
 	},
 	"info": {
 		"title": "rca-auth",
@@ -55,14 +81,14 @@
 	"paths": {
 		"/users": {
 			"get": {
-				"operationId": "GetUsers",
+				"operationId": "GetAllUsers",
 				"responses": {
 					"200": {
 						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/CUser"
+									"$ref": "#/components/schemas/User"
 								}
 							}
 						}
@@ -72,6 +98,92 @@
 					"users"
 				],
 				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"users"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/auth/login": {
+			"post": {
+				"operationId": "Login",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Authentication"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"email": "liberintwari@gmail.com",
+											"password": "liberi2324"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Authentication"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/current": {
+			"get": {
+				"operationId": "CurrentUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Authentication"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
 				"parameters": []
 			}
 		}
