@@ -1,15 +1,30 @@
 import {Post, Route,Body,Security, Tags, Get, Path,Put, Delete} from "tsoa";
 
+interface Client{
+    firstName:string,
+    secondName:string,
+    email:string,
+    password:string
+}
+
 @Route('clients')
 export class ClientsSwaggerConfig{
 
     /**
      * Get all clients
      */
-    @Tags('clients')
+    @Tags('Clients')
     @Get('/')
     public async getAll(){
 
     }
 
+    /**
+     * Create new client
+     */
+    @Tags('Clients')
+    @Post('/')
+    public async create(@Body() data:Client){
+
+    }
 }
