@@ -10,6 +10,8 @@ export class ClientsController extends CommonControllerConfig{
         super('ClientsController');
 
         this.prisma = new PrismaClient()
+
+        new ClientsController()
     }
 
     all = async (req:Request, res:Response) => {
