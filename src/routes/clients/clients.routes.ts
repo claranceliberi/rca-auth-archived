@@ -23,6 +23,7 @@ export class ClientsRoutes extends CommonRoutesConfig{
         this.app.route('clients/{clientsId}')
             .get(cc.get)
             .put(cc.put)
+            .delete(cc.delete)
 
 
 
