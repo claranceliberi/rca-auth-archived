@@ -5,21 +5,44 @@ import {Types} from "mongoose";
 import {CommonControllerConfig} from "../common/common.controller.config";
 import Joi,{Schema} from 'joi'
 import bcrypt from 'bcryptjs'
+import {Route,Get,Tags} from "tsoa"
 
 
 
 // initiating debugger
 const d:IDebugger = debug("UserController")
 
+interface CUser{
+    first_name:string,
+    second_name:string,
+    email:string,
+    password:string,
+    __v?:number,
+    _id?:string
+}
 
+@Route("users")
 export class UsersController extends CommonControllerConfig{
 
     constructor() {
         super('UserController');
     }
 
+    @Tags('users')
+    @Get('/')
+    public async getUsers () :Promise<CUser> {
+        return{
+            __v:0,
+            _id:"",
+            first_name:"",
+            second_name:"",
+            email:"",
+            password:""
+        }
+    }
+
     //get all users
-    all(req:Request,res:Response){
+    all = (req:Request,res:Response) =>{
         const s = super.s
 
         let users = User.find((err:any,users:any) =>{
