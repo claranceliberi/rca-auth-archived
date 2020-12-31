@@ -14,6 +14,16 @@
           "type": "http",
           "scheme": "bearer"
        }
-    }
+    },
+    "tags": [
+      {
+        "name": "Users",
+        "description": "Apis about users management"
+      },
+      {
+        "name": "Auth",
+        "description": "Apis to authenticate user"
+      }
+    ]
   }
 }
