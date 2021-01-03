@@ -1,24 +1,20 @@
 import {CommonControllerConfig} from "../common/common.controller.config";
-import {Request, Response} from "express";
-import {PrismaClient} from '@prisma/client'
 import {ClientsSwaggerConfig} from "../../swagger/clients.swagger.config";
 
 
 export class ClientsController extends CommonControllerConfig{
-    prisma:PrismaClient
 
     constructor() {
         super('ClientsController');
 
-        this.prisma = new PrismaClient()
 
         new ClientsSwaggerConfig()
     }
 
-    all = async (req:Request, res:Response) => {
+    all = async (req, res) => {
             try{
-                    const clients = await this.prisma.client.findMany()
-                    await this.prisma.
+                    const clients="" ;
+
 
                 res.send(this.s('success',clients))
             }catch (e) {
@@ -26,7 +22,7 @@ export class ClientsController extends CommonControllerConfig{
             }
     }
 
-    create = async (req:Request, res:Response) => {
+    create = async (req, res) => {
         const {firstName,secondName,email,password} = req.body
 
         try{
@@ -55,7 +51,7 @@ export class ClientsController extends CommonControllerConfig{
         }
     }
 
-    get = async (req:Request, res:Response) => {
+    get = async (req, res) => {
 
         try{
 
@@ -68,7 +64,7 @@ export class ClientsController extends CommonControllerConfig{
         }
     }
 
-    getByEmail = async (req:Request, res:Response) => {
+    getByEmail = async (req, res) => {
 
         try {
             const client = await this.prisma.client.findUnique({where:{email:req.params.email}})
@@ -81,7 +77,7 @@ export class ClientsController extends CommonControllerConfig{
 
 
 
-    put = async (req:Request,res:Response) => {
+    put = async (req,res) => {
 
         try{
             //extract user object
@@ -113,7 +109,7 @@ export class ClientsController extends CommonControllerConfig{
     }
 
 
-    delete = async (req:Request, res:Response) => {
+    delete = async (req, res) => {
 
         try{
             const deletedUser = await this.prisma.client.delete({where:{id:+req.params.clientId}})
