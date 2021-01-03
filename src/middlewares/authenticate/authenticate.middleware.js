@@ -1,5 +1,4 @@
 import {CommonMiddlewareConfig} from "../common/common.middleware.config";
-import {NextFunction, Request, Response} from "express";
 import jwt from 'jsonwebtoken'
 
 export class AuthenticateMiddleware extends CommonMiddlewareConfig{
@@ -7,10 +6,10 @@ export class AuthenticateMiddleware extends CommonMiddlewareConfig{
     constructor() {
         super('AuthenticationMiddleware');
     }
-    authenticateToken = async (req:Request,res:Response, next:NextFunction)=>{
+    authenticateToken = async (req,res, next)=>{
         //capturing authorization header to get token
-        const authHeader:string|undefined = req.header('Authorization')
-        const token:string|null|undefined = authHeader && authHeader.split(' ')[1]
+        const authHeader = req.header('Authorization')
+        const token = authHeader && authHeader.split(' ')[1]
 
         //when does not exists return 401
         if(!token) res.send(this.s('failed','token not found',401))
@@ -18,7 +17,7 @@ export class AuthenticateMiddleware extends CommonMiddlewareConfig{
         else {
 
             try{
-                await jwt.verify(token,process.env["TOKEN_SECRETE"] as string)
+                await jwt.verify(token,process.env["TOKEN_SECRETE"])
                 next()
 
             }catch (e) {
