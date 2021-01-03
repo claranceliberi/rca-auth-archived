@@ -9,7 +9,6 @@ export class AuthenticationController extends CommonControllerConfig{
     constructor() {
         super("AuthenticationController");
 
-        new AuthenticationSwaggerConfig()
     }
 
 
