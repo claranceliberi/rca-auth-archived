@@ -1,22 +1,21 @@
 import {CommonRoutesConfig} from "../common/common.routes.config";
-import {Application, NextFunction, Request, Response} from "express";
 import {ClientsController} from "../../controllers/clients/clients.controller";
 
-const     cc:ClientsController = new ClientsController()
+const     cc = new ClientsController()
 
 export class ClientsRoutes extends CommonRoutesConfig{
 
 
-    constructor(app:Application) {
+    constructor(app) {
         super(app,'ClientsController');
 
     }
 
-    configureRoutes(): Application {
+    configureRoutes() {
 
         //creating app
         this.app.route('/clients')
-            .all((req:Request,res:Response,next:NextFunction) => {
+            .all((req,res,next) => {
                 next()
             })
             .post(cc.create)
@@ -24,7 +23,7 @@ export class ClientsRoutes extends CommonRoutesConfig{
 
 
         this.app.route('clients/{clientsId}')
-            .all((req:Request, res:Response, next:NextFunction) => {
+            .all((req, res, next) => {
                 next()
             })
             .get(cc.get)
