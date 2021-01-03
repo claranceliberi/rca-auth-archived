@@ -1,13 +1,7 @@
-import {Request,Response} from "express";
-import {BackendIUser, IUser, User} from "../../models/user.model";
-import debug,{IDebugger} from 'debug'
-import {Types} from "mongoose";
+import debug from 'debug'
 import {CommonControllerConfig} from "../common/common.controller.config";
-import Joi,{Schema} from 'joi'
+import Joi from 'joi'
 import bcrypt from 'bcryptjs'
-import {Route,Get,Tags,Post} from "tsoa"
-import {UserSwaggerConfig} from "../../swagger/user.swagger.config";
-
 
 
 // initiating debugger
