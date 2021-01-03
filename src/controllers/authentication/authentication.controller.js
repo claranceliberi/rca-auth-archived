@@ -1,10 +1,7 @@
 import {CommonControllerConfig} from "../common/common.controller.config";
-import { User} from "../../models/user.model";
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import debug from 'debug'
-import {Query} from "mongoose";
-import {AuthenticationSwaggerConfig} from "../../swagger/authentication.swagger.config";
 
 const d = debug('AuthController')
 
