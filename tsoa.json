@@ -1,5 +1,5 @@
 {
-  "entryFile": "src/server.ts",
+  "entryFile": "app.ts",
   "noImplicitAdditionalProperties": "throw-on-extras",
   "spec": {
     "outputDirectory": "public",
