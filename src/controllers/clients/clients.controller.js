@@ -1,6 +1,7 @@
 import {CommonControllerConfig} from "../common/common.controller.config";
 import {Request, Response} from "express";
 import {PrismaClient} from '@prisma/client'
+import {ClientsSwaggerConfig} from "../../swagger/clients.swagger.config";
 
 
 export class ClientsController extends CommonControllerConfig{
@@ -11,12 +12,13 @@ export class ClientsController extends CommonControllerConfig{
 
         this.prisma = new PrismaClient()
 
-        new ClientsController()
+        new ClientsSwaggerConfig()
     }
 
     all = async (req:Request, res:Response) => {
             try{
-                const clients = await this.prisma.client.findMany()
+                    const clients = await this.prisma.client.findMany()
+                    await this.prisma.
 
                 res.send(this.s('success',clients))
             }catch (e) {
