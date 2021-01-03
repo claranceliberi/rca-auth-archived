@@ -18,3 +18,7 @@ src/prisma/migrations
 
 # dotenv environment variables file
 .env
+
+
+# todo
+todo.txt
