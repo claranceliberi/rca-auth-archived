@@ -1,24 +1,23 @@
 import {CommonRoutesConfig} from "../common/common.routes.config";
-import {Application,Request,Response,NextFunction} from 'express'
 import {UsersController} from "../../controllers/user/users.controller";
 import {AuthenticateMiddleware} from "../../middlewares/authenticate/authenticate.middleware";
 
 //user controller
-const  uc: UsersController = new UsersController()
+const  uc = new UsersController()
 
 //authenticated middleware
-const am: AuthenticateMiddleware  = new AuthenticateMiddleware()
+const am  = new AuthenticateMiddleware()
 
 export class UsersRoutes extends CommonRoutesConfig{
 
 
-    constructor(app:Application) {
+    constructor(app) {
         super(app,"UsersRoutes");
 
 
     }
 
-    configureRoutes (): Application {
+    configureRoutes () {
 
         //user route
         this.app.route('/users')
@@ -30,7 +29,7 @@ export class UsersRoutes extends CommonRoutesConfig{
 
         //user with id
         this.app.route('/users/:userId')
-            .all(am.authenticateToken,(req: Request, res: Response, next: NextFunction) => {
+            .all(am.authenticateToken,(req, res, next) => {
                 // this middleware function runs before any request to /users/:userId
                 // but it doesn't accomplish anything just yet---
                 // it simply passes control to the next applicable function below using next()
