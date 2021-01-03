@@ -3,25 +3,23 @@ import express,{Application,Response,Request} from 'express'
 import * as http from 'http'
 import * as bodyParser from "body-parser";
 import dotenv from    'dotenv'
-import path from 'path'
+
 
 import cors from 'cors'
 import debug from "debug";
 
-import {CommonRoutesConfig} from "./src/routes/common/common.routes.config";
 import {UsersRoutes} from "./src/routes/users/users.routes";
 import {AuthenticationRoutes} from "./src/routes/Authentication/authentication.routes";
 import connectMongo from './src/database/mongo'
 import {ClientsRoutes} from "./src/routes/clients/clients.routes";
-import {SwaggerConfig} from "./src/swagger/swagger.config";
 
 
 export class Server{
-    app:Application = express();
-    server:http.Server = http.createServer(this.app)
-    port: Number = Number(process.env.PORT) || 3000;
-    routes: Array<CommonRoutesConfig> = []
-    debugLog: debug.IDebugger = debug('app');
+    app = express();
+    server = http.createServer(this.app)
+    port = Number(process.env.PORT) || 3000;
+    routes = []
+    debugLog = debug('app');
 
     constructor() {
         this.connectMongo()
@@ -32,8 +30,6 @@ export class Server{
 
         this.initiateMainServerRoute()
 
-        //initiating swagger
-        new SwaggerConfig(this.app).initiateSwagger()
     }
 
     connectMongo = () => {
@@ -69,7 +65,7 @@ export class Server{
 
     initiateMainServerRoute = () => {
         // this is a simple route to make sure everything is working properly
-        this.app.get('/', (req: Request, res: Response) => {
+        this.app.get('/', (req, res) => {
             res.status(200).send(`Server up and running!`)
         });
     }
@@ -80,7 +76,7 @@ export class Server{
         this.server.listen(this.port,() =>{
             this.debugLog(`✨ Server has been started on https://localhost:${this.port}`)
 
-            this.routes.forEach((route:CommonRoutesConfig) => {
+            this.routes.forEach((route) => {
                 this.debugLog(`Routes configured for "${route.getName()}"`)
             })
         })
