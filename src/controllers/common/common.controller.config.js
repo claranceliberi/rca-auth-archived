@@ -1,10 +1,9 @@
-import {NextFunction,Request, Response} from "express";
 
-export abstract class CommonControllerConfig{
-    name:string;
+export class CommonControllerConfig{
+    name;
 
 
-    protected constructor( name:string) {
+    constructor( name) {
         this.name = name
     }
 
@@ -19,7 +18,7 @@ export abstract class CommonControllerConfig{
      * @param data
      * @param status
      */
-    s(msg:string,data:any,status:number=200): object{
+    s(msg,data,status=200){
         return {message:msg,data:data,status:status}
     }
 
