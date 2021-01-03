@@ -7,10 +7,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon",
-    "swagger": "tsoa spec",
-    "start": "tsc && node build/app.js",
+    "start": "app.js",
     "debug": "export DEBUG=* && yarn dev",
-    "build": "yarn swagger && tsc --project ./",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "nodemonConfig": {
@@ -18,7 +16,7 @@
       "src"
     ],
     "ext": "ts",
-    "exec": "tsoa spec && ts-node app.ts"
+    "exec": "node app.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
