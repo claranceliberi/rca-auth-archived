@@ -1,11 +1,10 @@
-import {Application} from 'express'
 
-export abstract class CommonRoutesConfig{
-    app:Application;
-    name:string;
+export class CommonRoutesConfig{
+    app;
+    name;
 
 
-    protected constructor(app:Application, name:string) {
+    constructor(app, name) {
         this.app = app
         this.name = name
         this.configureRoutes()
@@ -15,5 +14,5 @@ export abstract class CommonRoutesConfig{
         return this.name
     }
 
-    abstract configureRoutes():Application
+    configureRoutes(){}
 }
