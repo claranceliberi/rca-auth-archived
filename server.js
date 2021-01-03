@@ -50,7 +50,6 @@ export class Server{
 
 
         //configuring dot env
-        console.log(__dirname)
         dotenv.config({path:__dirname + "/.env"})
     }
 
