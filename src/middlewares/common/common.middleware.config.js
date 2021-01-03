@@ -1,8 +1,8 @@
 
 export class CommonMiddlewareConfig{
-    name:string
+    name
 
-    constructor(name:string) {
+    constructor(name) {
         this.name = name
     }
 
@@ -17,7 +17,7 @@ export class CommonMiddlewareConfig{
      * @param data
      * @param status
      */
-    s(msg:string,data:any,status:number=200): object{
+    s(msg,data,status=200){
         return {message:msg,data:data,status:status}
     }
 }
