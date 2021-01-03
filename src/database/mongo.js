@@ -1,18 +1,18 @@
 import {connect} from "mongoose";
-import debug,{IDebugger} from "debug";
+import debug from "debug";
 
-const uri: string = "mongodb://localhost:27018/rca_auth"
-const debugLog:IDebugger = debug('mongodb');
+const uri = "mongodb://localhost:27018/rca_auth"
+const debugLog = debug('mongodb');
 
 function connectMongo(){
     connect(uri,{
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
-    .then((res:any) => {
+    .then((res) => {
         debugLog('✔ connected successfully')
     })
-    .catch((err:any) =>{
+    .catch((err) =>{
         debugLog('❌ connection was not established')
     })
 }
