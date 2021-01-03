@@ -3,16 +3,17 @@ import express,{Application,Response,Request} from 'express'
 import * as http from 'http'
 import * as bodyParser from "body-parser";
 import dotenv from    'dotenv'
+import path from 'path'
 
 import cors from 'cors'
 import debug from "debug";
 
-import {CommonRoutesConfig} from "./routes/common/common.routes.config";
-import {UsersRoutes} from "./routes/users/users.routes";
-import {AuthenticationRoutes} from "./routes/Authentication/authentication.routes";
-import connectMongo from './database/mongo'
-import {ClientsRoutes} from "./routes/clients/clients.routes";
-import {SwaggerConfig} from "./swagger/swagger.config";
+import {CommonRoutesConfig} from "./src/routes/common/common.routes.config";
+import {UsersRoutes} from "./src/routes/users/users.routes";
+import {AuthenticationRoutes} from "./src/routes/Authentication/authentication.routes";
+import connectMongo from './src/database/mongo'
+import {ClientsRoutes} from "./src/routes/clients/clients.routes";
+import {SwaggerConfig} from "./src/swagger/swagger.config";
 
 
 export class Server{
@@ -51,8 +52,10 @@ export class Server{
         // here we are adding middleware to allow cross-origin requests
         // app.use(cors());
 
+
         //configuring dot env
-        dotenv.config({path:__dirname+'/.env'})
+        console.log(__dirname)
+        dotenv.config({path:__dirname + "/.env"})
     }
 
 
