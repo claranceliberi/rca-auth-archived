@@ -11,7 +11,7 @@ import {UserSwaggerConfig} from "../../swagger/user.swagger.config";
 
 
 // initiating debugger
-const d:IDebugger = debug("UserController")
+const d = debug("UserController")
 
 
 export class UsersController extends CommonControllerConfig{
@@ -22,10 +22,10 @@ export class UsersController extends CommonControllerConfig{
     }
 
     //get all users
-    all = (req:Request,res:Response)=>{
+    all = (req,res)=>{
         const s = super.s
 
-        let users = User.find((err:any,users:any) =>{
+        let users = User.find((err,users) =>{
             if(err)
                 res.send(s('failed',err,500))
             else if(users === null)
@@ -36,11 +36,11 @@ export class UsersController extends CommonControllerConfig{
     }
 
     //create user
-    create = async (req:Request,res:Response) =>{
+    create = async (req,res) =>{
         const s = this.s
 
         //validator format
-        const schema:Schema = Joi.object({
+        const schema = Joi.object({
             first_name:Joi.string().required().min(2),
             second_name:Joi.string().required().min(2),
             email:Joi.string().email().required().min(5),
@@ -55,7 +55,7 @@ export class UsersController extends CommonControllerConfig{
 
         else {
             //checking if user exists
-            let user:IUser|null =await User.findOne({email:req.body.email})
+            let user =await User.findOne({email:req.body.email})
 
             if(user)
                 res.send(s('failed','user already exists with that email',409))
@@ -64,7 +64,7 @@ export class UsersController extends CommonControllerConfig{
                 const salt = bcrypt.genSaltSync(10)
                 req.body.password = bcrypt.hashSync(req.body.password,salt)
 
-                let createdUser: void = User.create(req.body,(err:any,user:IUser) => {
+                let createdUser = User.create(req.body,(err,user) => {
 
 
                     if(err)
@@ -80,10 +80,10 @@ export class UsersController extends CommonControllerConfig{
     }
 
     //get user with id
-    get(req:Request,res:Response){
+    get(req,res){
         const s = super.s
 
-        let user = User.findById(req.params.userId,(err:any,user:IUser|null) => {
+        let user = User.findById(req.params.userId,(err,user) => {
             if(err)
                 res.send(s('server error',err,500))
             else if(user === null)
@@ -94,13 +94,13 @@ export class UsersController extends CommonControllerConfig{
     }
 
     // update user
-    update(req:Request,res:Response){
+    update(req,res){
         const s = super.s
 
-        const id:Types.ObjectId = req.body.id //get id from body
+        const id = req.body.id //get id from body
         delete req.body.id //delete id in body
 
-        let user = User.findByIdAndUpdate(id,req.body,{new:true},(err:any,user:IUser|null) => {
+        let user = User.findByIdAndUpdate(id,req.body,{new:true},(err,user) => {
             if(err)
                 res.send(s('not updated',err,500))
             else if(user === null)
@@ -112,10 +112,10 @@ export class UsersController extends CommonControllerConfig{
 
 
     // delete user
-    delete(req:Request,res:Response){
+    delete(req,res){
         const s = super.s
 
-        let user = User.findByIdAndDelete(req.params.userId,{},(err:any,user:IUser|null) => {
+        let user = User.findByIdAndDelete(req.params.userId,{},(err,user) => {
             if(err)
                 res.send(s('not deleted',err,500))
            else if(user === null)
