@@ -3,10 +3,10 @@ const {CommonControllerConfig} = require("../common/common.controller.config");
 const Joi = require('joi')
 const bcrypt = require('bcryptjs')
 
+const User = require('../../models/user.model')
 
 // initiating debugger
 const d = debug("UserController")
-
 
 class UsersController extends CommonControllerConfig{
     constructor() {
