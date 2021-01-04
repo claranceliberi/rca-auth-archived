@@ -1,6 +1,6 @@
-import {Server} from "./server";
+const {Server} = require("./server.js");
 
 
 const server = new Server()
 
-server.startServer()
+server.startSever()
