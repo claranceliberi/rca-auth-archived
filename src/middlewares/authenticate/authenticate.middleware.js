@@ -1,7 +1,7 @@
-import {CommonMiddlewareConfig} from "../common/common.middleware.config";
-import jwt from 'jsonwebtoken'
+const {CommonMiddlewareConfig} = require("../common/common.middleware.config");
+const jwt = require('jsonwebtoken')
 
-export class AuthenticateMiddleware extends CommonMiddlewareConfig{
+class AuthenticateMiddleware extends CommonMiddlewareConfig{
 
     constructor() {
         super('AuthenticationMiddleware');
@@ -27,3 +27,5 @@ export class AuthenticateMiddleware extends CommonMiddlewareConfig{
         }
     }
 }
+
+exports.AuthenticateMiddleware = AuthenticateMiddleware
