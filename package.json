@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon",
-    "start": "app.js",
+    "start": "node app.js",
     "sq": "sequelize",
     "debug": "export DEBUG=* && yarn dev",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,8 +16,8 @@
     "watch": [
       "src"
     ],
-    "ext": "ts",
-    "exec": "node app.js"
+    "ext": "js",
+    "exec": "node --experimental-modules app.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
