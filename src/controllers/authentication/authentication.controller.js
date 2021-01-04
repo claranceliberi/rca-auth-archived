@@ -1,11 +1,11 @@
-import {CommonControllerConfig} from "../common/common.controller.config";
-import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
-import debug from 'debug'
+const {CommonControllerConfig} = require("../common/common.controller.config")
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const debug = require('debug')
 
 const d = debug('AuthController')
 
-export class AuthenticationController extends CommonControllerConfig{
+class AuthenticationController extends CommonControllerConfig{
     constructor() {
         super("AuthenticationController");
 
@@ -69,3 +69,5 @@ export class AuthenticationController extends CommonControllerConfig{
         return jwt.sign(username,secrete,{expiresIn})
     }
 }
+
+exports.AuthenticationController = AuthenticationController
