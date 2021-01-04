@@ -1,8 +1,9 @@
-import {connect} from "mongoose";
-import debug from "debug";
+const mongoose = require("mongoose");
+const debug = require("debug");
 
 const uri = "mongodb://localhost:27018/rca_auth"
 const debugLog = debug('mongodb');
+const {connect} = mongoose
 
 function connectMongo(){
     connect(uri,{
@@ -18,4 +19,4 @@ function connectMongo(){
 }
 
 
-export default connectMongo
+module.exports =  connectMongo
