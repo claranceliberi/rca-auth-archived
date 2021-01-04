@@ -1,6 +1,6 @@
-import {CommonRoutesConfig} from "../common/common.routes.config";
-import {UsersController} from "../../controllers/user/users.controller";
-import {AuthenticateMiddleware} from "../../middlewares/authenticate/authenticate.middleware";
+const {CommonRoutesConfig} = require("../common/common.routes.config");
+const {UsersController} = require("../../controllers/user/users.controller");
+const {AuthenticateMiddleware} = require("../../middlewares/authenticate/authenticate.middleware");
 
 //user controller
 const  uc = new UsersController()
@@ -8,7 +8,7 @@ const  uc = new UsersController()
 //authenticated middleware
 const am  = new AuthenticateMiddleware()
 
-export class UsersRoutes extends CommonRoutesConfig{
+class UsersRoutes extends CommonRoutesConfig{
 
 
     constructor(app) {
@@ -42,3 +42,5 @@ export class UsersRoutes extends CommonRoutesConfig{
             return this.app;
     }
 }
+
+exports.UsersRoutes = UsersRoutes
