@@ -1,10 +1,10 @@
-import {CommonRoutesConfig} from "../common/common.routes.config";
-import {AuthenticationController} from "../../controllers/authentication/authentication.controller";
-import {AuthenticateMiddleware} from "../../middlewares/authenticate/authenticate.middleware";
+const {CommonRoutesConfig} = require("../common/common.routes.config");
+const {AuthenticationController} = require("../../controllers/authentication/authentication.controller");
+const {AuthenticateMiddleware} = require("../../middlewares/authenticate/authenticate.middleware");
 
 const authMiddle = new AuthenticateMiddleware()
 
-export class AuthenticationRoutes extends CommonRoutesConfig{
+class AuthenticationRoutes extends CommonRoutesConfig{
     constructor(app) {
         super(app,"AuthenticationRoutes");
     }
@@ -18,3 +18,5 @@ export class AuthenticationRoutes extends CommonRoutesConfig{
         return this.app
     }
 }
+
+exports.AuthenticationRoutes = AuthenticationRoutes
