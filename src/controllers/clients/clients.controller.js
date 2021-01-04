@@ -1,5 +1,6 @@
 const {CommonControllerConfig} = require("../common/common.controller.config")
 const models = require('../../database/postgresSql/models/index')
+const Joi = require('joi')
 
 const Client = models.Client
 
@@ -24,6 +25,7 @@ class ClientsController extends CommonControllerConfig{
     create = async (req, res) => {
         const {firstName,secondName,email,password} = req.body
 
+
         try{
             const userExist = await Client.findOne({where:{email}})
 
@@ -33,16 +35,32 @@ class ClientsController extends CommonControllerConfig{
                 res.send(this.s('failed',"email already exists",500))
 
             else{
-                const result = await Client.create({
-                    data:{
-                        firstName,
-                        secondName,
-                        email,
-                        password
-                    }
+
+                //validator format
+                const schema = Joi.object({
+                    firstName:Joi.string().required().min(2),
+                    secondName:Joi.string().required().min(2),
+                    email:Joi.string().email().required().min(5),
+                    password:Joi.string().required(),
                 })
 
-                res.json(this.s('success',result))
+                const {error} = schema.validate(req.body)
+
+                //checking error
+                if(error)
+                    res.send(this.s('failed',error.details[0].message,409))
+
+                else{
+
+                    const result = await Client.create({
+                            firstName,
+                            secondName,
+                            email,
+                            password
+                    })
+
+                    res.json(this.s('success',result))
+                }
             }
 
         }catch (e) {
