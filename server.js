@@ -1,20 +1,20 @@
 
-import express,{Application,Response,Request} from 'express'
-import * as http from 'http'
-import * as bodyParser from "body-parser";
-import dotenv from    'dotenv'
+const express = require('express')
+const http = require('http')
+const bodyParser = require("body-parser");
+const dotenv = require('dotenv')
 
 
-import cors from 'cors'
-import debug from "debug";
+const cors = require('cors')
+const debug = require("debug");
 
-import {UsersRoutes} from "./src/routes/users/users.routes";
-import {AuthenticationRoutes} from "./src/routes/Authentication/authentication.routes";
-import connectMongo from './src/database/mongo'
-import {ClientsRoutes} from "./src/routes/clients/clients.routes";
+const {UsersRoutes} =  require("./src/routes/users/users.routes");
+const {AuthenticationRoutes} =  require("./src/routes/Authentication/authentication.routes");
+const connectMongo =  require('./src/database/mongo')
+const {ClientsRoutes} =  require("./src/routes/clients/clients.routes");
 
 
-export class Server{
+class Server{
     app = express();
     server = http.createServer(this.app)
     port = Number(process.env.PORT) || 3000;
@@ -46,7 +46,7 @@ export class Server{
         this.app.use(express.static("public"))
 
         // here we are adding middleware to allow cross-origin requests
-        // app.use(cors());
+        this.app.use(cors());
 
 
         //configuring dot env
@@ -70,7 +70,7 @@ export class Server{
     }
 
 
-    startServer = () => {
+    startSever = () => {
 
         this.server.listen(this.port,() =>{
             this.debugLog(`✨ Server has been started on https://localhost:${this.port}`)
@@ -81,3 +81,6 @@ export class Server{
         })
     }
 }
+
+
+exports.Server = Server

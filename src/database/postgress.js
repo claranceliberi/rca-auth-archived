@@ -1,4 +1,4 @@
-import {Sequelize} from "sequelize";
+const {Sequelize} = require("sequelize");
 
-export default new Sequelize("postgres://liberi:liberI@111@localhost:5432/rca-auth");
+module.exports = new Sequelize("postgres://liberi:liberI@111@localhost:5432/rca-auth");
 
