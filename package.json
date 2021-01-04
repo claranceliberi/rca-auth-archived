@@ -31,8 +31,7 @@
     "mongoose": "^5.11.8",
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
-    "sequelize": "^6.3.5",
-    "swagger-ui-express": "^4.1.6"
+    "sequelize": "^6.3.5"
   },
   "devDependencies": {
     "sequelize-cli": "^6.2.0",
