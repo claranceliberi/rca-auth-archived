@@ -1,5 +1,5 @@
 
-export class CommonMiddlewareConfig{
+class CommonMiddlewareConfig{
     name
 
     constructor(name) {
@@ -21,3 +21,5 @@ export class CommonMiddlewareConfig{
         return {message:msg,data:data,status:status}
     }
 }
+
+exports.CommonMiddlewareConfig = CommonMiddlewareConfig
