@@ -1,6 +1,7 @@
 const {CommonControllerConfig} = require("../common/common.controller.config")
 const models = require('../../database/postgresSql/models/index')
 const Joi = require('joi')
+const bcrypt = require('bcryptjs')
 
 const Client = models.Client
 
@@ -23,7 +24,7 @@ class ClientsController extends CommonControllerConfig{
 
 
     create = async (req, res) => {
-        const {firstName,secondName,email,password} = req.body
+        let {firstName,secondName,email,password} = req.body
 
 
         try{
@@ -52,12 +53,10 @@ class ClientsController extends CommonControllerConfig{
 
                 else{
 
-                    const result = await Client.create({
-                            firstName,
-                            secondName,
-                            email,
-                            password
-                    })
+                    const salt = bcrypt.genSaltSync(10)
+                    password = bcrypt.hashSync(password,salt)
+
+                    const result = await Client.create({firstName, secondName, email, password})
 
                     res.json(this.s('success',result))
                 }
