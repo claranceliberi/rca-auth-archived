@@ -1,9 +1,9 @@
-import {CommonRoutesConfig} from "../common/common.routes.config";
-import {ClientsController} from "../../controllers/clients/clients.controller";
+const {CommonRoutesConfig} = require("../common/common.routes.config");
+const {ClientsController} = require("../../controllers/clients/clients.controller");
 
-const     cc = new ClientsController()
+const cc = new ClientsController()
 
-export class ClientsRoutes extends CommonRoutesConfig{
+class ClientsRoutes extends CommonRoutesConfig{
 
 
     constructor(app) {
@@ -39,3 +39,5 @@ export class ClientsRoutes extends CommonRoutesConfig{
         return this.app;
     }
 }
+
+exports.ClientsRoutes = ClientsRoutes
