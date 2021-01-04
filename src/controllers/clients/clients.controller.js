@@ -1,19 +1,17 @@
-import {CommonControllerConfig} from "../common/common.controller.config";
-import {ClientsSwaggerConfig} from "../../swagger/clients.swagger.config";
+const {CommonControllerConfig} = require("../common/common.controller.config")
+const models = require('../../database/postgresSql/models/index')
 
+const Client = models.Client
 
-export class ClientsController extends CommonControllerConfig{
+class ClientsController extends CommonControllerConfig{
 
     constructor() {
         super('ClientsController');
-
-
-        new ClientsSwaggerConfig()
     }
 
     all = async (req, res) => {
             try{
-                    const clients="" ;
+                    const clients= await Client.findAll() ;
 
 
                 res.send(this.s('success',clients))
@@ -26,7 +24,7 @@ export class ClientsController extends CommonControllerConfig{
         const {firstName,secondName,email,password} = req.body
 
         try{
-            const userExist = await this.prisma.client.findUnique({where:{email}})
+            const userExist = await Client.findOne({where:{email}})
 
 
             //check if user exists
@@ -34,7 +32,7 @@ export class ClientsController extends CommonControllerConfig{
                 res.send(this.s('failed',"email already exists",500))
 
             else{
-                const result = await this.prisma.client.create({
+                const result = await Client.create({
                     data:{
                         firstName,
                         secondName,
@@ -55,7 +53,7 @@ export class ClientsController extends CommonControllerConfig{
 
         try{
 
-            const client = await this.prisma.client.findUnique({where:{id:+req.params.clientId}})
+            const client = await Client.findOne({where:{id:req.params.clientId}})
 
             res.send(this.s('success',client))
 
@@ -67,7 +65,7 @@ export class ClientsController extends CommonControllerConfig{
     getByEmail = async (req, res) => {
 
         try {
-            const client = await this.prisma.client.findUnique({where:{email:req.params.email}})
+            const client = await Client.findOne({where:{email:req.params.email}})
 
             res.send(this.s('success',client))
         }catch (e) {
@@ -84,13 +82,13 @@ export class ClientsController extends CommonControllerConfig{
             const {firstName,secondName,email,password} = req.body
 
             //check if user already exists
-             const client = await this.prisma.client.findUnique({where:{id:+req.params.clientId}})
+            const client = await Client.findOne({where:{id:req.params.clientID}})
 
             if(client && client.hasOwnProperty('email')){
 
                try{
                     //update user
-                    const updatedUser = await this.prisma.client.update({where: {id: +req.params.clientId}, data: {firstName, secondName, email, password}})
+                    const updatedUser = await Client.update({firstName,secondName,email,password},{where:{id:req.params.clientId}})
 
                     res.send(this.s('success',updatedUser))
 
@@ -112,7 +110,7 @@ export class ClientsController extends CommonControllerConfig{
     delete = async (req, res) => {
 
         try{
-            const deletedUser = await this.prisma.client.delete({where:{id:+req.params.clientId}})
+            const deletedUser = await Client.destroy({where:{id:req.params.clientId}})
 
             res.send(this.s('success',deletedUser))
         }catch (e) {
@@ -120,3 +118,5 @@ export class ClientsController extends CommonControllerConfig{
         }
     }
 }
+
+exports.ClientsController = ClientsController
