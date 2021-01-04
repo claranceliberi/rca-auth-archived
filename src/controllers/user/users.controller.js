@@ -1,18 +1,17 @@
-import debug from 'debug'
-import {CommonControllerConfig} from "../common/common.controller.config";
-import Joi from 'joi'
-import bcrypt from 'bcryptjs'
+const debug = require('debug')
+const {CommonControllerConfig} = require("../common/common.controller.config");
+const Joi = require('joi')
+const bcrypt = require('bcryptjs')
 
 
 // initiating debugger
 const d = debug("UserController")
 
 
-export class UsersController extends CommonControllerConfig{
+class UsersController extends CommonControllerConfig{
     constructor() {
         super('UserController');
 
-        new UserSwaggerConfig()
     }
 
     //get all users
@@ -121,3 +120,5 @@ export class UsersController extends CommonControllerConfig{
 
 
 }
+
+exports.UsersController = UsersController
