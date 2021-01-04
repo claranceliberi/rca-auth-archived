@@ -1,10 +1,13 @@
-import {CommonControllerConfig} from "../common/common.controller.config";
+const {CommonControllerConfig} = require("../common/common.controller.config")
 
 
-export class AppsController extends CommonControllerConfig{
+class AppsController extends CommonControllerConfig{
 
     constructor() {
         super("AppsController");
     }
 
 }
+
+
+exports.AppController = AppsController
