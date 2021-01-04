@@ -5,6 +5,8 @@ const debug = require('debug')
 
 const d = debug('AuthController')
 
+const User = require('../../models/user.model')
+
 class AuthenticationController extends CommonControllerConfig{
     constructor() {
         super("AuthenticationController");
