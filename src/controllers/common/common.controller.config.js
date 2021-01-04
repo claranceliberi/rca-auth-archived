@@ -1,5 +1,5 @@
 
-export class CommonControllerConfig{
+class CommonControllerConfig{
     name;
 
 
@@ -23,3 +23,5 @@ export class CommonControllerConfig{
     }
 
 }
+
+exports.CommonControllerConfig = CommonControllerConfig
