@@ -3,8 +3,6 @@ const express = require('express')
 const http = require('http')
 const bodyParser = require("body-parser");
 const dotenv = require('dotenv')
-
-
 const cors = require('cors')
 const debug = require("debug");
 
@@ -12,6 +10,7 @@ const {UsersRoutes} =  require("./src/routes/users/users.routes");
 const {AuthenticationRoutes} =  require("./src/routes/Authentication/authentication.routes");
 const connectMongo =  require('./src/database/mongo')
 const {ClientsRoutes} =  require("./src/routes/clients/clients.routes");
+
 
 
 class Server{
@@ -30,6 +29,7 @@ class Server{
 
         this.initiateMainServerRoute()
 
+
     }
 
     connectMongo = () => {
@@ -47,7 +47,6 @@ class Server{
 
         // here we are adding middleware to allow cross-origin requests
         this.app.use(cors());
-
 
         //configuring dot env
         dotenv.config({path:__dirname + "/.env"})

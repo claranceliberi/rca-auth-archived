@@ -20,8 +20,11 @@ class ClientsController extends CommonControllerConfig{
             }
     }
 
+
     create = async (req, res) => {
         const {firstName,secondName,email,password} = req.body
+
+        console.log(req.body)
 
         try{
             const userExist = await Client.findOne({where:{email}})
