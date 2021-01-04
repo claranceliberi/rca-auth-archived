@@ -1,5 +1,6 @@
 
-export class CommonRoutesConfig{
+
+class CommonRoutesConfig{
     app;
     name;
 
@@ -16,3 +17,5 @@ export class CommonRoutesConfig{
 
     configureRoutes(){}
 }
+
+exports.CommonRoutesConfig = CommonRoutesConfig
