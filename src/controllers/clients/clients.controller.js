@@ -13,10 +13,9 @@ class ClientsController extends CommonControllerConfig{
 
     all = async (req, res) => {
             try{
-                    const clients= await Client.findAll() ;
-
-
+                const clients= await Client.findAll() ;
                 res.send(this.s('success',clients))
+
             }catch (e) {
                 res.send(this.s('failed',e,500))
             }
@@ -100,15 +99,39 @@ class ClientsController extends CommonControllerConfig{
             const {firstName,secondName,email,password} = req.body
 
             //check if user already exists
-            const client = await Client.findOne({where:{id:req.params.clientID}})
+            const client = await Client.findOne({where:{id:req.params.clientId}})
 
-            if(client && client.hasOwnProperty('email')){
+            console.log(client.email)
+
+            if(client && client.email){
 
                try{
-                    //update user
-                    const updatedUser = await Client.update({firstName,secondName,email,password},{where:{id:req.params.clientId}})
 
-                    res.send(this.s('success',updatedUser))
+                   //validator format
+                    const schema = Joi.object({
+                        id:Joi.number().required().min(1),
+                        firstName:Joi.string().required().min(2),
+                        secondName:Joi.string().required().min(2),
+                        email:Joi.string().email().required().min(5),
+                        password:Joi.string().required(),
+                    })
+
+                    const {error} = schema.validate(req.body)
+
+                    //checking error
+                    if(error)
+                        res.send(this.s('failed',error.details[0].message,409))
+                    else{
+
+                        //update user
+                        const updatedUser = await Client.update(
+                            {firstName,secondName,email,password},
+                            {where:{id:req.params.clientId},
+                            returning:true,
+                            })
+
+                        res.send(this.s('success',updatedUser[1]))
+                    }
 
                }catch (e){
                     res.send(this.s('failed',e,500))
