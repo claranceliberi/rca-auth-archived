@@ -1,7 +1,8 @@
 const {CommonControllerConfig} = require("../common/common.controller.config")
 const {AuthenticationController} = require("../authentication/authentication.controller")
 const models = require('../../database/postgresSql/models/index')
-
+const Joi = require('joi')
+const crypto = require('crypto')
 
 const App = models.App
 class AppsController extends CommonControllerConfig{
@@ -33,8 +34,9 @@ class AppsController extends CommonControllerConfig{
                 //validator format
                 const schema = Joi.object({
                     name:Joi.string().required().min(2),
-                    redirectUrl:Joi.string().uri().required().min(2),
+                    redirectUrl:Joi.string().uri().required().min(2)
                 })
+
 
                 const {error} = schema.validate(req.body)
 
@@ -46,11 +48,10 @@ class AppsController extends CommonControllerConfig{
 
                     const randomNumber = Math.floor(Math.random() * Date.now())
                     const appId = Date.now() + randomNumber //make sure that e get different number at the highest level
-                    let secretKey = crypto.randomBytes(64).toString('hex'); //secretKey
+                    let secretKey = crypto.randomBytes(30).toString('hex'); //secretKey
                     let {id:clientId} = AuthenticationController.userFromToken(req)
 
-                    const result = await App.create({name, redirectUrl, appId, secretKey,clientId})
-
+                    const result = await App.create({name, clientId , redirectUrl, appId, secretKey})
                     res.json(this.s('success',result))
                 }
 
