@@ -6,11 +6,11 @@ const dotenv = require('dotenv')
 const cors = require('cors')
 const debug = require("debug");
 
+const connectMongo =  require('./src/database/mongo')
 const {UsersRoutes} =  require("./src/routes/users/users.routes");
 const {AuthenticationRoutes} =  require("./src/routes/Authentication/authentication.routes");
-const connectMongo =  require('./src/database/mongo')
 const {ClientsRoutes} =  require("./src/routes/clients/clients.routes");
-
+const {AppsRoutes} = require("./src/routes/apps/app.routes.config")
 
 
 class Server{
@@ -59,6 +59,7 @@ class Server{
         this.routes.push(new UsersRoutes(this.app))
         this.routes.push(new AuthenticationRoutes(this.app))
         this.routes.push(new ClientsRoutes(this.app))
+        this.routes.push(new AppsRoutes(this.app))
     }
 
     initiateMainServerRoute = () => {
