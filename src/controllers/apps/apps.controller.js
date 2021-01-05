@@ -152,6 +152,23 @@ class AppsController extends CommonControllerConfig{
         }
     }
 
+    //delete client
+    delete = async (req, res) => {
+
+        try{
+            const deletedApp = await App.destroy({where:{appId:req.params.appId}})
+
+            if(deletedApp === 1)
+                res.send(this.s('success',"app deleted"))
+            else
+                res.send(this.s('failed',"app does not exists, may be already deleted or was not created",409))
+
+
+        }catch (e) {
+            res.send(this.s('failed',e))
+        }
+    }
+
 
 }
 
