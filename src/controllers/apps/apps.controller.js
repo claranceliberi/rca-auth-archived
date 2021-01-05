@@ -173,4 +173,4 @@ class AppsController extends CommonControllerConfig{
 }
 
 
-exports.AppController = AppsController
+exports.AppsController = AppsController
