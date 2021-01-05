@@ -43,4 +43,4 @@ class AppsRoutes extends CommonRoutesConfig{
     }
 }
 
-exports.ClientsRoutes = ClientsRoutes
+exports.AppsRoutes = AppsRoutes
