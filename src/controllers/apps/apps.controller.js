@@ -98,6 +98,59 @@ class AppsController extends CommonControllerConfig{
         }
     }
 
+    // update app
+    put = async (req,res) => {
+
+        try{
+            //extract user object
+            const {name,redirectUrl, appId} = req.body
+
+            //check if user already exists
+            const app = await App.findOne({where:{appId}})
+
+
+            if(app && app.email){
+
+               try{
+
+                   //validator format
+                    const schema = Joi.object({
+                        name:Joi.string().required().min(2),
+                        redirectUrl:Joi.string().uri().required().min(2),
+                    })
+
+
+                    const {error} = schema.validate(req.body)
+
+                    //checking error
+                    if(error)
+                        res.send(this.s('failed',error.details[0].message,409))
+
+                    else{
+
+                        //update app
+                        const updatedApp = await App.update(
+                            {name,redirectUrl},
+                            {where:{appId},
+                            returning:true,
+                            })
+
+                        res.send(this.s('success',updatedApp[1]))
+                    }
+
+               }catch (e){
+                    res.send(this.s('failed',e,500))
+               }
+
+
+            }else{
+                res.send(this.s('failed','app does not exists'))
+            }
+
+        }catch (e) {
+            res.send(this.s('failed',e,500))
+        }
+    }
 
 
 }
