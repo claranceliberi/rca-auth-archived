@@ -40,6 +40,10 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       allowNull:false
     },
+    clientId:{
+      type: DataTypes.BIGINT,
+      allowNull:false
+    },
     secretKey:{
       type:DataTypes.STRING,
       allowNull:false
