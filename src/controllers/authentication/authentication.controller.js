@@ -25,15 +25,19 @@ class AuthenticationController extends CommonControllerConfig{
         const userFromToken = await jwt.verify(token ,process.env["TOKEN_SECRETE"])
 
         //excluding password in returned document
-        const user = Client.where('email',userFromToken['email']).select('-password')
 
-        user.exec((err,user) => {
-            if(err)
-                res.send(this.s('failed',err,500))
-            else
-                res.send(this.s('success',user))
+        try{
+            const user = await Client.findOne({
+                where:{email:userFromToken['email']},
+                attributes:{exclude:['password']}
+            })
 
-        })
+            res.send(this.s('success',user))
+
+        }catch (e) {
+            res.send(this.s('failed',e,500))
+        }
+
 
 
     }
