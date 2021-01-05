@@ -7,13 +7,13 @@ class ClientsRoutes extends CommonRoutesConfig{
 
 
     constructor(app) {
-        super(app,'ClientsController');
+        super(app,'ClientsRoutes');
 
     }
 
     configureRoutes() {
 
-        //creating app
+        //creating apps
         this.app.route('/clients')
             .all((req,res,next) => {
                 next()
