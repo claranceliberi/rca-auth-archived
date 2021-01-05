@@ -8,7 +8,6 @@ class AppsRoutes extends CommonRoutesConfig{
 
     constructor(app) {
         super(app,'AppsRoutes');
-
     }
 
     configureRoutes() {
@@ -31,7 +30,7 @@ class AppsRoutes extends CommonRoutesConfig{
 
 
 
-        this.app.route('/apps/appId/:email')
+        this.app.route('/apps/appId/:appId')
             .get(app.getByAppId)
             .delete(app.delete)
 
