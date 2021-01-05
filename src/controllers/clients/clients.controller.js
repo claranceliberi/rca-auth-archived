@@ -129,13 +129,13 @@ class ClientsController extends CommonControllerConfig{
                     else{
 
                         //update user
-                        const updateClient = await Client.update(
+                        const updatedClient = await Client.update(
                             {firstName,secondName,email,password},
                             {where:{id:req.params.clientId},
                             returning:true,
                             })
 
-                        res.send(this.s('success',updateClient[1]))
+                        res.send(this.s('success',updatedClient[1]))
                     }
 
                }catch (e){
