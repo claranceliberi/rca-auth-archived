@@ -60,6 +60,19 @@ class AppsController extends CommonControllerConfig{
     }
 
 
+    //get app by id
+    getById = async (req, res) => {
+
+        try{
+
+            const app = await Client.findOne({where:{id:req.params.appId}})
+
+            res.send(this.s('success',app))
+
+        }catch (e) {
+            res.send(this.s('failed',e,500))
+        }
+    }
 
 }
 
