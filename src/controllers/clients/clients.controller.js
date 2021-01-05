@@ -106,8 +106,6 @@ class ClientsController extends CommonControllerConfig{
             //check if user already exists
             const client = await Client.findOne({where:{id:req.params.clientId}})
 
-            console.log(client.email)
-
             if(client && client.email){
 
                try{
