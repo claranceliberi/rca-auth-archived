@@ -65,7 +65,7 @@ class AppsController extends CommonControllerConfig{
 
         try{
 
-            const app = await Client.findOne({where:{id:req.params.appId}})
+            const app = await Client.findOne({where:{id:req.params.id}})
 
             res.send(this.s('success',app))
 
@@ -73,6 +73,19 @@ class AppsController extends CommonControllerConfig{
             res.send(this.s('failed',e,500))
         }
     }
+
+        //get client by email
+    getByAppId = async (req, res) => {
+
+        try {
+            const app = await Client.findOne({where:{appId:req.params.appId}})
+
+            res.send(this.s('success',app))
+        }catch (e) {
+            res.send(this.s('failed', e, 500))
+        }
+    }
+
 
 }
 
