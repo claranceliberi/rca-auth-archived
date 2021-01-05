@@ -49,7 +49,7 @@ class AppsController extends CommonControllerConfig{
                     let secretKey = crypto.randomBytes(64).toString('hex'); //secretKey
                     let {id:clientId} = AuthenticationController.userFromToken(req)
 
-                    const result = await Client.create({name, redirectUrl, appId, secretKey,clientId})
+                    const result = await App.create({name, redirectUrl, appId, secretKey,clientId})
 
                     res.json(this.s('success',result))
                 }
@@ -65,7 +65,7 @@ class AppsController extends CommonControllerConfig{
 
         try{
 
-            const app = await Client.findOne({where:{id:req.params.id}})
+            const app = await App.findOne({where:{id:req.params.id}})
 
             res.send(this.s('success',app))
 
@@ -74,17 +74,30 @@ class AppsController extends CommonControllerConfig{
         }
     }
 
-    //get client by email
+    //get app by app id
     getByAppId = async (req, res) => {
 
         try {
-            const app = await Client.findOne({where:{appId:req.params.appId}})
+            const app = await App.findOne({where:{appId:req.params.appId}})
 
             res.send(this.s('success',app))
         }catch (e) {
             res.send(this.s('failed', e, 500))
         }
     }
+
+    //get client by creator based on his id
+    getByClient = async (req, res) => {
+
+        try {
+            const apps = await App.findAll({where:{clientId:req.params.clientId}})
+
+            res.send(this.s('success',apps))
+        }catch (e) {
+            res.send(this.s('failed', e, 500))
+        }
+    }
+
 
 
 }
