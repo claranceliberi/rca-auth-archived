@@ -22,7 +22,7 @@ class ClientsRoutes extends CommonRoutesConfig{
             .get(cc.all)
 
 
-        this.app.route('/clients/:clientsId')
+        this.app.route('/clients/id/:clientId')
             .all((req, res, next) => {
                 next()
             })
@@ -31,7 +31,7 @@ class ClientsRoutes extends CommonRoutesConfig{
             .delete(cc.delete)
 
 
-        this.app.route('/clients/:email')
+        this.app.route('/clients/email/:email')
             .get(cc.getByEmail)
 
 
