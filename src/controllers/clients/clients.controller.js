@@ -153,7 +153,12 @@ class ClientsController extends CommonControllerConfig{
         try{
             const deletedUser = await Client.destroy({where:{id:req.params.clientId}})
 
-            res.send(this.s('success',deletedUser))
+            if(deletedUser === 1)
+                res.send(this.s('success',"user deleted"))
+            else
+                res.send(this.s('failed',"user does not exists, may be already deleted or was not created"))
+
+
         }catch (e) {
             res.send(this.s('failed',e))
         }
