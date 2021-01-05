@@ -26,7 +26,7 @@ class ClientsRoutes extends CommonRoutesConfig{
             .all((req, res, next) => {
                 next()
             })
-            .get(cc.get)
+            .get(cc.getById)
             .put(cc.put)
             .delete(cc.delete)
 

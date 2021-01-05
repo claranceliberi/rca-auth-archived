@@ -11,6 +11,7 @@ class ClientsController extends CommonControllerConfig{
         super('ClientsController');
     }
 
+    //get all clients
     all = async (req, res) => {
             try{
                 const clients= await Client.findAll() ;
@@ -22,6 +23,7 @@ class ClientsController extends CommonControllerConfig{
     }
 
 
+    //create client
     create = async (req, res) => {
         let {firstName,secondName,email,password} = req.body
 
@@ -66,7 +68,8 @@ class ClientsController extends CommonControllerConfig{
         }
     }
 
-    get = async (req, res) => {
+    //get client by id
+    getById = async (req, res) => {
 
         try{
 
@@ -79,6 +82,7 @@ class ClientsController extends CommonControllerConfig{
         }
     }
 
+    //get client by email
     getByEmail = async (req, res) => {
 
         try {
@@ -92,6 +96,7 @@ class ClientsController extends CommonControllerConfig{
 
 
 
+    // update client
     put = async (req,res) => {
 
         try{
@@ -148,15 +153,16 @@ class ClientsController extends CommonControllerConfig{
     }
 
 
+    //delete client
     delete = async (req, res) => {
 
         try{
             const deletedUser = await Client.destroy({where:{id:req.params.clientId}})
 
             if(deletedUser === 1)
-                res.send(this.s('success',"user deleted"))
+                res.send(this.s('success',"client deleted"))
             else
-                res.send(this.s('failed',"user does not exists, may be already deleted or was not created"))
+                res.send(this.s('failed',"client does not exists, may be already deleted or was not created",409))
 
 
         }catch (e) {
