@@ -27,6 +27,11 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement:true,
       type:DataTypes.BIGINT
     },
+    appId: {
+      type:DataTypes.STRING,
+      allowNull:false,
+      unique:true
+    },
     name: {
       type:DataTypes.STRING,
       allowNull:false
