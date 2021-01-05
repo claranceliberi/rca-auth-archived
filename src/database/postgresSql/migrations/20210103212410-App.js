@@ -16,9 +16,9 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       appId: {
-      type: Sequelize.STRING,
-      allowNull:false,
-      unique:true
+        type: Sequelize.STRING,
+        allowNull:false,
+        unique:true
       },
       name: {
         type: Sequelize.STRING,
@@ -42,9 +42,10 @@ module.exports = {
       },
       clientId: {
         type: Sequelize.INTEGER,
+        allowNull:false,
         onDelete: 'CASCADE',
         references: {
-          model: 'Clients',
+          model: 'Client',
           key: 'id',
           as: 'clientId',
         },
