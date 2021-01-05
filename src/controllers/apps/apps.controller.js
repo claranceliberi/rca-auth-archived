@@ -74,7 +74,7 @@ class AppsController extends CommonControllerConfig{
         }
     }
 
-        //get client by email
+    //get client by email
     getByAppId = async (req, res) => {
 
         try {
