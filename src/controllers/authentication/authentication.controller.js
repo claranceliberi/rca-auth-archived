@@ -17,18 +17,15 @@ class AuthenticationController extends CommonControllerConfig{
 
     currentUser = async (req,res) => {
 
-        //capturing authorization header to get token
-        const authHeader = req.header('Authorization')
-        const token = authHeader && authHeader.split(' ')[1]
+        //get user
+        const {email} = await AuthenticationController.userFromToken(req)
 
-        //get user email from token
-        const userFromToken = await jwt.verify(token ,process.env["TOKEN_SECRETE"])
-
-        //excluding password in returned document
 
         try{
+            //excluding password in returned document\
+
             const user = await Client.findOne({
-                where:{email:userFromToken['email']},
+                where:{email},
                 attributes:{exclude:['password']}
             })
 
@@ -55,7 +52,7 @@ class AuthenticationController extends CommonControllerConfig{
                     const truePassword = bcrypt.compareSync(req.body.password,user.password)
 
                     if(truePassword){ //when password was right
-                        const jwt = self.generatesAccessToken({email:req.body.email})
+                        const jwt = self.generatesAccessToken({email:user.email,id:user.id})
 
                         const response = {
                             email:req.body.email,
@@ -76,6 +73,15 @@ class AuthenticationController extends CommonControllerConfig{
     generatesAccessToken = (username,secrete = process.env.TOKEN_SECRETE,expiresIn = '1800s') =>{
         d(secrete)
         return jwt.sign(username,secrete,{expiresIn})
+    }
+
+     static userFromToken = (req)=>{
+                //capturing authorization header to get token
+        const authHeader = req.header('Authorization')
+        const token = authHeader && authHeader.split(' ')[1]
+
+        //get user email from token
+        return jwt.verify(token, process.env["TOKEN_SECRETE"]);
     }
 }
 
