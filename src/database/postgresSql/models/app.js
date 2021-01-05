@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
 
       App.belongsTo(models.Client, {
-        foreignKey:'appId',
+        foreignKey:'clientId',
         onDelete:'CASCADE'
       })
     }
