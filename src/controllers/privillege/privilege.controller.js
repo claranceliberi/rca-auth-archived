@@ -111,7 +111,7 @@ class PrivilegesController extends CommonControllerConfig{
 
         try{
             //extract privilege body object
-            let {id, userId, appID, viewProfile} = req.body
+            let {id, viewProfile} = req.body
 
             //validator format
             const schema = Joi.object({
