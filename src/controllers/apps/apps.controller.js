@@ -48,7 +48,7 @@ class AppsController extends CommonControllerConfig{
 
                     const randomNumber = Math.floor(Math.random() * Date.now())
                     const appId = Date.now() + randomNumber //make sure that e get different number at the highest level
-                    let secretKey = crypto.randomBytes(30).toString('hex'); //secretKey
+                    let secretKey = crypto.randomBytes(35).toString('hex'); //secretKey
                     let {id:clientId} = AuthenticationController.userFromToken(req)
 
                     const result = await App.create({name, clientId , redirectUrl, appId, secretKey})
@@ -99,6 +99,61 @@ class AppsController extends CommonControllerConfig{
         }
     }
 
+
+    // update app
+    generateNewSecretKey = async (req,res) => {
+
+        try{
+            //extract user object
+            const {appId} = req.body
+
+           //validator format
+            const schema = Joi.object({
+                appId:Joi.string().required().min(10),
+            })
+
+
+            const {error} = schema.validate(req.body)
+
+            //checking error
+            if(error)
+                res.send(this.s('failed',error.details[0].message,409))
+
+            else{
+
+                //check if app exists
+                const app = await App.findOne({where:{appId},plain:true})
+
+                if(app){
+
+                   try{
+
+                       let secretKey = crypto.randomBytes(35).toString('hex'); //secretKey
+
+                        //update app
+                        const updatedApp = await App.update(
+                            {secretKey},
+                            {where:{appId},
+                            returning:true,
+                            })
+
+                        res.send(this.s('success',updatedApp[1]))
+
+                   }catch (e){
+                        res.send(this.s('failed',e,500))
+                   }
+
+                }else{
+                    res.send(this.s('failed','app does not exists'))
+                }
+
+            }
+
+        }catch (e) {
+            res.send(this.s('failed',e,500))
+        }
+    }
+
     // update app
     put = async (req,res) => {
 
@@ -122,7 +177,7 @@ class AppsController extends CommonControllerConfig{
 
             else{
 
-                //check if user already exists
+                //check if app exists
                 const app = await App.findOne({where:{appId},plain:true})
 
                 if(app){
