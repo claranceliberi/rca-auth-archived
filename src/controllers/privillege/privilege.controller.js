@@ -97,6 +97,62 @@ class PrivilegeController extends CommonControllerConfig{
         }
     }
 
+
+    // update privilege
+    put = async (req,res) => {
+
+        try{
+            //extract privilege body object
+            let {id, userId, appID, viewProfile} = req.body
+
+            //validator format
+            const schema = Joi.object({
+                id:Joi.number().required(),
+                viewProfile:Joi.boolean().required(),
+            })
+
+
+
+            const {error} = schema.validate(req.body)
+
+            //checking error
+            if(error)
+                res.send(this.s('failed',error.details[0].message,409))
+
+            else{
+
+                //check if app exists
+                const privilege = await Privilege.findOne({where:{id},plain:true})
+
+                if(privilege){
+
+                   try{
+
+
+                            //update app
+                            const updatedApp = await Privilege.update(
+                                {viewProfile},
+                                {where:{id},
+                                returning:true,
+                                })
+
+                            res.send(this.s('success',updatedApp[1]))
+
+                   }catch (e){
+                        res.send(this.s('failed',e,500))
+                   }
+
+                }else{
+                    res.send(this.s('failed','app does not exists'))
+                }
+
+            }
+
+        }catch (e) {
+            res.send(this.s('failed',e,500))
+        }
+    }
+
 }
 
 
