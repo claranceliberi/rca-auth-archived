@@ -5,7 +5,7 @@ const crypto = require('crypto')
 
 const Privilege = models.Privilege
 
-class PrivilegeController extends CommonControllerConfig{
+class PrivilegesController extends CommonControllerConfig{
 
     constructor() {
         super("PrivilegeController");
@@ -38,7 +38,6 @@ class PrivilegeController extends CommonControllerConfig{
                     viewProfile:Joi.boolean().required(),
                 })
 
-
                 const {error} = schema.validate(req.body)
 
                 //checking error
@@ -46,9 +45,19 @@ class PrivilegeController extends CommonControllerConfig{
                     res.send(this.s('failed',error.details[0].message,409))
 
                 else{
+                   //check if app exists
+                    const privilege = await Privilege.findOne({where:{userId,appId},plain:true})
 
-                    const result = await Privilege.create({userId, appID , viewProfile})
-                    res.json(this.s('success',result))
+                    if(privilege){ //if privilege exists let us update it
+                        //update privilege
+                        const updatedApp = await Privilege.update({viewProfile}, {where:{id:privilege.id}, returning:true,})
+                        res.send(this.s('success',updatedApp[1]))
+
+                    } else{ // if it does not exist let us create
+                        const result = await Privilege.create({userId, appID , viewProfile})
+                        res.json(this.s('success',result))
+                    }
+
                 }
 
         }catch (e) {
@@ -129,14 +138,14 @@ class PrivilegeController extends CommonControllerConfig{
                    try{
 
 
-                            //update app
-                            const updatedApp = await Privilege.update(
-                                {viewProfile},
-                                {where:{id},
-                                returning:true,
-                                })
+                        //update app
+                        const updatedApp = await Privilege.update(
+                            {viewProfile},
+                            {where:{id},
+                            returning:true,
+                            })
 
-                            res.send(this.s('success',updatedApp[1]))
+                        res.send(this.s('success',updatedApp[1]))
 
                    }catch (e){
                         res.send(this.s('failed',e,500))
@@ -156,4 +165,4 @@ class PrivilegeController extends CommonControllerConfig{
 }
 
 
-exports.AppsController = AppsController
+exports.PrivilegesController = PrivilegesController
