@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const models = require('../../database/postgresSql/models/index')
 const debug = require('debug')
 
-const d = debug('AuthController')
+const d = debug('AuthenticationController')
 
 
 const Client = models.Client
