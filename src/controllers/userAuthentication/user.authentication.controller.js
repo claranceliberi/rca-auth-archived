@@ -45,15 +45,14 @@ class UserAuthenticationController extends CommonControllerConfig{
 
         let user = await User.findOne({email:req.body.email})
 
-            console.log(user)
 
             try{
-                if(user === null) //when use was not found
+                if(!user) //when use was not found
                     res.send(s('failed',"Wrong credentials",401))
                 else{
                     const truePassword = bcrypt.compareSync(req.body.password,user.password)
 
-                    if(truePassword){ //when password was right
+                    if(truePassword){ //when password is right
                         const jwt = self.generatesAccessToken({email:user.email,id:user.id})
 
                         const response = {
