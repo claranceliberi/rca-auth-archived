@@ -1,7 +1,6 @@
 const {CommonControllerConfig} = require("../common/common.controller.config")
 const models = require('../../database/postgresSql/models/index')
 const Joi = require('joi')
-const crypto = require('crypto')
 
 const Privilege = models.Privilege
 
