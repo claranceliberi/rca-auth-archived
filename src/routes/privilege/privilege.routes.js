@@ -3,7 +3,7 @@ const {PrivilegesController} = require("../../controllers/privillege/privilege.c
 
 const privilege = new PrivilegesController()
 
-class PrivilegeRoutes extends CommonRoutesConfig{
+class PrivilegesRoutes extends CommonRoutesConfig{
 
 
     constructor(app) {
@@ -42,4 +42,4 @@ class PrivilegeRoutes extends CommonRoutesConfig{
     }
 }
 
-exports.AppsRoutes = AppsRoutes
+exports.PrivilegesRoutes = PrivilegesRoutes
