@@ -13,12 +13,12 @@ module.exports = {
         allowNull: false,
       },
       appId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
         onDelete: 'CASCADE',
         references: {
           model: 'Apps',
-          key: 'id',
+          key: 'appId',
           as: 'appId',
         },
       },
