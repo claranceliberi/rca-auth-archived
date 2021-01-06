@@ -72,6 +72,17 @@ class PrivilegeController extends CommonControllerConfig{
         }
     }
 
+    //get privilege by user id
+    getByUserId = async (req, res) => {
+
+        try {
+            const privilege = await Privilege.findOne({where:{userId:req.params.userId}})
+
+            res.send(this.s('success',privilege))
+        }catch (e) {
+            res.send(this.s('failed', e, 500))
+        }
+    }
 
 }
 
