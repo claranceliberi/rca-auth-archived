@@ -37,6 +37,8 @@ class AppsRoutes extends CommonRoutesConfig{
         this.app.route('/apps/client/:clientId')
             .get(app.getByClient)
 
+        this.app.route('/apps/secretKey/regenerate')
+            .post(app.generateNewSecretKey)
 
         return this.app;
     }
