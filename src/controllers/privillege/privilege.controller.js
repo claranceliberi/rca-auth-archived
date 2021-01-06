@@ -25,7 +25,7 @@ class PrivilegesController extends CommonControllerConfig{
 
     //create privilege
     create = async (req, res) => {
-        let {userId,appID,viewProfile} = req.body
+        let {userId,appId,viewProfile} = req.body
 
 
         try{
@@ -33,7 +33,7 @@ class PrivilegesController extends CommonControllerConfig{
                 //validator format
                 const schema = Joi.object({
                     userId:Joi.string().required().min(20),
-                    appID:Joi.string().uri().required(),
+                    appId:Joi.string().uri().required(),
                     viewProfile:Joi.boolean().required(),
                 })
 
@@ -53,7 +53,7 @@ class PrivilegesController extends CommonControllerConfig{
                         res.send(this.s('success',updatedApp[1]))
 
                     } else{ // if it does not exist let us create
-                        const result = await Privilege.create({userId, appID , viewProfile})
+                        const result = await Privilege.create({userId, appId , viewProfile})
                         res.json(this.s('success',result))
                     }
 
