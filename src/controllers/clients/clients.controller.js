@@ -29,29 +29,26 @@ class ClientsController extends CommonControllerConfig{
 
 
         try{
-            const userExist = await Client.findOne({where:{email}})
 
+            //validator format
+            const schema = Joi.object({
+                firstName:Joi.string().required().min(2),
+                secondName:Joi.string().required().min(2),
+                email:Joi.string().email().required().min(5),
+                password:Joi.string().required(),
+            })
+            const {error} = schema.validate(req.body)
 
-            //check if user exists
-            if( userExist !== null && userExist.hasOwnProperty('email'))
-                res.send(this.s('failed',"email already exists",500))
-
+            //errors in attributes
+            if(error)
+                res.send(this.s('failed',error.details[0].message,406))
             else{
 
-                //validator format
-                const schema = Joi.object({
-                    firstName:Joi.string().required().min(2),
-                    secondName:Joi.string().required().min(2),
-                    email:Joi.string().email().required().min(5),
-                    password:Joi.string().required(),
-                })
+            const userExist = await Client.findOne({where:{email}})
 
-                const {error} = schema.validate(req.body)
-
-                //checking error
-                if(error)
-                    res.send(this.s('failed',error.details[0].message,409))
-
+                // checking if client exists
+                if(userExist)
+                    res.send(this.s('failed',"email already exists",409))
                 else{
 
                     const salt = bcrypt.genSaltSync(10)
