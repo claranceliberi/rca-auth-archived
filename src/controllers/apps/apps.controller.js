@@ -106,46 +106,47 @@ class AppsController extends CommonControllerConfig{
             //extract user object
             const {name,redirectUrl, appId} = req.body
 
-            //check if user already exists
-            const app = await App.findOne({where:{appId}})
+           //validator format
+            const schema = Joi.object({
+                appId:Joi.string().required().min(10),
+                name:Joi.string().required().min(2),
+                redirectUrl:Joi.string().uri().required().min(2),
+            })
 
 
-            if(app && app.email){
+            const {error} = schema.validate(req.body)
 
-               try{
+            //checking error
+            if(error)
+                res.send(this.s('failed',error.details[0].message,409))
 
-                   //validator format
-                    const schema = Joi.object({
-                        name:Joi.string().required().min(2),
-                        redirectUrl:Joi.string().uri().required().min(2),
-                    })
+            else{
 
+                //check if user already exists
+                const app = await App.findOne({where:{appId},plain:true})
 
-                    const {error} = schema.validate(req.body)
+                if(app){
 
-                    //checking error
-                    if(error)
-                        res.send(this.s('failed',error.details[0].message,409))
-
-                    else{
-
-                        //update app
-                        const updatedApp = await App.update(
-                            {name,redirectUrl},
-                            {where:{appId},
-                            returning:true,
-                            })
-
-                        res.send(this.s('success',updatedApp[1]))
-                    }
-
-               }catch (e){
-                    res.send(this.s('failed',e,500))
-               }
+                   try{
 
 
-            }else{
-                res.send(this.s('failed','app does not exists'))
+                            //update app
+                            const updatedApp = await App.update(
+                                {name,redirectUrl},
+                                {where:{appId},
+                                returning:true,
+                                })
+
+                            res.send(this.s('success',updatedApp[1]))
+
+                   }catch (e){
+                        res.send(this.s('failed',e,500))
+                   }
+
+                }else{
+                    res.send(this.s('failed','app does not exists'))
+                }
+
             }
 
         }catch (e) {
