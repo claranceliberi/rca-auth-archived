@@ -11,6 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+
+      Privilege.belongsTo(models.App, {
+        foreignKey:'appId',
+        onDelete:'CASCADE'
+      })
     }
   }
 
@@ -27,9 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       allowNull:false,
     }
-  }, {
-    sequelize,
-    modelName: 'Privilege',
-  });
+  }, {sequelize, modelName: 'Privilege',});
+
   return Privilege;
 };
