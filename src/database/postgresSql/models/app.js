@@ -18,6 +18,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey:'clientId',
         onDelete:'CASCADE'
       })
+
+      Client.hasMany(models.Privilege,{
+        foreignKey:'appId',
+        as:"appPrivileges"
+      })
     }
   }
 
