@@ -32,7 +32,6 @@ class PrivilegesRoutes extends CommonRoutesConfig{
 
         this.app.route('/privileges/appId/:appId')
             .get(privilege.getByAppId)
-            .delete(privilege.delete)
 
         this.app.route('/privileges/user/:userId')
             .get(privilege.getByUserId)
