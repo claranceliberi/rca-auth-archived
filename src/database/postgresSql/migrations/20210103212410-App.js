@@ -45,7 +45,7 @@ module.exports = {
         allowNull:false,
         onDelete: 'CASCADE',
         references: {
-          model: 'Client',
+          model: 'Clients',
           key: 'id',
           as: 'clientId',
         },
