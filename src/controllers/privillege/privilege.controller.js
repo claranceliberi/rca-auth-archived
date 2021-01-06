@@ -33,7 +33,7 @@ class PrivilegesController extends CommonControllerConfig{
                 //validator format
                 const schema = Joi.object({
                     userId:Joi.string().required().min(20),
-                    appId:Joi.number().required(),
+                    appId:Joi.string().required(),
                     viewProfile:Joi.boolean().required(),
                 })
 
