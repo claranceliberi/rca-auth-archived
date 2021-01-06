@@ -76,14 +76,8 @@ class UserAuthenticationController extends CommonControllerConfig{
         return jwt.sign(username,secrete,{expiresIn})
     }
 
-     static userFromToken = (req)=>{
-                //capturing authorization header to get token
-        const authHeader = req.header('Authorization')
-        const token = authHeader && authHeader.split(' ')[1]
 
-        //get user email from token
-        return jwt.verify(token, process.env["TOKEN_SECRETE"]);
-    }
+
 }
 
 exports.UserAuthenticationController = UserAuthenticationController
