@@ -1,12 +1,14 @@
 const {CommonControllerConfig} = require("../common/common.controller.config")
+const {AuthenticationController} = require('../authentication/authentication.controller')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const User = require('../../models/user.model')
 const debug = require('debug')
-const {AuthenticationController} = require('../authentication/authentication.controller')
+const User = require('../../models/user.model')
+const models = require('../../database/postgresSql/models/index')
 
 const d = debug('UserAuthenticationController')
 
+const App = models.App
 
 class UserAuthenticationController extends CommonControllerConfig{
     constructor() {
@@ -76,6 +78,25 @@ class UserAuthenticationController extends CommonControllerConfig{
         return jwt.sign(username,secrete,{expiresIn})
     }
 
+    authorizeApp = async (req,res) => {
+        const {viewProfile,appId} = req.body
+        const {email,id} = AuthenticationController.userFromToken(req)
+
+        try{
+
+            const app = await App.findOne({where:{appId}})
+
+            if(!app){
+
+                
+
+            } else
+                res.send(this.s('failed',"app does not exists",409))
+
+        }catch (e) {
+            res.send(this.s('failed',e,500))
+        }
+    }
 
 
 }
