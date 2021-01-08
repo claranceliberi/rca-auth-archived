@@ -15,7 +15,6 @@ const {PrivilegesRoutes} = require("./src/routes/privilege/privilege.routes")
 const {UserAuthenticationRoutes} = require("./src/routes/userAuthentication/user.authentication.routes")
 
 
-
 class Server{
     app = express();
     server = http.createServer(this.app)
@@ -65,6 +64,7 @@ class Server{
         this.routes.push(new AppsRoutes(this.app))
         this.routes.push(new PrivilegesRoutes(this.app))
         this.routes.push(new UserAuthenticationRoutes(this.app))
+
     }
 
     initiateMainServerRoute = () => {
