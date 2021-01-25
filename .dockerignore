@@ -1,0 +1,12 @@
+#node modules
+node_modules/
+
+#build
+build/
+
+# Logs
+logs
+*.log
+
+# TypeScript cache
+*.tsbuildinfo

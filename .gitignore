@@ -1,7 +1,16 @@
+#node modules
 node_modules/
+
+#build
+build/
 
 # Logs
 logs
+
+
+#prisma migrations
+src/prisma/migrations
+
 *.log
 
 # TypeScript cache
@@ -9,3 +18,7 @@ logs
 
 # dotenv environment variables file
 .env
+
+
+# todo
+todo.txt

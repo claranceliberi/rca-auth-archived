@@ -1,0 +1,290 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"User": {
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"first_name": {
+						"type": "string"
+					},
+					"second_name": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"__v": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"first_name",
+					"second_name",
+					"email",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Authentication": {
+				"properties": {
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"email",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {
+			"api_key": {
+				"type": "apiKey",
+				"name": "Authorization",
+				"in": "header"
+			},
+			"BearerAuth": {
+				"type": "http",
+				"scheme": "bearer"
+			}
+		}
+	},
+	"info": {
+		"title": "rca-auth",
+		"version": "1.0.0",
+		"description": "RCA authentication system that helps user to authenticate base on RCA credentials",
+		"license": {
+			"name": "MIT"
+		},
+		"contact": {
+			"name": "Ntwari Clarance Liberiste"
+		}
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/users": {
+			"get": {
+				"operationId": "GetAllUsers",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"description": "Get all user",
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateUser",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"description": "Create users",
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/User"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users/{userId}": {
+			"get": {
+				"operationId": "GetUser",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"description": "Get user based on Id",
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateUser",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"description": "Update user based on Id",
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "DeleteUser",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"description": "Delete user based on Id",
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/auth/login": {
+			"post": {
+				"operationId": "Login",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Authentication"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"email": "liberintwari@gmail.com",
+											"password": "liberi2324"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Authenticate to the system",
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Authentication"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/current": {
+			"get": {
+				"operationId": "CurrentUser",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"description": "Retrieves the information of the current logged in user",
+				"tags": [
+					"Auth"
+				],
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"parameters": []
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	],
+	"tags": [
+		{
+			"name": "Users",
+			"description": "Apis about users management"
+		},
+		{
+			"name": "Auth",
+			"description": "Apis to authenticate user"
+		}
+	]
+}
