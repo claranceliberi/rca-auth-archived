@@ -193,8 +193,15 @@ class PrivilegesController extends CommonControllerConfig{
         }
     }
 
-    permit_privilege = (req,res) => {
+    permit_privilege = async (req,res) => {
+        const {appId,userId} = req.body
+        const data_to_encrypt = `uid:${userId},aip:${appId},vp:true`
 
+        const {data:{token}} = await this.#create_privilege(req,true)
+
+        console.log(token)
+
+        res.send(this.s('success',{token}))
     }
 
     /**
