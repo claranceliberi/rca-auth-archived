@@ -1,5 +1,5 @@
 const {CommonRoutesConfig} = require("../common/common.routes.config");
-const {UserController} = require("../../controllers/user/users.controller");
+const {UsersController} = require("../../controllers/user/users.controller");
 
 const user = new UsersController()
 
