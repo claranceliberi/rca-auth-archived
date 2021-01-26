@@ -15,6 +15,7 @@ class AuthenticationController extends CommonControllerConfig{
     }
 
 
+    // get current user
     currentUser = async (req,res) => {
 
         //get user
@@ -39,32 +40,34 @@ class AuthenticationController extends CommonControllerConfig{
 
     }
 
+    //authenticate user
     login = async (req,res) =>{
         const s = super.s
         const self = this
 
         let user = await Client.findOne({where:{email:req.body.email}})
 
-            try{
-                if(user === null) //when use was not found
-                    res.send(s('failed',"Wrong credentials",401))
-                else{
-                    const truePassword = bcrypt.compareSync(req.body.password,user.password)
 
-                    if(truePassword){ //when password was right
-                        const jwt = self.generatesAccessToken({email:user.email,id:user.id})
+        try{
+            if(user === null) //when use was not found
+                res.send(s('failed',"Wrong credentials",401))
+            else{
+                const truePassword = bcrypt.compareSync(req.body.password,user.password)
 
-                        const response = {
-                            email:req.body.email,
-                            token:jwt
-                        }
+                if(truePassword){ //when password was right
+                    const jwt = self.generatesAccessToken({email:user.email,id:user.id})
 
-                        res.send(s('success',response))
-                    } else {
-                        res.send(s('failed',"Wrong credentials",401))
+                    const response = {
+                        email:req.body.email,
+                        token:jwt
                     }
 
+                    res.send(s('success',response))
+                } else {
+                    res.send(s('failed',"Wrong credentials",401))
                 }
+
+            }
         }catch(e) {
             res.send(s('failed',e,500))
         }
@@ -75,6 +78,7 @@ class AuthenticationController extends CommonControllerConfig{
         return jwt.sign(username,secrete,{expiresIn})
     }
 
+    //get user from token
      static userFromToken = (req)=>{
                 //capturing authorization header to get token
         const authHeader = req.header('Authorization')
