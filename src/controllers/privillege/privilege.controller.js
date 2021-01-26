@@ -207,7 +207,7 @@ class PrivilegesController extends CommonControllerConfig{
     /**
      * generate privilege encrypted token
      *
-     * @param data : data to be encrypted
+     * @param data : string data to be encrypted
      *
      * @returns {string|Buffer}
      */
@@ -218,11 +218,11 @@ class PrivilegesController extends CommonControllerConfig{
     /**
      * decrypting token and get privileges
      *
-     * @param token : token to be decrypted
+     * @param token : string token to be decrypted
      *
      * @returns {Buffer|Object|string}
      */
-    #decrypt_privilege_token = (token) => {
+    decrypt_privilege_token = (token) => {
         return this.key.decrypt(token,'utf8')
     }
 
