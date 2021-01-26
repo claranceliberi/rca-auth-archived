@@ -32,45 +32,9 @@ class PrivilegesController extends CommonControllerConfig{
 
     //create privilege
     create = async (req, res) => {
-        let {userId,appId,viewProfile} = req.body
+        const privilege = await this.#create_privilege(req,true)
 
-
-        try{
-
-                //validator format
-                const schema = Joi.object({
-                    userId:Joi.string().required().min(20),
-                    appId:Joi.string().required(),
-                    viewProfile:Joi.boolean().required(),
-                })
-
-                const {error} = schema.validate(req.body)
-
-                //checking error
-                if(error)
-                    res.send(this.s('failed',error.details[0].message,409))
-
-                else{
-                   //check if app exists
-                    const privilege = await Privilege.findOne({where:{userId,appId},plain:true})
-
-                    if(privilege){ //if privilege exists let us update it
-                        //update privilege
-                        const updatedApp = await Privilege.update({viewProfile}, {where:{id:privilege.id}, returning:true,})
-                        res.send(this.s('success',updatedApp[1]))
-
-                    } else{ // if it does not exist let us create
-                        const result = await Privilege.create({userId, appId , viewProfile})
-                        res.json(this.s('success',result))
-                    }
-
-                    this.privilege_token('token')
-
-                }
-
-        }catch (e) {
-            res.json(this.s('failed',e,500))
-        }
+        return res.send(privilege)
     }
 
 
@@ -171,16 +135,64 @@ class PrivilegesController extends CommonControllerConfig{
     }
 
 
+    #create_privilege = async (req,with_token=false)=>{
+         let {userId,appId,viewProfile} = req.body
 
+
+        try{
+
+                //validator format
+                const schema = Joi.object({
+                    userId:Joi.string().required().min(20),
+                    appId:Joi.string().required(),
+                    viewProfile:Joi.boolean().required(),
+                })
+
+                const {error} = schema.validate(req.body)
+
+                //checking error
+                if(error)
+                    return (this.s('failed',error.details[0].message,409))
+
+                else{
+
+
+                    //check if app exists
+                    const privilege = await Privilege.findOne({where:{userId,appId},plain:true})
+                    let result = '';
+
+                    if(privilege){//if privilege exists let us update it
+                        result = await Privilege.update({viewProfile}, {where:{id:privilege.id}, returning:true,})    //update privilege
+                        result = result[1]
+                    }
+
+                    else // if it does not exist let us create
+                        result = await Privilege.create({userId, appId , viewProfile})
+
+                    if(with_token){
+                        const data_to_encrypt = `uid:${userId},aid:${appId},vp:${viewProfile}`
+                        const token = this.#privilege_token(data_to_encrypt)
+
+                        result = {...result[0].dataValues,token}
+                    }
+
+                    return (this.s('success',result))
+
+                }
+
+        }catch (e) {
+           return (this.s('failed',e,500))
+        }
+    }
 
 
     // generate privilege_token
-    privilege_token = (data) => {
-            return this.key.encrypt(text, 'base64');
+    #privilege_token = (data) => {
+        return this.key.encrypt(data, 'base64');
     }
 
     //decrypt privilege token
-    decrypt_privilege_token = (token) => {
+    #decrypt_privilege_token = (token) => {
         return this.key.decrypt(token,'utf8')
     }
 
