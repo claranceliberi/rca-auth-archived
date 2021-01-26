@@ -11,12 +11,16 @@ const d = debug('UserAuthenticationController')
 const App = models.App
 
 class UserAuthenticationController extends CommonControllerConfig{
+    /**
+     * Controller that manage user management request
+     */
     constructor() {
         super("UserAuthenticationController");
 
     }
 
 
+    //get current user in based on the token
     currentUser = async (req,res) => {
 
         //get user
@@ -41,6 +45,7 @@ class UserAuthenticationController extends CommonControllerConfig{
 
     }
 
+    //authenticate user
     login = async (req,res) =>{
         const s = super.s
         const self = this
@@ -73,6 +78,15 @@ class UserAuthenticationController extends CommonControllerConfig{
         }
     }
 
+    /**
+     * Generating JWT token
+     *
+     * @param username => users username
+     * @param secrete : secrete key
+     * @param expiresIn : token expiration time
+     *
+     * @returns {*}
+     */
     generatesAccessToken = (username,secrete = process.env.TOKEN_SECRETE,expiresIn = '1800s') =>{
         d(secrete)
         return jwt.sign(username,secrete,{expiresIn})
