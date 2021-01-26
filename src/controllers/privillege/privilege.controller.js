@@ -179,7 +179,7 @@ class PrivilegesController extends CommonControllerConfig{
 
                     if(with_token){
                         const data_to_encrypt = `uid:${userId},aid:${appId},vp:${viewProfile}`
-                        const token = this.#privilege_token(data_to_encrypt)
+                        const token = viewProfile ? this.#privilege_token(data_to_encrypt) : null
 
                         result = {...result[0].dataValues,token}
                     }
