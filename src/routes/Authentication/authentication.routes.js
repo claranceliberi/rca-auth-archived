@@ -12,8 +12,8 @@ class AuthenticationRoutes extends CommonRoutesConfig{
     configureRoutes(){
         const auth = new AuthenticationController()
 
-        this.app.post('/auth/login',auth.login)
-        this.app.get('/auth/current',authMiddle.authenticateToken,auth.currentUser)
+        this.app.post('/v1/auth/login',auth.login)
+        this.app.get('/v1/auth/current',authMiddle.authenticateToken,auth.currentUser)
 
         return this.app
     }

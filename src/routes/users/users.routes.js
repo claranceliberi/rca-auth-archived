@@ -20,7 +20,7 @@ class UsersRoutes extends CommonRoutesConfig{
     configureRoutes () {
 
         //user route
-        this.app.route('/users')
+        this.app.route('/v1/users')
             .get(am.authenticateToken,uc.all)
             .post(uc.create)
             .put(am.authenticateToken,uc.update)
@@ -28,7 +28,7 @@ class UsersRoutes extends CommonRoutesConfig{
 
 
         //user with id
-        this.app.route('/users/:userId')
+        this.app.route('/v1/users/:userId')
             .all(am.authenticateToken,(req, res, next) => {
                 // this middleware function runs before any request to /users/:userId
                 // but it doesn't accomplish anything just yet---

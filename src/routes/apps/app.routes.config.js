@@ -13,7 +13,7 @@ class AppsRoutes extends CommonRoutesConfig{
     configureRoutes() {
 
         //creating apps
-        this.app.route('/apps')
+        this.app.route('/v1/apps')
             .all((req,res,next) => {
                 next()
             })
@@ -22,7 +22,7 @@ class AppsRoutes extends CommonRoutesConfig{
             .get(app.all)
 
 
-        this.app.route('/apps/id/:id')
+        this.app.route('/v1/apps/id/:id')
             .all((req, res, next) => {
                 next()
             })
@@ -30,14 +30,14 @@ class AppsRoutes extends CommonRoutesConfig{
 
 
 
-        this.app.route('/apps/appId/:appId')
+        this.app.route('/v1/apps/appId/:appId')
             .get(app.getByAppId)
             .delete(app.delete)
 
-        this.app.route('/apps/client/:clientId')
+        this.app.route('/v1/apps/client/:clientId')
             .get(app.getByClient)
 
-        this.app.route('/apps/secretKey/regenerate')
+        this.app.route('/v1/apps/secretKey/regenerate')
             .post(app.generateNewSecretKey)
 
         return this.app;
