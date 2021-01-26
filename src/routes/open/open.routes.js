@@ -24,4 +24,4 @@ class OpenRoutes extends CommonRoutesConfig{
     }
 }
 
-exports.PrivilegesRoutes = PrivilegesRoutes
+exports.OpenRoutes = OpenRoutes
