@@ -175,6 +175,9 @@ class PrivilegesController extends CommonControllerConfig{
             return this.key.encrypt(text, 'base64');
     }
 
+    decrypt_privilege_token = (token) => {
+        return this.key.decrypt(token,'utf8')
+    }
 
 
 
