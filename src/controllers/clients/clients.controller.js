@@ -9,6 +9,7 @@ class ClientsController extends CommonControllerConfig{
 
     /**
      * controller that manage clients management requests
+     * @constructor
      */
     constructor() {
         super('ClientsController');
