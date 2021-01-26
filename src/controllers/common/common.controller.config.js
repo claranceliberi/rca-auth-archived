@@ -6,6 +6,8 @@ class CommonControllerConfig{
     /**
      * Parent class that has common controllers features
      *
+     * @constructor
+     *
      * @param name : name of the controller
      */
     constructor( name) {
