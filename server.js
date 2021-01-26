@@ -1,4 +1,3 @@
-
 const express = require('express')
 const http = require('http')
 const bodyParser = require("body-parser");
@@ -13,7 +12,7 @@ const {ClientsRoutes} =  require("./src/routes/clients/clients.routes");
 const {AppsRoutes} = require("./src/routes/apps/app.routes.config")
 const {PrivilegesRoutes} = require("./src/routes/privilege/privilege.routes")
 const {UserAuthenticationRoutes} = require("./src/routes/userAuthentication/user.authentication.routes")
-
+const {OpenRoutes} = require("./src/routes/open/open.routes")
 
 class Server{
     app = express();
@@ -64,6 +63,7 @@ class Server{
         this.routes.push(new AppsRoutes(this.app))
         this.routes.push(new PrivilegesRoutes(this.app))
         this.routes.push(new UserAuthenticationRoutes(this.app))
+        this.routes.push(new OpenRoutes(this.app))
 
     }
 
