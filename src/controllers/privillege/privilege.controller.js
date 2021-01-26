@@ -1,10 +1,17 @@
 const {CommonControllerConfig} = require("../common/common.controller.config")
 const models = require('../../database/postgresSql/models/index')
+const fs = require('fs')
+const path = require('path')
 const Joi = require('joi')
+const NodeRSA = require('node-rsa')
+const {privateRSAKEY} = require('../../config/secured.vals')
+
 
 const Privilege = models.Privilege
 
 class PrivilegesController extends CommonControllerConfig{
+
+    key = new NodeRSA(privateRSAKEY)
 
     constructor() {
         super("PrivilegeController");
@@ -56,6 +63,8 @@ class PrivilegesController extends CommonControllerConfig{
                         const result = await Privilege.create({userId, appId , viewProfile})
                         res.json(this.s('success',result))
                     }
+
+                    this.privilege_token('token')
 
                 }
 
@@ -160,6 +169,14 @@ class PrivilegesController extends CommonControllerConfig{
             res.send(this.s('failed',e,500))
         }
     }
+
+    // update privilege
+    privilege_token = (data) => {
+            return this.key.encrypt(text, 'base64');
+    }
+
+
+
 
 }
 
