@@ -2,8 +2,11 @@ const debug = require('debug')
 const {CommonControllerConfig} = require("../common/common.controller.config");
 const Joi = require('joi')
 const bcrypt = require('bcryptjs')
+const models = require('../../database/postgresSql/models/index')
+const {PrivilegesController} = require('../privillege/privilege.controller')
 
 const User = require('../../models/user.model')
+const App = models.App
 
 // initiating debugger
 const d = debug("UserController")
@@ -116,6 +119,35 @@ class UsersController extends CommonControllerConfig{
             else
                 res.send(s('deleted',user))
         })
+    }
+
+
+    //get user by token
+    get_user_by_token = async (req,res) => {
+        const {userToken,secretKey,appId} = req.body
+
+        try{
+            const app = await App.findOne({where:{appId}})
+
+            if(app){    //if app exists
+
+                if(app.secretKey === secretKey){    //if the secreteKey is correct
+                    const privilegesInstance = new PrivilegesController()
+                    const decryptedToken = privilegesInstance.decrypt_privilege_token(userToken)
+                    const permissions = decryptedToken.split(',')
+                    console.log(permissions)
+
+                    res.send(this.s('success',permissions))
+
+                }else{
+                    res.send(this.s('failed','not authorized',401))
+                }
+            }else{
+                res.send(this.s('failed','not authorized',401))
+            }
+        }catch(err){
+            console.log(err)
+        }
     }
 
 
