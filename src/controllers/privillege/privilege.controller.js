@@ -135,6 +135,14 @@ class PrivilegesController extends CommonControllerConfig{
     }
 
 
+    /**
+     * creating privilege and return token that contains user privileges
+     *
+     * @param req :request node parameter
+     * @param with_token : return data with token included
+     *
+     * @returns {Promise<{data: *, message: *, status: number}>}
+     */
     #create_privilege = async (req,with_token=false)=>{
          let {userId,appId,viewProfile} = req.body
 
@@ -185,13 +193,28 @@ class PrivilegesController extends CommonControllerConfig{
         }
     }
 
+    permit_privilege = (req,res) => {
 
-    // generate privilege_token
+    }
+
+    /**
+     * generate privilege encrypted token
+     *
+     * @param data : data to be encrypted
+     *
+     * @returns {string|Buffer}
+     */
     #privilege_token = (data) => {
         return this.key.encrypt(data, 'base64');
     }
 
-    //decrypt privilege token
+    /**
+     * decrypting token and get privileges
+     *
+     * @param token : token to be decrypted
+     *
+     * @returns {Buffer|Object|string}
+     */
     #decrypt_privilege_token = (token) => {
         return this.key.decrypt(token,'utf8')
     }
