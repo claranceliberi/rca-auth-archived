@@ -7,6 +7,9 @@ const Client = models.Client
 
 class ClientsController extends CommonControllerConfig{
 
+    /**
+     * controller that manage clients management requests
+     */
     constructor() {
         super('ClientsController');
     }
