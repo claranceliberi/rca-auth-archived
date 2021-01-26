@@ -170,11 +170,16 @@ class PrivilegesController extends CommonControllerConfig{
         }
     }
 
-    // update privilege
+
+
+
+
+    // generate privilege_token
     privilege_token = (data) => {
             return this.key.encrypt(text, 'base64');
     }
 
+    //decrypt privilege token
     decrypt_privilege_token = (token) => {
         return this.key.decrypt(token,'utf8')
     }
