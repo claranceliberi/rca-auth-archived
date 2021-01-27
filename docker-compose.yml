@@ -12,11 +12,13 @@ services:
     depends_on:
       - mongo
       - postgres
+    env_file:
+      - .env
   mongo:
     container_name: mongo
     image: mongo
     ports:
-    - "27018:27017"
+      - "27018:27017"
   postgres:
     container_name: postgres
     image: postgres
