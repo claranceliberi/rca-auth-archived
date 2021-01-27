@@ -135,9 +135,23 @@ class UsersController extends CommonControllerConfig{
                     const privilegesInstance = new PrivilegesController()
                     const decryptedToken = privilegesInstance.decrypt_privilege_token(userToken)
                     const permissions = decryptedToken.split(',')
-                    console.log(permissions)
+                    let permissionsObject = {}
 
-                    res.send(this.s('success',permissions))
+                    //converting array to object
+                    permissions.forEach(val => {
+                        val = val.split(":")
+                        permissionsObject[val[0]] = val[1]
+                    })
+
+                    //verify if the asking app is already in the token
+                    if(+appId === +permissionsObject.aid ){
+                        const user = await User.findById(permissionsObject.uid).select(['-password','-_id','-__v'])
+
+                        res.send(this.s('success',user))
+                    }else{
+                         res.send(this.s('failed','invalid token',401))
+                    }
+
 
                 }else{
                     res.send(this.s('failed','not authorized',401))
@@ -146,10 +160,9 @@ class UsersController extends CommonControllerConfig{
                 res.send(this.s('failed','not authorized',401))
             }
         }catch(err){
-            console.log(err)
+            res.send(this.s('failed',{error},500))
         }
     }
-
 
 }
 
