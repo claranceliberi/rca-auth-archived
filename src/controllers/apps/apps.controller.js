@@ -26,7 +26,7 @@ class AppsController extends CommonControllerConfig{
 
         //create client
     create = async (req, res) => {
-        let {name,redirectUrl} = req.body
+        const {name,redirectUrl} = req.body
 
 
         try{
@@ -48,8 +48,8 @@ class AppsController extends CommonControllerConfig{
 
                     const randomNumber = Math.floor(Math.random() * Date.now())
                     const appId = Date.now() + randomNumber //make sure that e get different number at the highest level
-                    let secretKey = crypto.randomBytes(35).toString('hex'); //secretKey
-                    let {id:clientId} = AuthenticationController.userFromToken(req)
+                    const secretKey = crypto.randomBytes(35).toString('hex'); //secretKey
+                    const {id:clientId} = AuthenticationController.userFromToken(req)
 
                     const result = await App.create({name, clientId , redirectUrl, appId, secretKey})
                     res.json(this.s('success',result))
@@ -128,7 +128,7 @@ class AppsController extends CommonControllerConfig{
 
                    try{
 
-                       let secretKey = crypto.randomBytes(35).toString('hex'); //secretKey
+                       const secretKey = crypto.randomBytes(35).toString('hex'); //secretKey
 
                         //update app
                         const updatedApp = await App.update(
