@@ -21,7 +21,7 @@ class UsersController extends CommonControllerConfig{
     all = (req,res)=>{
         const s = super.s
 
-        let users = User.find((err,users) =>{
+        const users = User.find((err,users) =>{
             if(err)
                 res.send(s('failed',err,500))
             else if(users === null)
@@ -51,7 +51,7 @@ class UsersController extends CommonControllerConfig{
 
         else {
             //checking if user exists
-            let user =await User.findOne({email:req.body.email})
+            const user =await User.findOne({email:req.body.email})
 
             if(user)
                 res.send(s('failed','user already exists with that email',409))
@@ -60,7 +60,7 @@ class UsersController extends CommonControllerConfig{
                 const salt = bcrypt.genSaltSync(10)
                 req.body.password = bcrypt.hashSync(req.body.password,salt)
 
-                let createdUser = User.create(req.body,(err,user) => {
+                const createdUser = User.create(req.body,(err,user) => {
 
 
                     if(err)
@@ -79,7 +79,7 @@ class UsersController extends CommonControllerConfig{
     get(req,res){
         const s = super.s
 
-        let user = User.findById(req.params.userId,(err,user) => {
+        const user = User.findById(req.params.userId,(err,user) => {
             if(err)
                 res.send(s('server error',err,500))
             else if(user === null)
@@ -96,7 +96,7 @@ class UsersController extends CommonControllerConfig{
         const id = req.body.id //get id from body
         delete req.body.id //delete id in body
 
-        let user = User.findByIdAndUpdate(id,req.body,{new:true},(err,user) => {
+        const user = User.findByIdAndUpdate(id,req.body,{new:true},(err,user) => {
             if(err)
                 res.send(s('not updated',err,500))
             else if(user === null)
@@ -111,7 +111,7 @@ class UsersController extends CommonControllerConfig{
     delete(req,res){
         const s = super.s
 
-        let user = User.findByIdAndDelete(req.params.userId,{},(err,user) => {
+        const user = User.findByIdAndDelete(req.params.userId,{},(err,user) => {
             if(err)
                 res.send(s('not deleted',err,500))
            else if(user === null)
@@ -135,7 +135,7 @@ class UsersController extends CommonControllerConfig{
                     const privilegesInstance = new PrivilegesController()
                     const decryptedToken = privilegesInstance.decrypt_privilege_token(userToken)
                     const permissions = decryptedToken.split(',')
-                    let permissionsObject = {}
+                    const permissionsObject = {}
 
                     //converting array to object
                     permissions.forEach(val => {

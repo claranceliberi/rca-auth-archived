@@ -45,7 +45,7 @@ class AuthenticationController extends CommonControllerConfig{
         const s = super.s
         const self = this
 
-        let user = await Client.findOne({where:{email:req.body.email}})
+        const user = await Client.findOne({where:{email:req.body.email}})
 
 
         try{

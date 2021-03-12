@@ -50,7 +50,7 @@ class UserAuthenticationController extends CommonControllerConfig{
         const s = super.s
         const self = this
 
-        let user = await User.findOne({email:req.body.email})
+        const user = await User.findOne({email:req.body.email})
 
 
             try{

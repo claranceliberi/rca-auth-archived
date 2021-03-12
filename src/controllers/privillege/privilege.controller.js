@@ -84,7 +84,7 @@ class PrivilegesController extends CommonControllerConfig{
 
         try{
             //extract privilege body object
-            let {id, viewProfile} = req.body
+            const {id, viewProfile} = req.body
 
             //validator format
             const schema = Joi.object({
@@ -144,7 +144,7 @@ class PrivilegesController extends CommonControllerConfig{
      * @returns {Promise<{data: *, message: *, status: number}>}
      */
     #create_privilege = async (req,with_token=false)=>{
-         let {userId,appId,viewProfile} = req.body
+         const {userId,appId,viewProfile} = req.body
 
 
         try{
