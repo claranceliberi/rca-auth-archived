@@ -102,8 +102,6 @@ class UserAuthenticationController extends CommonControllerConfig {
 
             if(!app) {
 
-                
-
             } else
                 res.send(this.s('failed',"app does not exists",409))
 

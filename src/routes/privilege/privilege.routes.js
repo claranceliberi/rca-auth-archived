@@ -12,7 +12,6 @@ class PrivilegesRoutes extends CommonRoutesConfig{
 
     configureRoutes() {
 
-        
         this.app.route('/v1/privileges')
             .all((req,res,next) => {
                 next()
@@ -21,7 +20,6 @@ class PrivilegesRoutes extends CommonRoutesConfig{
             .put(privilege.put)
             .get(privilege.all)
 
-        
         this.app.route('/v1/privileges/permit')
             .post(privilege.permit_privilege)
 
@@ -30,7 +28,6 @@ class PrivilegesRoutes extends CommonRoutesConfig{
                 next()
             })
             .get(privilege.getById)
-
 
 
         this.app.route('/v1/privileges/appId/:appId')
