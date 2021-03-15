@@ -1,12 +1,12 @@
 
-class CommonMiddlewareConfig{
+class CommonMiddlewareConfig {
     name
 
     constructor(name) {
         this.name = name
     }
 
-    getName(){
+    getName() {
       return this.name
     }
 
@@ -17,7 +17,7 @@ class CommonMiddlewareConfig{
      * @param data
      * @param status
      */
-    s(msg,data,status=200){
+    s(msg,data,status=200) {
         return {message:msg,data:data,status:status}
     }
 }

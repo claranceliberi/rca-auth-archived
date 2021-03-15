@@ -5,7 +5,7 @@ const uri = "mongodb://localhost:27018/rca_auth"
 const debugLog = debug('mongodb');
 const {connect} = mongoose
 
-function connectMongo(){
+function connectMongo() {
     connect(uri,{
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -13,7 +13,7 @@ function connectMongo(){
     .then((res) => {
         debugLog('✔ connected successfully')
     })
-    .catch((err) =>{
+    .catch((err) => {
         debugLog('❌ connection was not established')
     })
 }
