@@ -1,5 +1,6 @@
 const {CommonControllerConfig} = require("../common/common.controller.config")
-const {AuthenticationController} = require("../authentication/authentication.controller")
+const {AuthenticationController} =
+    require("../authentication/authentication.controller")
 const models = require('../../database/postgresSql/models/index')
 const Joi = require('joi')
 const crypto = require('crypto')
@@ -42,16 +43,32 @@ class AppsController extends CommonControllerConfig {
 
                 //checking error
                 if(error)
-                    res.send(this.s('failed',error.details[0].message,409))
+                    res.send(
+                        this.s('failed',error.details[0].message,409)
+                    )
 
                 else{
 
-                    const randomNumber = Math.floor(Math.random() * Date.now())
-                    const appId = Date.now() + randomNumber //make sure that e get different number at the highest level
-                    const secretKey = crypto.randomBytes(35).toString('hex'); //secretKey
-                    const {id:clientId} = AuthenticationController.userFromToken(req)
+                    const randomNumber =
+                        Math.floor(Math.random() * Date.now())
 
-                    const result = await App.create({name, clientId , redirectUrl, appId, secretKey})
+                    //make sure that e get different number at the highest level
+                    const appId = Date.now() + randomNumber
+
+                    //secretKey
+                    const secretKey =
+                        crypto.randomBytes(35).toString('hex');
+
+                    const {id:clientId} =
+                        AuthenticationController.userFromToken(req)
+
+                    const result = await App.create({
+                        name,
+                        clientId ,
+                        redirectUrl,
+                        appId,
+                        secretKey,
+                    })
                     res.json(this.s('success',result))
                 }
 
@@ -117,7 +134,9 @@ class AppsController extends CommonControllerConfig {
 
             //checking error
             if(error)
-                res.send(this.s('failed',error.details[0].message,409))
+                res.send(
+                    this.s('failed',error.details[0].message,409)
+                )
 
             else{
 
@@ -128,7 +147,9 @@ class AppsController extends CommonControllerConfig {
 
                    try{
 
-                       const secretKey = crypto.randomBytes(35).toString('hex'); //secretKey
+                       //secretKey
+                       const secretKey =
+                           crypto.randomBytes(35).toString('hex');
 
                         //update app
                         const updatedApp = await App.update(
@@ -173,12 +194,16 @@ class AppsController extends CommonControllerConfig {
 
             //checking error
             if(error)
-                res.send(this.s('failed',error.details[0].message,409))
+                res.send(
+                    this.s('failed',error.details[0].message,409)
+                )
 
             else{
 
                 //check if app exists
-                const app = await App.findOne({where:{appId},plain:true})
+                const app = await App.findOne(
+                    {where:{appId},plain:true}
+                    )
 
                 if(app){
 
@@ -213,12 +238,19 @@ class AppsController extends CommonControllerConfig {
     delete = async (req, res) => {
 
         try{
-            const deletedApp = await App.destroy({where:{appId:req.params.appId}})
+            const deletedApp =
+                await App.destroy({where:{appId:req.params.appId}})
 
             if(deletedApp === 1)
                 res.send(this.s('success',"app deleted"))
             else
-                res.send(this.s('failed',"app does not exists, may be already deleted or was not created",409))
+                res.send(
+                    this.s(
+                        'failed',
+                        "app does not exists, may be already deleted" +
+                        " or was not created",
+                        409)
+                )
 
 
         }catch (e) {

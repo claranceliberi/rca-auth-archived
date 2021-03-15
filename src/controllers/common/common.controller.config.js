@@ -25,9 +25,9 @@ class CommonControllerConfig{
     /**
      * Formatted output
      *
-     * @param msg : message to be outputted
-     * @param data : data (json) to be returned
-     * @param status : response status
+     * @param msg : string message to be outputted
+     * @param data : string data (json) to be returned
+     * @param status : number response status
      *
      * @returns {{data, message, status: number}}
      */

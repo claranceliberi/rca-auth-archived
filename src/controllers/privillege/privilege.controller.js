@@ -44,7 +44,8 @@ class PrivilegesController extends CommonControllerConfig{
 
         try{
 
-            const privilege = await Privilege.findOne({where:{id:req.params.id}})
+            const privilege = await Privilege
+                .findOne({where:{id:req.params.id}})
 
             res.send(this.s('success',privilege))
 
@@ -57,7 +58,8 @@ class PrivilegesController extends CommonControllerConfig{
     getByUserId = async (req, res) => {
 
         try {
-            const privilege = await Privilege.findOne({where:{userId:req.params.userId}})
+            const privilege = await Privilege
+                .findOne({where:{userId:req.params.userId}})
 
             res.send(this.s('success',privilege))
         }catch (e) {
@@ -70,7 +72,8 @@ class PrivilegesController extends CommonControllerConfig{
     getByAppId = async (req, res) => {
 
         try {
-            const privilege = await Privilege.findOne({where:{appId:req.params.appId}})
+            const privilege = await Privilege
+                .findOne({where:{appId:req.params.appId}})
 
             res.send(this.s('success',privilege))
         }catch (e) {
@@ -98,12 +101,14 @@ class PrivilegesController extends CommonControllerConfig{
 
             //checking error
             if(error)
-                res.send(this.s('failed',error.details[0].message,409))
+                res.send(this.s('failed',
+                    error.details[0].message,409))
 
             else{
 
                 //check if app exists
-                const privilege = await Privilege.findOne({where:{id},plain:true})
+                const privilege = await Privilege
+                    .findOne({where:{id},plain:true})
 
                 if(privilege) {
 
@@ -160,26 +165,34 @@ class PrivilegesController extends CommonControllerConfig{
 
                 //checking error
                 if(error)
-                    return (this.s('failed',error.details[0].message,409))
+                    return (this.s('failed',
+                        error.details[0].message,409))
 
                 else{
 
 
                     //check if app exists
-                    const privilege = await Privilege.findOne({where:{userId,appId},plain:true})
+                    const privilege = await Privilege
+                        .findOne({where:{userId,appId},plain:true})
                     let result = '';
 
                     if(privilege) {//if privilege exists let us update it
-                        result = await Privilege.update({viewProfile}, {where:{id:privilege.id}, returning:true}) //update privilege
+                        result = await Privilege
+                            .update({viewProfile},
+                                {where:{id:privilege.id},
+                                    returning:true}) //update privilege
                         result = result[1]
                     }
 
                     else // if it does not exist let us create
-                        result = await Privilege.create({userId, appId , viewProfile})
+                        result = await Privilege
+                            .create({userId, appId , viewProfile})
 
                     if(with_token) {
-                        const data_to_encrypt = `uid:${userId},aid:${appId},vp:${viewProfile}`
-                        const token = viewProfile ? this.#privilege_token(data_to_encrypt) : null
+                        const data_to_encrypt =
+                            `uid:${userId},aid:${appId},vp:${viewProfile}`
+                        const token = viewProfile ?
+                            this.#privilege_token(data_to_encrypt) : null
 
                         result = {...result[0].dataValues,token}
                     }
