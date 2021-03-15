@@ -105,7 +105,7 @@ class PrivilegesController extends CommonControllerConfig{
                 //check if app exists
                 const privilege = await Privilege.findOne({where:{id},plain:true})
 
-                if(privilege){
+                if(privilege) {
 
                    try{
 
@@ -119,7 +119,7 @@ class PrivilegesController extends CommonControllerConfig{
 
                         res.send(this.s('success',updatedApp[1]))
 
-                   }catch (e){
+                   }catch (e) {
                         res.send(this.s('failed',e,500))
                    }
 
@@ -143,7 +143,7 @@ class PrivilegesController extends CommonControllerConfig{
      *
      * @returns {Promise<{data: *, message: *, status: number}>}
      */
-    #create_privilege = async (req,with_token=false)=>{
+    #create_privilege = async (req,with_token=false)=> {
          const {userId,appId,viewProfile} = req.body
 
 
@@ -169,7 +169,7 @@ class PrivilegesController extends CommonControllerConfig{
                     const privilege = await Privilege.findOne({where:{userId,appId},plain:true})
                     let result = '';
 
-                    if(privilege){//if privilege exists let us update it
+                    if(privilege) {//if privilege exists let us update it
                         result = await Privilege.update({viewProfile}, {where:{id:privilege.id}, returning:true,}) //update privilege
                         result = result[1]
                     }
@@ -177,7 +177,7 @@ class PrivilegesController extends CommonControllerConfig{
                     else // if it does not exist let us create
                         result = await Privilege.create({userId, appId , viewProfile})
 
-                    if(with_token){
+                    if(with_token) {
                         const data_to_encrypt = `uid:${userId},aid:${appId},vp:${viewProfile}`
                         const token = viewProfile ? this.#privilege_token(data_to_encrypt) : null
 

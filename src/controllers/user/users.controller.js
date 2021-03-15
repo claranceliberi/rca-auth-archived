@@ -76,7 +76,7 @@ class UsersController extends CommonControllerConfig{
     }
 
     //get user with id
-    get(req,res){
+    get(req,res) {
         const s = super.s
 
         const user = User.findById(req.params.userId,(err,user) => {
@@ -90,7 +90,7 @@ class UsersController extends CommonControllerConfig{
     }
 
     // update user
-    update(req,res){
+    update(req,res) {
         const s = super.s
 
         const id = req.body.id //get id from body
@@ -108,7 +108,7 @@ class UsersController extends CommonControllerConfig{
 
 
     // delete user
-    delete(req,res){
+    delete(req,res) {
         const s = super.s
 
         const user = User.findByIdAndDelete(req.params.userId,{},(err,user) => {
@@ -130,10 +130,10 @@ class UsersController extends CommonControllerConfig{
             const app = await App.findOne({where:{appId}})
 
             //if app exists
-            if(app){
+            if(app) {
 
                 //if the secreteKey is correct
-                if(app.secretKey === secretKey){
+                if(app.secretKey === secretKey) {
                     const privilegesInstance = new PrivilegesController()
                     const decryptedToken = privilegesInstance.decrypt_privilege_token(userToken)
                     const permissions = decryptedToken.split(',')
@@ -146,7 +146,7 @@ class UsersController extends CommonControllerConfig{
                     })
 
                     //verify if the asking app is already in the token
-                    if(+appId === +permissionsObject.aid ){
+                    if(+appId === +permissionsObject.aid ) {
                         const user = await User.findById(permissionsObject.uid).select(['-password','-_id','-__v'])
 
                         res.send(this.s('success',user))
@@ -161,7 +161,7 @@ class UsersController extends CommonControllerConfig{
             }else{
                 res.send(this.s('failed','not authorized',401))
             }
-        }catch(err){
+        }catch(err) {
             res.send(this.s('failed',{error},500))
         }
     }
