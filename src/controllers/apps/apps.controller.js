@@ -34,7 +34,7 @@ class AppsController extends CommonControllerConfig {
                 //validator format
                 const schema = Joi.object({
                     name:Joi.string().required().min(2),
-                    redirectUrl:Joi.string().uri().required().min(2)
+                    redirectUrl:Joi.string().uri().required().min(2),
                 })
 
 

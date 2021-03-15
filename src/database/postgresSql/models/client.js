@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
 
       Client.hasMany(models.App,{
         foreignKey:'clientId',
-        as:"clientApps"
+        as:"clientApps",
       })
     }
   }
@@ -22,24 +22,24 @@ module.exports = (sequelize, DataTypes) => {
     id:{
       primaryKey:true,
       autoIncrement:true,
-      type:DataTypes.BIGINT
+      type:DataTypes.BIGINT,
     },
     firstName: {
       type:DataTypes.STRING,
-      allowNull:false
+      allowNull:false,
     },
     secondName:{
       type:DataTypes.STRING,
-      allowNull:false
+      allowNull:false,
     },
     email:{
       type:DataTypes.STRING,
-      allowNull:false
+      allowNull:false,
     },
     password:{
       type:DataTypes.STRING,
-      allowNull:false
-    }
+      allowNull:false,
+    },
   }, {sequelize, modelName: 'Client'});
 
   return Client;
