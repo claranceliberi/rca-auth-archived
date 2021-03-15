@@ -59,7 +59,7 @@ class UserAuthenticationController extends CommonControllerConfig{
                 else{
                     const truePassword = bcrypt.compareSync(req.body.password,user.password)
 
-                    if(truePassword){ //when password is right
+                    if(truePassword) { //when password is right
                         const jwt = self.generatesAccessToken({email:user.email,id:user.id})
 
                         const response = {
@@ -100,9 +100,7 @@ class UserAuthenticationController extends CommonControllerConfig{
 
             const app = await App.findOne({where:{appId}})
 
-            if(!app){
-
-                
+            if(!app) {
 
             } else
                 res.send(this.s('failed',"app does not exists",409))
