@@ -140,7 +140,7 @@ class UsersController extends CommonControllerConfig{
                     const permissionsObject = {}
 
                     //converting array to object
-                    permissions.forEach(val => {
+                    permissions.forEach( (val) => {
                         val = val.split(":")
                         permissionsObject[val[0]] = val[1]
                     })
