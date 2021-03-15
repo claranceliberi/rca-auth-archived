@@ -1,5 +1,6 @@
 const {CommonControllerConfig} = require("../common/common.controller.config")
-const {AuthenticationController} = require('../authentication/authentication.controller')
+const {AuthenticationController} =
+    require('../authentication/authentication.controller')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const debug = require('debug')
@@ -57,10 +58,15 @@ class UserAuthenticationController extends CommonControllerConfig {
                 if(!user) //when use was not found
                     res.send(s('failed',"Wrong credentials",401))
                 else{
-                    const truePassword = bcrypt.compareSync(req.body.password,user.password)
+                    const truePassword =
+                        bcrypt.compareSync(req.body.password,user.password)
 
                     if(truePassword) { //when password is right
-                        const jwt = self.generatesAccessToken({email:user.email,id:user.id})
+                        const jwt =
+                            self.generatesAccessToken({
+                                email:user.email,
+                                id:user.id,
+                            })
 
                         const response = {
                             email:req.body.email,
@@ -69,7 +75,9 @@ class UserAuthenticationController extends CommonControllerConfig {
 
                         res.send(s('success',response))
                     } else {
-                        res.send(s('failed',"Wrong credentials",401))
+                        res.send(
+                            s('failed',"Wrong credentials",401)
+                        )
                     }
 
                 }
@@ -87,7 +95,10 @@ class UserAuthenticationController extends CommonControllerConfig {
      *
      * @returns {*}
      */
-    generatesAccessToken = (username,secrete = process.env.TOKEN_SECRETE,expiresIn = '1800s') =>{
+    generatesAccessToken = (username,
+                            secrete = process.env.TOKEN_SECRETE,
+                            expiresIn = '1800s'
+    ) =>{
         d(secrete)
         return jwt.sign(username,secrete,{expiresIn})
     }
@@ -103,7 +114,9 @@ class UserAuthenticationController extends CommonControllerConfig {
             if(!app) {
 
             } else
-                res.send(this.s('failed',"app does not exists",409))
+                res.send(
+                    this.s('failed',"app does not exists",409)
+                )
 
         }catch (e) {
             res.send(this.s('failed',e,500))

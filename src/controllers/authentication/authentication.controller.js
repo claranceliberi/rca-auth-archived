@@ -52,10 +52,13 @@ class AuthenticationController extends CommonControllerConfig {
             if(user === null) //when use was not found
                 res.send(s('failed',"Wrong credentials",401))
             else {
-                const truePassword = bcrypt.compareSync(req.body.password,user.password)
+                const truePassword =
+                    bcrypt.compareSync(req.body.password,user.password)
 
                 if(truePassword){ //when password was right
-                    const jwt = self.generatesAccessToken({email:user.email,id:user.id})
+                    const jwt = self.generatesAccessToken({
+                        email:user.email, id:user.id
+                    })
 
                     const response = {
                         email:req.body.email,
@@ -64,7 +67,9 @@ class AuthenticationController extends CommonControllerConfig {
 
                     res.send(s('success',response))
                 } else {
-                    res.send(s('failed',"Wrong credentials",401))
+                    res.send(
+                        s('failed',"Wrong credentials",401)
+                    )
                 }
 
             }
@@ -73,7 +78,10 @@ class AuthenticationController extends CommonControllerConfig {
         }
     }
 
-    generatesAccessToken = (username,secrete = process.env.TOKEN_SECRETE,expiresIn = '1800s') => {
+    generatesAccessToken = (
+        username,secrete = process.env.TOKEN_SECRETE,
+        expiresIn = '1800s'
+    ) => {
         d(secrete)
         return jwt.sign(username,secrete,{expiresIn})
     }
