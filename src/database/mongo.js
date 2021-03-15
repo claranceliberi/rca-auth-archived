@@ -8,7 +8,7 @@ const {connect} = mongoose
 function connectMongo() {
     connect(uri,{
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
     })
     .then((res) => {
         debugLog('✔ connected successfully')

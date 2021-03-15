@@ -16,12 +16,12 @@ module.exports = (sequelize, DataTypes) => {
 
       App.belongsTo(models.Client, {
         foreignKey:'clientId',
-        onDelete:'CASCADE'
+        onDelete:'CASCADE',
       })
 
       App.hasMany(models.Privilege,{
         foreignKey:'appId',
-        as:"appPrivileges"
+        as:"appPrivileges",
       })
     }
   }
@@ -53,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       allowNull:false
     }
-  }, {sequelize, modelName: 'App',});
+  }, {sequelize, modelName: 'App'});
 
   return App;
 };

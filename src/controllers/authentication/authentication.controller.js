@@ -27,7 +27,7 @@ class AuthenticationController extends CommonControllerConfig {
 
             const user = await Client.findOne({
                 where:{email},
-                attributes:{exclude:['password']}
+                attributes:{exclude:['password']},
             })
 
             res.send(this.s('success',user))
@@ -59,7 +59,7 @@ class AuthenticationController extends CommonControllerConfig {
 
                     const response = {
                         email:req.body.email,
-                        token:jwt
+                        token:jwt,
                     }
 
                     res.send(s('success',response))

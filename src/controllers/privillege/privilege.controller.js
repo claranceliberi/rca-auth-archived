@@ -170,7 +170,7 @@ class PrivilegesController extends CommonControllerConfig{
                     let result = '';
 
                     if(privilege) {//if privilege exists let us update it
-                        result = await Privilege.update({viewProfile}, {where:{id:privilege.id}, returning:true,}) //update privilege
+                        result = await Privilege.update({viewProfile}, {where:{id:privilege.id}, returning:true}) //update privilege
                         result = result[1]
                     }
 

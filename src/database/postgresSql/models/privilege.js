@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
 
       Privilege.belongsTo(models.App, {
         foreignKey:'appId',
-        onDelete:'CASCADE'
+        onDelete:'CASCADE',
       })
     }
   }
@@ -22,17 +22,17 @@ module.exports = (sequelize, DataTypes) => {
   Privilege.init({
     userId:{
       type: DataTypes.STRING,
-      allowNull:false
+      allowNull:false,
     },
     appId: {
       type:DataTypes.STRING,
-      allowNull:false
+      allowNull:false,
     },
     viewProfile: {
       type: DataTypes.BOOLEAN,
       allowNull:false,
-    }
-  }, {sequelize, modelName: 'Privilege',});
+    },
+  }, {sequelize, modelName: 'Privilege'});
 
   return Privilege;
 };

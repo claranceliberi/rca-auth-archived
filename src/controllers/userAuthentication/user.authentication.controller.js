@@ -64,7 +64,7 @@ class UserAuthenticationController extends CommonControllerConfig {
 
                         const response = {
                             email:req.body.email,
-                            token:jwt
+                            token:jwt,
                         }
 
                         res.send(s('success',response))
