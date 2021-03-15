@@ -5,10 +5,10 @@ const dotenv = require('dotenv')
 const cors = require('cors')
 const debug = require("debug");
 
-const connectMongo =  require('./src/database/mongo')
-const {UsersRoutes} =  require("./src/routes/users/users.routes");
-const {AuthenticationRoutes} =  require("./src/routes/Authentication/authentication.routes");
-const {ClientsRoutes} =  require("./src/routes/clients/clients.routes");
+const connectMongo = require('./src/database/mongo')
+const {UsersRoutes} = require("./src/routes/users/users.routes");
+const {AuthenticationRoutes} = require("./src/routes/Authentication/authentication.routes");
+const {ClientsRoutes} = require("./src/routes/clients/clients.routes");
 const {AppsRoutes} = require("./src/routes/apps/app.routes.config")
 const {PrivilegesRoutes} = require("./src/routes/privilege/privilege.routes")
 const {UserAuthenticationRoutes} = require("./src/routes/userAuthentication/user.authentication.routes")
