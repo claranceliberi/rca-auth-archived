@@ -3,10 +3,10 @@ const {UsersController} = require("../../controllers/user/users.controller");
 const {AuthenticateMiddleware} = require("../../middlewares/authenticate/authenticate.middleware");
 
 //user controller
-const  uc = new UsersController()
+const uc = new UsersController()
 
 //authenticated middleware
-const am  = new AuthenticateMiddleware()
+const am = new AuthenticateMiddleware()
 
 class UsersRoutes extends CommonRoutesConfig{
 

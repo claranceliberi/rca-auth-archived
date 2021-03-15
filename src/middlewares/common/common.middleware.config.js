@@ -7,7 +7,7 @@ class CommonMiddlewareConfig{
     }
 
     getName(){
-      return  this.name
+      return this.name
     }
 
     /**

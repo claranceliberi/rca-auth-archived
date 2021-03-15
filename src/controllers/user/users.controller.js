@@ -129,9 +129,11 @@ class UsersController extends CommonControllerConfig{
         try{
             const app = await App.findOne({where:{appId}})
 
-            if(app){    //if app exists
+            //if app exists
+            if(app){
 
-                if(app.secretKey === secretKey){    //if the secreteKey is correct
+                //if the secreteKey is correct
+                if(app.secretKey === secretKey){
                     const privilegesInstance = new PrivilegesController()
                     const decryptedToken = privilegesInstance.decrypt_privilege_token(userToken)
                     const permissions = decryptedToken.split(',')
