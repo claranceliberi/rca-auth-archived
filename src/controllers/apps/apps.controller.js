@@ -5,7 +5,7 @@ const Joi = require('joi')
 const crypto = require('crypto')
 
 const App = models.App
-class AppsController extends CommonControllerConfig{
+class AppsController extends CommonControllerConfig {
 
     constructor() {
         super("AppsController");

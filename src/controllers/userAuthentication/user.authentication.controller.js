@@ -10,7 +10,7 @@ const d = debug('UserAuthenticationController')
 
 const App = models.App
 
-class UserAuthenticationController extends CommonControllerConfig{
+class UserAuthenticationController extends CommonControllerConfig {
     /**
      * Controller that manage user management request
      */
@@ -27,7 +27,7 @@ class UserAuthenticationController extends CommonControllerConfig{
         const {email} = await AuthenticationController.userFromToken(req)
 
 
-        try{
+        try {
             //excluding password in returned document\
             const userQuery = User.findOne({email})
 
@@ -46,14 +46,14 @@ class UserAuthenticationController extends CommonControllerConfig{
     }
 
     //authenticate user
-    login = async (req,res) =>{
+    login = async (req,res) => {
         const s = super.s
         const self = this
 
         const user = await User.findOne({email:req.body.email})
 
 
-            try{
+            try {
                 if(!user) //when use was not found
                     res.send(s('failed',"Wrong credentials",401))
                 else{

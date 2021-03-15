@@ -8,7 +8,7 @@ const d = debug('AuthenticationController')
 
 
 const Client = models.Client
-class AuthenticationController extends CommonControllerConfig{
+class AuthenticationController extends CommonControllerConfig {
     constructor() {
         super("AuthenticationController");
 
@@ -22,7 +22,7 @@ class AuthenticationController extends CommonControllerConfig{
         const {email} = await AuthenticationController.userFromToken(req)
 
 
-        try{
+        try {
             //excluding password in returned document\
 
             const user = await Client.findOne({
@@ -41,17 +41,17 @@ class AuthenticationController extends CommonControllerConfig{
     }
 
     //authenticate user
-    login = async (req,res) =>{
+    login = async (req,res) => {
         const s = super.s
         const self = this
 
         const user = await Client.findOne({where:{email:req.body.email}})
 
 
-        try{
+        try {
             if(user === null) //when use was not found
                 res.send(s('failed',"Wrong credentials",401))
-            else{
+            else {
                 const truePassword = bcrypt.compareSync(req.body.password,user.password)
 
                 if(truePassword){ //when password was right
@@ -73,13 +73,13 @@ class AuthenticationController extends CommonControllerConfig{
         }
     }
 
-    generatesAccessToken = (username,secrete = process.env.TOKEN_SECRETE,expiresIn = '1800s') =>{
+    generatesAccessToken = (username,secrete = process.env.TOKEN_SECRETE,expiresIn = '1800s') => {
         d(secrete)
         return jwt.sign(username,secrete,{expiresIn})
     }
 
     //get user from token
-     static userFromToken = (req)=>{
+     static userFromToken = (req)=> {
                 //capturing authorization header to get token
         const authHeader = req.header('Authorization')
         const token = authHeader && authHeader.split(' ')[1]

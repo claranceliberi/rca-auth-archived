@@ -14,7 +14,7 @@ const {PrivilegesRoutes} = require("./src/routes/privilege/privilege.routes")
 const {UserAuthenticationRoutes} = require("./src/routes/userAuthentication/user.authentication.routes")
 const {OpenRoutes} = require("./src/routes/open/open.routes")
 
-class Server{
+class Server {
     app = express();
     server = http.createServer(this.app)
     port = Number(process.env.PORT) || 3000;

@@ -8,7 +8,7 @@ const uc = new UsersController()
 //authenticated middleware
 const am = new AuthenticateMiddleware()
 
-class UsersRoutes extends CommonRoutesConfig{
+class UsersRoutes extends CommonRoutesConfig {
 
 
     constructor(app) {
