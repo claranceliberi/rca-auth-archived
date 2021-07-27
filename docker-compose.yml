@@ -3,7 +3,9 @@ services:
   app:
     container_name: rca_auth_node
     restart: always
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "3003:3000"
     links:

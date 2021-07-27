@@ -70,7 +70,7 @@ class Server {
     initiateMainServerRoute = () => {
         // this is a simple route to make sure everything is working properly
         this.app.get('/', (req, res) => {
-            res.status(200).send(`Server up and running!`)
+            res.status(200).send(`Server wow up and running!`)
         });
     }
 
