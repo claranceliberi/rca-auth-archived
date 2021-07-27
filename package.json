@@ -6,7 +6,7 @@
   "author": "Ntwari Clarance Liberiste",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon",
+    "dev": "nodemon -L app.js",
     "start": "node app.js",
     "sq": "sequelize",
     "debug": "export DEBUG=* && yarn dev",
@@ -15,9 +15,7 @@
   "nodemonConfig": {
     "watch": [
       "src"
-    ],
-    "ext": "js",
-    "exec": "node --experimental-modules app.js"
+    ]
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -35,6 +33,7 @@
     "sequelize": "^6.3.5"
   },
   "devDependencies": {
+    "nodemon": "^2.0.12",
     "sequelize-cli": "^6.2.0",
     "source-map-support": "^0.5.19"
   }
