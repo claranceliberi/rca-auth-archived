@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3003:3000"
+      - "3000:3000"
     links:
       - mongo
       - postgres
@@ -16,6 +16,8 @@ services:
       - postgres
     env_file:
       - .env
+    volumes: 
+      - .:/app
   mongo:
     container_name: mongo
     image: mongo
