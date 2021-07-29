@@ -1,11 +1,12 @@
-const debug = require('debug')
-const {CommonControllerConfig} = require("../common/common.controller.config");
-const Joi = require('joi')
-const bcrypt = require('bcryptjs')
-const models = require('../../database/postgresSql/models/index')
-const {PrivilegesController} = require('../privillege/privilege.controller')
+import debug from 'debug'
+import {CommonControllerConfig} from "../common/common.controller.config"
+import Joi from 'joi'
+import bcrypt from 'bcryptjs'
+import models from '../../database/postgresSql/models/index'
+import {PrivilegesController} from '../privillege/privilege.controller'
 
-const User = require('../../models/user.model')
+import User from '../../models/user.model'
+import { Request, Response } from 'express'
 const App = models.App
 
 // initiating debugger
@@ -18,7 +19,7 @@ class UsersController extends CommonControllerConfig{
     }
 
     //get all users
-    all = (req,res)=>{
+    all = (req:Request,res:Response)=>{
         const s = super.s
 
         const users = User.find((err,users) =>{
@@ -32,7 +33,7 @@ class UsersController extends CommonControllerConfig{
     }
 
     //create user
-    create = async (req,res) =>{
+    create = async (req:Request,res : Response) =>{
         const s = this.s
 
         //validator format
@@ -76,7 +77,7 @@ class UsersController extends CommonControllerConfig{
     }
 
     //get user with id
-    get(req,res) {
+    get(req:Request,res:Response) {
         const s = super.s
 
         const user = User.findById(req.params.userId,(err,user) => {
@@ -90,7 +91,7 @@ class UsersController extends CommonControllerConfig{
     }
 
     // update user
-    update(req,res) {
+    update(req:Request,res:Response) {
         const s = super.s
 
         const id = req.body.id //get id from body
@@ -108,7 +109,7 @@ class UsersController extends CommonControllerConfig{
 
 
     // delete user
-    delete(req,res) {
+    delete(req:Request,res:Response) {
         const s = super.s
 
         const user = User.findByIdAndDelete(req.params.userId,{},(err,user) => {
@@ -123,7 +124,7 @@ class UsersController extends CommonControllerConfig{
 
 
     //get user by token
-    get_user_by_token = async (req,res) => {
+    get_user_by_token = async (req:Request,res:Response) => {
         const {userToken,secretKey,appId} = req.body
 
         try{

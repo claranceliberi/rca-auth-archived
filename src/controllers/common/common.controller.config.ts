@@ -1,6 +1,7 @@
+import {CustomResponse} from '../../types/controller.types'
 
-class CommonControllerConfig{
-    name;
+export class CommonControllerConfig{
+    name:string;
 
 
     /**
@@ -10,7 +11,7 @@ class CommonControllerConfig{
      *
      * @param name : name of the controller
      */
-    constructor( name) {
+    constructor( name : string) {
         this.name = name
     }
 
@@ -18,7 +19,7 @@ class CommonControllerConfig{
      * get name of the controller
      * @returns {*}
      */
-    getName(){
+    getName() : string{
       return  this.name
     }
 
@@ -31,10 +32,9 @@ class CommonControllerConfig{
      *
      * @returns {{data, message, status: number}}
      */
-    s(msg,data,status=200){
+    s(msg : string,data : any,status : number=200) : CustomResponse{
         return {message:msg,data:data,status:status}
     }
 
 }
 
-exports.CommonControllerConfig = CommonControllerConfig

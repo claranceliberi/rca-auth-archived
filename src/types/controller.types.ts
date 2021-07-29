@@ -1,5 +1,5 @@
 export type CustomResponse = {
-    msg:string
+    message:string
     data:any
     status: number
 }
