@@ -1,10 +1,10 @@
-import {CommonControllerConfig} from "../common/common.controller.config"
+import {CommonControllerConfig} from "./common.controller.config"
 import bcrypt from 'bcryptjs'
 import jwt, { Secret } from 'jsonwebtoken'
-import models from '../../database/postgresSql/models/index'
+import models from '../database/postgresSql/models/index'
 import debug from 'debug'
 import { Request, Response } from "express"
-import { UserInToken } from "../../types/controller.types"
+import { UserInToken } from "../types/controller.types"
 
 const d = debug('AuthenticationController')
 

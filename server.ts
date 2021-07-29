@@ -6,14 +6,14 @@ import cors from 'cors'
 import debug, {Debugger} from "debug"
 
 import connectMongo from './src/database/mongo'
-import {UsersRoutes} from "./src/routes/users/users.routes"
-import {AuthenticationRoutes} from "./src/routes/Authentication/authentication.routes"
-import {ClientsRoutes} from "./src/routes/clients/clients.routes"
-import {AppsRoutes} from "./src/routes/apps/app.routes.config"
-import {PrivilegesRoutes} from "./src/routes/privilege/privilege.routes"
-import {UserAuthenticationRoutes} from "./src/routes/userAuthentication/user.authentication.routes"
-import {OpenRoutes} from "./src/routes/open/open.routes"
-import { CommonRoutesConfig } from './src/routes/common/common.routes.config'
+import {UsersRoutes} from "./src/routes/users.routes"
+import {AuthenticationRoutes} from "./src/routes/authentication.routes"
+import {ClientsRoutes} from "./src/routes/clients.routes"
+import {AppsRoutes} from "./src/routes/app.routes"
+import {PrivilegesRoutes} from "./src/routes/privilege.routes"
+import {UserAuthenticationRoutes} from "./src/routes/user.authentication.routes"
+import {OpenRoutes} from "./src/routes/open.routes"
+import { CommonRoutesConfig } from './src/routes/common.routes.config'
 
 export class Server {
     app : Express = express();

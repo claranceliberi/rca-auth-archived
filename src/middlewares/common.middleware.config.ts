@@ -1,4 +1,4 @@
-import {CustomResponse} from '../../types/controller.types'
+import {CustomResponse} from '../types/controller.types'
 
 export class CommonMiddlewareConfig {
     private name : string

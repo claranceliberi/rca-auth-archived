@@ -1,9 +1,9 @@
-import {CommonControllerConfig} from "../common/common.controller.config"
-import models from '../../database/postgresSql/models/index'
+import {CommonControllerConfig} from "./common.controller.config"
+import models from '../database/postgresSql/models/index'
 import Joi from 'joi'
 import bcrypt from 'bcryptjs'
 import { Response, Request } from "express"
-import { CustomClientRequest } from "../../types/controller.types"
+import { CustomClientRequest } from "../types/controller.types"
 
 const Client = models.Client
 

@@ -1,11 +1,11 @@
 import debug from 'debug'
-import {CommonControllerConfig} from "../common/common.controller.config"
+import {CommonControllerConfig} from "./common.controller.config"
 import Joi from 'joi'
 import bcrypt from 'bcryptjs'
-import models from '../../database/postgresSql/models/index'
-import {PrivilegesController} from '../privillege/privilege.controller'
+import models from '../database/postgresSql/models/index'
+import {PrivilegesController} from './privilege.controller'
 
-import User from '../../models/user.model'
+import User from '../models/user.model'
 import { Request, Response } from 'express'
 const App = models.App
 

@@ -1,5 +1,5 @@
-import  {CommonRoutesConfig} from "../common/common.routes.config"
-import  {ClientsController} from "../../controllers/clients/clients.controller"
+import  {CommonRoutesConfig} from "./common.routes.config"
+import  {ClientsController} from "../controllers/clients.controller"
 import { Express } from "express";
 
 const cc = new ClientsController()

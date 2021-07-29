@@ -1,12 +1,12 @@
-import  {CommonControllerConfig} from "../common/common.controller.config"
-import  {AuthenticationController} from '../authentication/authentication.controller'
+import  {CommonControllerConfig} from "./common.controller.config"
+import  {AuthenticationController} from './authentication.controller'
 import  bcrypt from 'bcryptjs'
 import  jwt, { Secret } from 'jsonwebtoken'
 import  debug from 'debug'
-import  User from '../../models/user.model'
-import  models from '../../database/postgresSql/models/index'
+import  User from '../models/user.model'
+import  models from '../database/postgresSql/models/index'
 import { Response, Request } from "express"
-import { UserInToken } from "../../types/controller.types"
+import { UserInToken } from "../types/controller.types"
 
 const d = debug('UserAuthenticationController')
 

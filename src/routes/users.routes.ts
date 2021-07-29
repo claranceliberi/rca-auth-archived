@@ -1,8 +1,8 @@
 import {Express, Request,Response,NextFunction} from 'express'
 
-import {CommonRoutesConfig} from "../common/common.routes.config"
-import {UsersController} from "../../controllers/user/users.controller"
-import {AuthenticateMiddleware} from "../../middlewares/authenticate/authenticate.middleware"
+import {CommonRoutesConfig} from "./common.routes.config"
+import {UsersController} from "../controllers/users.controller"
+import {AuthenticateMiddleware} from "../middlewares/authenticate.middleware"
 
 //user controller
 const uc = new UsersController()

@@ -1,10 +1,10 @@
 import {CommonControllerConfig} from "../common/common.controller.config"
-import models from '../../database/postgresSql/models/index'
+import models from '../database/postgresSql/models/index'
 import fs from 'fs'
 import path from 'path'
 import Joi from 'joi'
 import NodeRSA from 'node-rsa'
-import {privateRSAKEY} from '../../config/secured.vals'
+import {privateRSAKEY} from '../config/secured.vals'
 import { Request, Response } from "express"
 
 const Privilege = models.Privilege

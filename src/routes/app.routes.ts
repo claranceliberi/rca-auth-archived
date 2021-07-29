@@ -1,5 +1,5 @@
-import {CommonRoutesConfig} from "../common/common.routes.config"
-import {AppsController} from "../../controllers/apps/apps.controller"
+import {CommonRoutesConfig} from "./common.routes.config"
+import {AppsController} from "../controllers/apps.controller"
 
 import { Express } from "express";
 

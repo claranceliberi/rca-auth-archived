@@ -1,6 +1,6 @@
-import  {CommonRoutesConfig} from "../common/common.routes.config"
-import  {UserAuthenticationController} from "../../controllers/userAuthentication/user.authentication.controller"
-import  {AuthenticateMiddleware} from "../../middlewares/authenticate/authenticate.middleware"
+import  {CommonRoutesConfig} from "./common.routes.config"
+import  {UserAuthenticationController} from "../controllers/user.authentication.controller"
+import  {AuthenticateMiddleware} from "../middlewares/authenticate.middleware"
 import { Express } from "express"
 
 const authMiddle = new AuthenticateMiddleware()

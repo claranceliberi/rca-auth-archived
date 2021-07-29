@@ -1,5 +1,5 @@
-import  {CommonRoutesConfig} from "../common/common.routes.config"
-import  {PrivilegesController} from "../../controllers/privillege/privilege.controller"
+import  {CommonRoutesConfig} from "./common.routes.config"
+import  {PrivilegesController} from "../controllers/privilege.controller"
 import { Express, Request, Response, NextFunction } from "express";
 
 const privilege = new PrivilegesController()

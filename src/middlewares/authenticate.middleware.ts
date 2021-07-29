@@ -1,4 +1,4 @@
-import {CommonMiddlewareConfig} from "../common/common.middleware.config"
+import {CommonMiddlewareConfig} from "./common.middleware.config"
 import jwt, {Secret} from 'jsonwebtoken'
 import {Request, Response, NextFunction} from 'express'
 
