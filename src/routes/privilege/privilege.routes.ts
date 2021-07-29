@@ -1,19 +1,20 @@
-const {CommonRoutesConfig} = require("../common/common.routes.config");
-const {PrivilegesController} = require("../../controllers/privillege/privilege.controller");
+import  {CommonRoutesConfig} from "../common/common.routes.config"
+import  {PrivilegesController} from "../../controllers/privillege/privilege.controller"
+import { Express, Request, Response, NextFunction } from "express";
 
 const privilege = new PrivilegesController()
 
-class PrivilegesRoutes extends CommonRoutesConfig{
+export class PrivilegesRoutes extends CommonRoutesConfig{
 
 
-    constructor(app) {
+    constructor(app : Express) {
         super(app,'PrivilegeRoutes');
     }
 
     configureRoutes() {
 
         this.app.route('/v1/privileges')
-            .all((req,res,next) => {
+            .all((req : Request,res : Response,next : NextFunction) => {
                 next()
             })
             .post(privilege.create)
@@ -40,5 +41,3 @@ class PrivilegesRoutes extends CommonRoutesConfig{
         return this.app;
     }
 }
-
-exports.PrivilegesRoutes = PrivilegesRoutes

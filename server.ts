@@ -13,12 +13,13 @@ import {AppsRoutes} from "./src/routes/apps/app.routes.config"
 import {PrivilegesRoutes} from "./src/routes/privilege/privilege.routes"
 import {UserAuthenticationRoutes} from "./src/routes/userAuthentication/user.authentication.routes"
 import {OpenRoutes} from "./src/routes/open/open.routes"
+import { CommonRoutesConfig } from './src/routes/common/common.routes.config'
 
 export class Server {
     app : Express = express();
     server = http.createServer(this.app)
     port : number = Number(process.env.PORT) || 3000;
-    routes = []
+    routes : CommonRoutesConfig[] = []
     debugLog : Debugger = debug('app');
 
 

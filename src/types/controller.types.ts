@@ -9,6 +9,7 @@ export type CustomResponse = {
 
 export type UserInToken = {
     email? : string
+    username? : string
     id?:string
 }
 

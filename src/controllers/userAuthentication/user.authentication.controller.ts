@@ -1,17 +1,18 @@
-const {CommonControllerConfig} = require("../common/common.controller.config")
-const {AuthenticationController} =
-    require('../authentication/authentication.controller')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const debug = require('debug')
-const User = require('../../models/user.model')
-const models = require('../../database/postgresSql/models/index')
+import  {CommonControllerConfig} from "../common/common.controller.config"
+import  {AuthenticationController} from '../authentication/authentication.controller'
+import  bcrypt from 'bcryptjs'
+import  jwt, { Secret } from 'jsonwebtoken'
+import  debug from 'debug'
+import  User from '../../models/user.model'
+import  models from '../../database/postgresSql/models/index'
+import { Response, Request } from "express"
+import { UserInToken } from "../../types/controller.types"
 
 const d = debug('UserAuthenticationController')
 
 const App = models.App
 
-class UserAuthenticationController extends CommonControllerConfig {
+export class UserAuthenticationController extends CommonControllerConfig {
     /**
      * Controller that manage user management request
      */
@@ -22,7 +23,7 @@ class UserAuthenticationController extends CommonControllerConfig {
 
 
     //get current user in based on the token
-    currentUser = async (req,res) => {
+    currentUser = async (req : Request,res : Response) => {
 
         //get user
         const {email} = await AuthenticationController.userFromToken(req)
@@ -47,7 +48,7 @@ class UserAuthenticationController extends CommonControllerConfig {
     }
 
     //authenticate user
-    login = async (req,res) => {
+    login = async (req : Request,res : Response) => {
         const s = super.s
         const self = this
 
@@ -95,15 +96,15 @@ class UserAuthenticationController extends CommonControllerConfig {
      *
      * @returns {*}
      */
-    generatesAccessToken = (username,
+    generatesAccessToken = (username : UserInToken,
                             secrete = process.env.TOKEN_SECRETE,
                             expiresIn = '1800s'
     ) =>{
         d(secrete)
-        return jwt.sign(username,secrete,{expiresIn})
+        return jwt.sign(username,secrete as Secret,{expiresIn})
     }
 
-    authorizeApp = async (req,res) => {
+    authorizeApp = async (req : Request,res : Response) => {
         const {viewProfile,appId} = req.body
         const {email,id} = AuthenticationController.userFromToken(req)
 
@@ -125,5 +126,3 @@ class UserAuthenticationController extends CommonControllerConfig {
 
 
 }
-
-exports.UserAuthenticationController = UserAuthenticationController

@@ -6,11 +6,12 @@ export interface sequelizeDB  {
     [key: string]: any
 }
 
-
-
-export type ClientBody = {
+export interface User  {
     firstName : string 
     secondName : string
     email : string 
     password : string
 }
+
+
+export interface ClientBody extends User {}
