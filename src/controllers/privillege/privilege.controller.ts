@@ -1,11 +1,11 @@
-const {CommonControllerConfig} = require("../common/common.controller.config")
-const models = require('../../database/postgresSql/models/index')
-const fs = require('fs')
-const path = require('path')
-const Joi = require('joi')
-const NodeRSA = require('node-rsa')
-const {privateRSAKEY} = require('../../config/secured.vals')
-
+import {CommonControllerConfig} from "../common/common.controller.config"
+import models from '../../database/postgresSql/models/index'
+import fs from 'fs'
+import path from 'path'
+import Joi from 'joi'
+import NodeRSA from 'node-rsa'
+import {privateRSAKEY} from '../../config/secured.vals'
+import { Request, Response } from "express"
 
 const Privilege = models.Privilege
 
@@ -20,7 +20,7 @@ class PrivilegesController extends CommonControllerConfig{
 
 
     //get all privileges
-    all = async (req, res) => {
+    all = async (req : Request, res : Response) => {
             try{
                 const privileges= await Privilege.findAll() ;
                 res.send(this.s('success',privileges))
@@ -31,7 +31,7 @@ class PrivilegesController extends CommonControllerConfig{
     }
 
     //create privilege
-    create = async (req, res) => {
+    create = async (req : Request, res : Response) => {
         const privilege = await this.#create_privilege(req,true)
 
         return res.send(privilege)
@@ -40,7 +40,7 @@ class PrivilegesController extends CommonControllerConfig{
 
 
     //get privilege by id
-    getById = async (req, res) => {
+    getById = async (req : Request, res : Response) => {
 
         try{
 
@@ -55,7 +55,7 @@ class PrivilegesController extends CommonControllerConfig{
     }
 
     //get privilege by user id
-    getByUserId = async (req, res) => {
+    getByUserId = async (req : Request, res : Response) => {
 
         try {
             const privilege = await Privilege
@@ -69,7 +69,7 @@ class PrivilegesController extends CommonControllerConfig{
 
 
     //get privilege by app id
-    getByAppId = async (req, res) => {
+    getByAppId = async (req : Request, res : Response) => {
 
         try {
             const privilege = await Privilege
@@ -83,7 +83,7 @@ class PrivilegesController extends CommonControllerConfig{
 
 
     // update privilege
-    put = async (req,res) => {
+    put = async (req : Request, res : Response) => {
 
         try{
             //extract privilege body object
@@ -112,7 +112,7 @@ class PrivilegesController extends CommonControllerConfig{
 
                 if(privilege) {
 
-                   try{
+                    try{
 
 
                         //update app
@@ -124,9 +124,9 @@ class PrivilegesController extends CommonControllerConfig{
 
                         res.send(this.s('success',updatedApp[1]))
 
-                   }catch (e) {
+                    }catch (e) {
                         res.send(this.s('failed',e,500))
-                   }
+                    }
 
                 }else{
                     res.send(this.s('failed','app does not exists'))
@@ -148,7 +148,7 @@ class PrivilegesController extends CommonControllerConfig{
      *
      * @returns {Promise<{data: *, message: *, status: number}>}
      */
-    #create_privilege = async (req,with_token=false)=> {
+    #create_privilege = async (req : Request,with_token=false)=> {
          const {userId,appId,viewProfile} = req.body
 
 
@@ -174,7 +174,7 @@ class PrivilegesController extends CommonControllerConfig{
                     //check if app exists
                     const privilege = await Privilege
                         .findOne({where:{userId,appId},plain:true})
-                    let result = '';
+                    let result = [];
 
                     if(privilege) {//if privilege exists let us update it
                         result = await Privilege
@@ -206,7 +206,7 @@ class PrivilegesController extends CommonControllerConfig{
         }
     }
 
-    permit_privilege = async (req,res) => {
+    permit_privilege = async (req : Request, res : Response) => {
         const {appId,userId} = req.body
         const data_to_encrypt = `uid:${userId},aip:${appId},vp:true`
 
@@ -224,7 +224,7 @@ class PrivilegesController extends CommonControllerConfig{
      *
      * @returns {string|Buffer}
      */
-    #privilege_token = (data) => {
+    #privilege_token = (data : string) => {
         return this.key.encrypt(data, 'base64');
     }
 
@@ -235,7 +235,7 @@ class PrivilegesController extends CommonControllerConfig{
      *
      * @returns {Buffer|Object|string}
      */
-    decrypt_privilege_token = (token) => {
+    decrypt_privilege_token = (token : string) => {
         return this.key.decrypt(token,'utf8')
     }
 

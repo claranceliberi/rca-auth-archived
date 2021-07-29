@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose, {Document, Model} from 'mongoose'
 
 const userSchema = new mongoose.Schema({
 first_name: {
@@ -19,4 +19,6 @@ password:{
 },
 })
 
-module.exports = mongoose.model('User',userSchema)
+const User : Model<Document> = mongoose.model('User',userSchema)
+
+export default User

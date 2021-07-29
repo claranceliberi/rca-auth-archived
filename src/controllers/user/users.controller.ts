@@ -22,7 +22,7 @@ class UsersController extends CommonControllerConfig{
     all = (req:Request,res:Response)=>{
         const s = super.s
 
-        const users = User.find((err,users) =>{
+        const users = User.find((err : any,user :any) =>{
             if(err)
                 res.send(s('failed',err,500))
             else if(users === null)
@@ -61,7 +61,7 @@ class UsersController extends CommonControllerConfig{
                 const salt = bcrypt.genSaltSync(10)
                 req.body.password = bcrypt.hashSync(req.body.password,salt)
 
-                const createdUser = User.create(req.body,(err,user) => {
+                const createdUser = User.create(req.body,(err : any,user :any) => {
 
 
                     if(err)
@@ -80,7 +80,7 @@ class UsersController extends CommonControllerConfig{
     get(req:Request,res:Response) {
         const s = super.s
 
-        const user = User.findById(req.params.userId,(err,user) => {
+        const user = User.findById(req.params.userId,(err : any,user :any) => {
             if(err)
                 res.send(s('server error',err,500))
             else if(user === null)
@@ -97,7 +97,7 @@ class UsersController extends CommonControllerConfig{
         const id = req.body.id //get id from body
         delete req.body.id //delete id in body
 
-        const user = User.findByIdAndUpdate(id,req.body,{new:true},(err,user) => {
+        const user = User.findByIdAndUpdate(id,req.body,{new:true},(err : any,user :any) => {
             if(err)
                 res.send(s('not updated',err,500))
             else if(user === null)
@@ -112,10 +112,10 @@ class UsersController extends CommonControllerConfig{
     delete(req:Request,res:Response) {
         const s = super.s
 
-        const user = User.findByIdAndDelete(req.params.userId,{},(err,user) => {
+        const user = User.findByIdAndDelete(req.params.userId,{},(err : any,user :any) => {
             if(err)
                 res.send(s('not deleted',err,500))
-           else if(user === null)
+            else if(user === null)
                 res.send(s('no user found',user,404))
             else
                 res.send(s('deleted',user))
@@ -137,13 +137,13 @@ class UsersController extends CommonControllerConfig{
                 if(app.secretKey === secretKey) {
                     const privilegesInstance = new PrivilegesController()
                     const decryptedToken = privilegesInstance.decrypt_privilege_token(userToken)
-                    const permissions = decryptedToken.split(',')
-                    const permissionsObject = {}
+                    const permissions : string[] = decryptedToken.split(',')
+                    const permissionsObject : Record<string,string> = {}
 
                     //converting array to object
                     permissions.forEach( (val) => {
-                        val = val.split(":")
-                        permissionsObject[val[0]] = val[1]
+                        const valArray = val.split(":")
+                        permissionsObject[valArray[0]] = valArray[1]
                     })
 
                     //verify if the asking app is already in the token
@@ -152,7 +152,7 @@ class UsersController extends CommonControllerConfig{
 
                         res.send(this.s('success',user))
                     }else{
-                         res.send(this.s('failed','invalid token',401))
+                        res.send(this.s('failed','invalid token',401))
                     }
 
 
@@ -163,7 +163,7 @@ class UsersController extends CommonControllerConfig{
                 res.send(this.s('failed','not authorized',401))
             }
         }catch(err) {
-            res.send(this.s('failed',{error},500))
+            res.send(this.s('failed',{err},500))
         }
     }
 
