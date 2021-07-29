@@ -1,12 +1,13 @@
-const {CommonMiddlewareConfig} = require("../common/common.middleware.config");
-const jwt = require('jsonwebtoken')
+import {CommonMiddlewareConfig} from "../common/common.middleware.config"
+import jwt, {Secret} from 'jsonwebtoken'
+import {Request, Response, NextFunction} from 'express'
 
-class AuthenticateMiddleware extends CommonMiddlewareConfig{
+export class AuthenticateMiddleware extends CommonMiddlewareConfig{
 
     constructor() {
         super('AuthenticationMiddleware');
     }
-    authenticateToken = async (req,res, next)=>{
+    authenticateToken = async (req : Request,res: Response, next : NextFunction)=>{
         //capturing authorization header to get token
         const authHeader = req.header('Authorization')
         const token = authHeader && authHeader.split(' ')[1]
@@ -17,7 +18,7 @@ class AuthenticateMiddleware extends CommonMiddlewareConfig{
         else {
 
             try{
-                await jwt.verify(token,process.env["TOKEN_SECRETE"])
+                await jwt.verify(token,process.env["TOKEN_SECRETE"] as Secret)
                 next()
 
             }catch (e) {
@@ -27,5 +28,3 @@ class AuthenticateMiddleware extends CommonMiddlewareConfig{
         }
     }
 }
-
-exports.AuthenticateMiddleware = AuthenticateMiddleware

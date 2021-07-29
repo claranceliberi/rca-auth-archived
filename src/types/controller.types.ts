@@ -3,3 +3,7 @@ export type CustomResponse = {
     data:any
     status: number
 }
+
+export type UserFromToken = {
+    email? : string
+}

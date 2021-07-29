@@ -12,7 +12,7 @@ const App = models.App
 // initiating debugger
 const d = debug("UserController")
 
-class UsersController extends CommonControllerConfig{
+export class UsersController extends CommonControllerConfig{
     constructor() {
         super('UserController');
 
@@ -168,5 +168,3 @@ class UsersController extends CommonControllerConfig{
     }
 
 }
-
-exports.UsersController = UsersController

@@ -9,9 +9,9 @@ import { Request, Response } from "express"
 
 const Privilege = models.Privilege
 
-class PrivilegesController extends CommonControllerConfig{
+export class PrivilegesController extends CommonControllerConfig{
 
-    key = new NodeRSA(privateRSAKEY)
+    private key = new NodeRSA(privateRSAKEY)
 
     constructor() {
         super("PrivilegeController");
@@ -243,5 +243,3 @@ class PrivilegesController extends CommonControllerConfig{
 
 }
 
-
-exports.PrivilegesController = PrivilegesController

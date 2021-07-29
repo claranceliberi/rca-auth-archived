@@ -1,14 +1,18 @@
-const {CommonControllerConfig} = require("../common/common.controller.config")
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const models = require('../../database/postgresSql/models/index')
-const debug = require('debug')
+import {CommonControllerConfig} from "../common/common.controller.config"
+import bcrypt from 'bcryptjs'
+import jwt, { Secret } from 'jsonwebtoken'
+import models from '../../database/postgresSql/models/index'
+import debug from 'debug'
+import { Request, Response } from "express"
+import { UserFromToken } from "../../types/controller.types"
+import { UserType } from "../../types/models.types"
 
 const d = debug('AuthenticationController')
 
 
 const Client = models.Client
-class AuthenticationController extends CommonControllerConfig {
+
+export class AuthenticationController extends CommonControllerConfig {
     constructor() {
         super("AuthenticationController");
 
@@ -16,7 +20,7 @@ class AuthenticationController extends CommonControllerConfig {
 
 
     // get current user
-    currentUser = async (req,res) => {
+    currentUser = async (req : Request,res : Response) => {
 
         //get user
         const {email} = await AuthenticationController.userFromToken(req)
@@ -41,7 +45,7 @@ class AuthenticationController extends CommonControllerConfig {
     }
 
     //authenticate user
-    login = async (req,res) => {
+    login = async (req : Request,res : Response) => {
         const s = super.s
         const self = this
 
@@ -79,22 +83,20 @@ class AuthenticationController extends CommonControllerConfig {
     }
 
     generatesAccessToken = (
-        username,secrete = process.env.TOKEN_SECRETE,
+        username : string | UserType ,secrete = process.env.TOKEN_SECRETE,
         expiresIn = '1800s'
     ) => {
         d(secrete)
-        return jwt.sign(username,secrete,{expiresIn})
+        return jwt.sign(username,secrete as Secret,{expiresIn})
     }
 
     //get user from token
-     static userFromToken = (req)=> {
+     static userFromToken = (req : Request) : UserFromToken=> {
                 //capturing authorization header to get token
         const authHeader = req.header('Authorization')
-        const token = authHeader && authHeader.split(' ')[1]
+        const token : string | undefined = authHeader && authHeader.split(' ')[1]
 
         //get user email from token
-        return jwt.verify(token, process.env["TOKEN_SECRETE"]);
+        return jwt.verify(token as string, process.env["TOKEN_SECRETE"] as Secret) as UserFromToken;
     }
 }
-
-exports.AuthenticationController = AuthenticationController
