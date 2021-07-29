@@ -1,22 +1,19 @@
-const mongoose = require("mongoose");
-const debug = require("debug");
+import mongoose from "mongoose"
+import debug from "debug"
 
 const uri = "mongodb://localhost:27018/rca_auth"
 const debugLog = debug('mongodb');
 const {connect} = mongoose
 
-function connectMongo() {
+export default function connectMongo() : void {
     connect(uri,{
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })
-    .then((res) => {
+    .then(() => {
         debugLog('✔ connected successfully')
     })
-    .catch((err) => {
+    .catch(() => {
         debugLog('❌ connection was not established')
     })
 }
-
-
-module.exports = connectMongo

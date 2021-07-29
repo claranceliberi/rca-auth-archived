@@ -4,8 +4,7 @@ import jwt, { Secret } from 'jsonwebtoken'
 import models from '../../database/postgresSql/models/index'
 import debug from 'debug'
 import { Request, Response } from "express"
-import { UserFromToken } from "../../types/controller.types"
-import { UserType } from "../../types/models.types"
+import { UserInToken } from "../../types/controller.types"
 
 const d = debug('AuthenticationController')
 
@@ -83,7 +82,7 @@ export class AuthenticationController extends CommonControllerConfig {
     }
 
     generatesAccessToken = (
-        username : string | UserType ,secrete = process.env.TOKEN_SECRETE,
+        username : string | UserInToken ,secrete = process.env.TOKEN_SECRETE,
         expiresIn = '1800s'
     ) => {
         d(secrete)
@@ -91,12 +90,12 @@ export class AuthenticationController extends CommonControllerConfig {
     }
 
     //get user from token
-     static userFromToken = (req : Request) : UserFromToken=> {
+     static userFromToken = (req : Request) : UserInToken=> {
                 //capturing authorization header to get token
         const authHeader = req.header('Authorization')
         const token : string | undefined = authHeader && authHeader.split(' ')[1]
 
         //get user email from token
-        return jwt.verify(token as string, process.env["TOKEN_SECRETE"] as Secret) as UserFromToken;
+        return jwt.verify(token as string, process.env["TOKEN_SECRETE"] as Secret) as UserInToken;
     }
 }

@@ -7,7 +7,10 @@ export interface sequelizeDB  {
 }
 
 
-export type UserType = {
-    email? : string
-    id?:string
+
+export type ClientBody = {
+    firstName : string 
+    secondName : string
+    email : string 
+    password : string
 }

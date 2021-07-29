@@ -1,12 +1,14 @@
-const {CommonRoutesConfig} = require("../common/common.routes.config");
-const {AppsController} = require("../../controllers/apps/apps.controller");
+import {CommonRoutesConfig} from "../common/common.routes.config"
+import {AppsController} from "../../controllers/apps/apps.controller"
+
+import { Express } from "express";
 
 const app = new AppsController()
 
-class AppsRoutes extends CommonRoutesConfig{
+export class AppsRoutes extends CommonRoutesConfig{
 
 
-    constructor(app) {
+    constructor(app : Express) {
         super(app,'AppsRoutes');
     }
 
@@ -43,5 +45,3 @@ class AppsRoutes extends CommonRoutesConfig{
         return this.app;
     }
 }
-
-exports.AppsRoutes = AppsRoutes

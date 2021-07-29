@@ -1,12 +1,12 @@
-const {CommonControllerConfig} = require("../common/common.controller.config")
-const {AuthenticationController} =
-    require("../authentication/authentication.controller")
-const models = require('../../database/postgresSql/models/index')
-const Joi = require('joi')
-const crypto = require('crypto')
+import {CommonControllerConfig} from "../common/common.controller.config"
+import {AuthenticationController} from "../authentication/authentication.controller"
+import models from '../../database/postgresSql/models/index'
+import Joi from 'joi'
+import crypto from 'crypto'
+import { Response, Request } from "express"
 
 const App = models.App
-class AppsController extends CommonControllerConfig {
+export class AppsController extends CommonControllerConfig {
 
     constructor() {
         super("AppsController");
@@ -15,7 +15,7 @@ class AppsController extends CommonControllerConfig {
 
 
     //get all apps
-    all = async (req, res) => {
+    all = async (req : Request, res : Response) => {
             try{
                 const apps= await App.findAll() ;
                 res.send(this.s('success',apps))
@@ -26,7 +26,7 @@ class AppsController extends CommonControllerConfig {
     }
 
         //create client
-    create = async (req, res) => {
+    create = async (req : Request, res : Response) => {
         const {name,redirectUrl} = req.body
 
 
@@ -79,7 +79,7 @@ class AppsController extends CommonControllerConfig {
 
 
     //get app by id
-    getById = async (req, res) => {
+    getById = async (req : Request, res : Response) => {
 
         try{
 
@@ -93,7 +93,7 @@ class AppsController extends CommonControllerConfig {
     }
 
     //get app by app id
-    getByAppId = async (req, res) => {
+    getByAppId = async (req : Request, res : Response) => {
 
         try {
             const app = await App.findOne({where:{appId:req.params.appId}})
@@ -105,7 +105,7 @@ class AppsController extends CommonControllerConfig {
     }
 
     //get client by creator based on his id
-    getByClient = async (req, res) => {
+    getByClient = async (req : Request, res : Response) => {
 
         try {
             const apps = await App.findAll({where:{clientId:req.params.clientId}})
@@ -118,7 +118,7 @@ class AppsController extends CommonControllerConfig {
 
 
     // update app
-    generateNewSecretKey = async (req,res) => {
+    generateNewSecretKey = async (req : Request, res : Response) => {
 
         try{
             //extract user object
@@ -176,7 +176,7 @@ class AppsController extends CommonControllerConfig {
     }
 
     // update app
-    put = async (req,res) => {
+    put = async (req : Request, res : Response) => {
 
         try{
             //extract user object
@@ -207,7 +207,7 @@ class AppsController extends CommonControllerConfig {
 
                 if(app){
 
-                   try{
+                    try{
 
 
                             //update app
@@ -219,9 +219,9 @@ class AppsController extends CommonControllerConfig {
 
                             res.send(this.s('success',updatedApp[1]))
 
-                   }catch (e){
+                    }catch (e){
                         res.send(this.s('failed',e,500))
-                   }
+                    }
 
                 }else{
                     res.send(this.s('failed','app does not exists'))
@@ -235,7 +235,7 @@ class AppsController extends CommonControllerConfig {
     }
 
     //delete client
-    delete = async (req, res) => {
+    delete = async (req : Request, res : Response) => {
 
         try{
             const deletedApp =
@@ -261,5 +261,3 @@ class AppsController extends CommonControllerConfig {
 
 }
 
-
-exports.AppsController = AppsController

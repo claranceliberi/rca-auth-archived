@@ -1,11 +1,13 @@
-const {CommonControllerConfig} = require("../common/common.controller.config")
-const models = require('../../database/postgresSql/models/index')
-const Joi = require('joi')
-const bcrypt = require('bcryptjs')
+import {CommonControllerConfig} from "../common/common.controller.config"
+import models from '../../database/postgresSql/models/index'
+import Joi from 'joi'
+import bcrypt from 'bcryptjs'
+import { Response, Request } from "express"
+import { CustomClientRequest } from "../../types/controller.types"
 
 const Client = models.Client
 
-class ClientsController extends CommonControllerConfig{
+export class ClientsController extends CommonControllerConfig{
 
     /**
      * controller that manage clients management requests
@@ -16,7 +18,7 @@ class ClientsController extends CommonControllerConfig{
     }
 
     //get all clients
-    all = async (req, res) => {
+    all = async (req : Request, res : Response) => {
             try{
                 const clients= await Client.findAll() ;
                 res.send(this.s('success',clients))
@@ -28,7 +30,7 @@ class ClientsController extends CommonControllerConfig{
 
 
     //create client
-    create = async (req, res) => {
+    create = async (req : CustomClientRequest, res : Response) => {
         let {firstName,secondName,email,password} = req.body
 
 
@@ -70,7 +72,7 @@ class ClientsController extends CommonControllerConfig{
     }
 
     //get client by id
-    getById = async (req, res) => {
+    getById = async (req : Request, res : Response) => {
 
         try{
 
@@ -84,7 +86,7 @@ class ClientsController extends CommonControllerConfig{
     }
 
     //get client by email
-    getByEmail = async (req, res) => {
+    getByEmail = async (req : Request, res : Response) => {
 
         try {
             const client = await Client.findOne({where:{email:req.params.email}})
@@ -98,7 +100,7 @@ class ClientsController extends CommonControllerConfig{
 
 
     // update client
-    put = async (req,res) => {
+    put = async (req : Request,res : Response) => {
 
         try{
             //extract user object
@@ -109,7 +111,7 @@ class ClientsController extends CommonControllerConfig{
 
             if(client && client.email){
 
-               try{
+                try{
 
                    //validator format
                     const schema = Joi.object({
@@ -137,9 +139,9 @@ class ClientsController extends CommonControllerConfig{
                         res.send(this.s('success',updatedClient[1]))
                     }
 
-               }catch (e){
+                }catch (e){
                     res.send(this.s('failed',e,500))
-               }
+                }
 
 
             }else{
@@ -153,7 +155,7 @@ class ClientsController extends CommonControllerConfig{
 
 
     //delete client
-    delete = async (req, res) => {
+    delete = async (req : Request, res : Response) => {
 
         try{
             const deletedUser = await Client.destroy({where:{id:req.params.clientId}})
@@ -169,5 +171,3 @@ class ClientsController extends CommonControllerConfig{
         }
     }
 }
-
-exports.ClientsController = ClientsController
