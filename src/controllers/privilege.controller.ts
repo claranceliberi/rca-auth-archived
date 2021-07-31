@@ -1,4 +1,4 @@
-import {CommonControllerConfig} from "../common/common.controller.config"
+import {CommonControllerConfig} from "./common.controller.config"
 import models from '../database/postgresSql/models/index'
 import fs from 'fs'
 import path from 'path'
