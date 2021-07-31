@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 'use strict';
 
-import { Model } from 'sequelize';
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export default (sequelize, DataTypes) => {
+const { Model } = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
     class Privilege extends Model {
         /**
          * Helper method for defining associations.
