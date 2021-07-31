@@ -2,7 +2,7 @@
   "development": {
     "use_env_variable": "DATABASE_URL"
   },
-    "production": {
+  "production": {
     "use_env_variable": "DATABASE_URL"
   }
 }

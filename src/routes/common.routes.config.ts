@@ -1,6 +1,6 @@
 import { Express } from 'express';
 
-export class CommonRoutesConfig {
+export abstract class CommonRoutesConfig {
     app: Express;
     name: string;
 
@@ -14,5 +14,5 @@ export class CommonRoutesConfig {
         return this.name;
     }
 
-    // configureRoutes() {}
+    abstract configureRoutes(): Express;
 }

@@ -9,7 +9,7 @@ export class ClientsRoutes extends CommonRoutesConfig {
         super(app, 'ClientsRoutes');
     }
 
-    configureRoutes() {
+    configureRoutes(): Express {
         //creating apps
         this.app
             .route('/v1/clients')
