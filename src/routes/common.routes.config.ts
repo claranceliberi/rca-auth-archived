@@ -1,19 +1,18 @@
-import {Express} from 'express'
+import { Express } from 'express';
 
-export class CommonRoutesConfig{
-    app : Express;
-    name : string;
+export class CommonRoutesConfig {
+    app: Express;
+    name: string;
 
-
-    constructor(app : Express, name : string) {
-        this.app = app
-        this.name = name
-        this.configureRoutes()
+    constructor(app: Express, name: string) {
+        this.app = app;
+        this.name = name;
+        this.configureRoutes();
     }
 
-    getName() : string{
-        return this.name
+    getName(): string {
+        return this.name;
     }
 
-    configureRoutes(){}
+    // configureRoutes() {}
 }

@@ -1,144 +1,106 @@
-import {CommonControllerConfig} from "./common.controller.config"
-import models from '../database/postgresSql/models/index'
-import fs from 'fs'
-import path from 'path'
-import Joi from 'joi'
-import NodeRSA from 'node-rsa'
-import {privateRSAKEY} from '../config/secured.vals'
-import { Request, Response } from "express"
+import { CommonControllerConfig } from './common.controller.config';
+import models from '../database/postgresSql/models/index';
+import Joi from 'joi';
+import NodeRSA from 'node-rsa';
+import { privateRSAKEY } from '../config/secured.vals';
+import { Request, Response } from 'express';
 
-const Privilege = models.Privilege
+const Privilege = models.Privilege;
 
-export class PrivilegesController extends CommonControllerConfig{
-
-    private key = new NodeRSA(privateRSAKEY)
+export class PrivilegesController extends CommonControllerConfig {
+    private key = new NodeRSA(privateRSAKEY);
 
     constructor() {
-        super("PrivilegeController");
+        super('PrivilegeController');
     }
-
-
 
     //get all privileges
-    all = async (req : Request, res : Response) => {
-            try{
-                const privileges= await Privilege.findAll() ;
-                res.send(this.s('success',privileges))
-
-            }catch (e) {
-                res.send(this.s('failed',e,500))
-            }
-    }
+    all = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const privileges = await Privilege.findAll();
+            res.send(this.s('success', privileges));
+        } catch (e) {
+            res.send(this.s('failed', e, 500));
+        }
+    };
 
     //create privilege
-    create = async (req : Request, res : Response) => {
-        const privilege = await this.#create_privilege(req,true)
+    create = async (req: Request, res: Response) => {
+        const privilege = await this.#create_privilege(req, true);
 
-        return res.send(privilege)
-    }
-
-
+        return res.send(privilege);
+    };
 
     //get privilege by id
-    getById = async (req : Request, res : Response) => {
+    getById = async (req: Request, res: Response) => {
+        try {
+            const privilege = await Privilege.findOne({ where: { id: req.params.id } });
 
-        try{
-
-            const privilege = await Privilege
-                .findOne({where:{id:req.params.id}})
-
-            res.send(this.s('success',privilege))
-
-        }catch (e) {
-            res.send(this.s('failed',e,500))
+            res.send(this.s('success', privilege));
+        } catch (e) {
+            res.send(this.s('failed', e, 500));
         }
-    }
+    };
 
     //get privilege by user id
-    getByUserId = async (req : Request, res : Response) => {
-
+    getByUserId = async (req: Request, res: Response) => {
         try {
-            const privilege = await Privilege
-                .findOne({where:{userId:req.params.userId}})
+            const privilege = await Privilege.findOne({ where: { userId: req.params.userId } });
 
-            res.send(this.s('success',privilege))
-        }catch (e) {
-            res.send(this.s('failed', e, 500))
+            res.send(this.s('success', privilege));
+        } catch (e) {
+            res.send(this.s('failed', e, 500));
         }
-    }
-
+    };
 
     //get privilege by app id
-    getByAppId = async (req : Request, res : Response) => {
-
+    getByAppId = async (req: Request, res: Response) => {
         try {
-            const privilege = await Privilege
-                .findOne({where:{appId:req.params.appId}})
+            const privilege = await Privilege.findOne({ where: { appId: req.params.appId } });
 
-            res.send(this.s('success',privilege))
-        }catch (e) {
-            res.send(this.s('failed', e, 500))
+            res.send(this.s('success', privilege));
+        } catch (e) {
+            res.send(this.s('failed', e, 500));
         }
-    }
-
+    };
 
     // update privilege
-    put = async (req : Request, res : Response) => {
-
-        try{
+    put = async (req: Request, res: Response) => {
+        try {
             //extract privilege body object
-            const {id, viewProfile} = req.body
+            const { id, viewProfile } = req.body;
 
             //validator format
             const schema = Joi.object({
-                id:Joi.number().required(),
-                viewProfile:Joi.boolean().required(),
-            })
+                id: Joi.number().required(),
+                viewProfile: Joi.boolean().required(),
+            });
 
-
-
-            const {error} = schema.validate(req.body)
+            const { error } = schema.validate(req.body);
 
             //checking error
-            if(error)
-                res.send(this.s('failed',
-                    error.details[0].message,409))
-
-            else{
-
+            if (error) res.send(this.s('failed', error.details[0].message, 409));
+            else {
                 //check if app exists
-                const privilege = await Privilege
-                    .findOne({where:{id},plain:true})
+                const privilege = await Privilege.findOne({ where: { id }, plain: true });
 
-                if(privilege) {
-
-                    try{
-
-
+                if (privilege) {
+                    try {
                         //update app
-                        const updatedApp = await Privilege.update(
-                            {viewProfile},
-                            {where:{id},
-                            returning:true,
-                            })
+                        const updatedApp = await Privilege.update({ viewProfile }, { where: { id }, returning: true });
 
-                        res.send(this.s('success',updatedApp[1]))
-
-                    }catch (e) {
-                        res.send(this.s('failed',e,500))
+                        res.send(this.s('success', updatedApp[1]));
+                    } catch (e) {
+                        res.send(this.s('failed', e, 500));
                     }
-
-                }else{
-                    res.send(this.s('failed','app does not exists'))
+                } else {
+                    res.send(this.s('failed', 'app does not exists'));
                 }
-
             }
-
-        }catch (e) {
-            res.send(this.s('failed',e,500))
+        } catch (e) {
+            res.send(this.s('failed', e, 500));
         }
-    }
-
+    };
 
     /**
      * creating privilege and return token that contains user privileges
@@ -148,74 +110,59 @@ export class PrivilegesController extends CommonControllerConfig{
      *
      * @returns {Promise<{data: *, message: *, status: number}>}
      */
-    #create_privilege = async (req : Request,with_token=false)=> {
-         const {userId,appId,viewProfile} = req.body
+    #create_privilege = async (req: Request, with_token = false) => {
+        const { userId, appId, viewProfile } = req.body;
 
+        try {
+            //validator format
+            const schema = Joi.object({
+                userId: Joi.string().required().min(20),
+                appId: Joi.string().required(),
+                viewProfile: Joi.boolean().required(),
+            });
 
-        try{
+            const { error } = schema.validate(req.body);
 
-                //validator format
-                const schema = Joi.object({
-                    userId:Joi.string().required().min(20),
-                    appId:Joi.string().required(),
-                    viewProfile:Joi.boolean().required(),
-                })
+            //checking error
+            if (error) return this.s('failed', error.details[0].message, 409);
+            else {
+                //check if app exists
+                const privilege = await Privilege.findOne({ where: { userId, appId }, plain: true });
+                let result = [];
 
-                const {error} = schema.validate(req.body)
+                if (privilege) {
+                    //if privilege exists let us update it
+                    result = await Privilege.update({ viewProfile }, { where: { id: privilege.id }, returning: true }); //update privilege
+                    result = result[1];
+                } // if it does not exist let us create
+                else result = await Privilege.create({ userId, appId, viewProfile });
 
-                //checking error
-                if(error)
-                    return (this.s('failed',
-                        error.details[0].message,409))
+                if (with_token) {
+                    const data_to_encrypt = `uid:${userId},aid:${appId},vp:${viewProfile}`;
+                    const token = viewProfile ? this.#privilege_token(data_to_encrypt) : null;
 
-                else{
-
-
-                    //check if app exists
-                    const privilege = await Privilege
-                        .findOne({where:{userId,appId},plain:true})
-                    let result = [];
-
-                    if(privilege) {//if privilege exists let us update it
-                        result = await Privilege
-                            .update({viewProfile},
-                                {where:{id:privilege.id},
-                                    returning:true}) //update privilege
-                        result = result[1]
-                    }
-
-                    else // if it does not exist let us create
-                        result = await Privilege
-                            .create({userId, appId , viewProfile})
-
-                    if(with_token) {
-                        const data_to_encrypt =
-                            `uid:${userId},aid:${appId},vp:${viewProfile}`
-                        const token = viewProfile ?
-                            this.#privilege_token(data_to_encrypt) : null
-
-                        result = {...result[0].dataValues,token}
-                    }
-
-                    return (this.s('success',result))
-
+                    result = { ...result[0].dataValues, token };
                 }
 
-        }catch (e) {
-           return (this.s('failed',e,500))
+                return this.s('success', result);
+            }
+        } catch (e) {
+            return this.s('failed', e, 500);
         }
-    }
+    };
 
-    permit_privilege = async (req : Request, res : Response) => {
-        const {appId,userId} = req.body
-        const data_to_encrypt = `uid:${userId},aip:${appId},vp:true`
+    permit_privilege = async (req: Request, res: Response) => {
+        const { appId, userId } = req.body;
+        const data_to_encrypt = `uid:${userId},aip:${appId},vp:true`;
 
-        const {data:{token}} = await this.#create_privilege(req,true)
+        const {
+            data: { token },
+        } = await this.#create_privilege(req, true);
 
-        console.log(token)
+        console.log(token);
 
-        res.send(this.s('success',{token}))
-    }
+        res.send(this.s('success', { token }));
+    };
 
     /**
      * generate privilege encrypted token
@@ -224,9 +171,9 @@ export class PrivilegesController extends CommonControllerConfig{
      *
      * @returns {string|Buffer}
      */
-    #privilege_token = (data : string) => {
+    #privilege_token = (data: string) => {
         return this.key.encrypt(data, 'base64');
-    }
+    };
 
     /**
      * decrypting token and get privileges
@@ -235,11 +182,7 @@ export class PrivilegesController extends CommonControllerConfig{
      *
      * @returns {Buffer|Object|string}
      */
-    decrypt_privilege_token = (token : string) => {
-        return this.key.decrypt(token,'utf8')
-    }
-
-
-
+    decrypt_privilege_token = (token: string) => {
+        return this.key.decrypt(token, 'utf8');
+    };
 }
-

@@ -1,25 +1,21 @@
-import {CommonRoutesConfig} from "./common.routes.config"
-import {UsersController} from "../controllers/users.controller"
-import {Express} from 'express'
+import { CommonRoutesConfig } from './common.routes.config';
+import { UsersController } from '../controllers/users.controller';
+import { Express } from 'express';
 
-const user = new UsersController()
+const user = new UsersController();
 
-export class OpenRoutes extends CommonRoutesConfig{
-
-
-    constructor(app : Express) {
-        super(app,'Openroutes');
+export class OpenRoutes extends CommonRoutesConfig {
+    constructor(app: Express) {
+        super(app, 'Openroutes');
     }
 
     configureRoutes() {
-
-
-        this.app.route('/v1/o/user/info')
-            .all((req,res,next) => {
-                next()
+        this.app
+            .route('/v1/o/user/info')
+            .all((req, res, next) => {
+                next();
             })
-            .post(user.get_user_by_token)
-
+            .post(user.get_user_by_token);
 
         return this.app;
     }

@@ -1,4 +1,4 @@
-export const privateRSAKEY : string = `-----BEGIN RSA PRIVATE KEY-----
+export const privateRSAKEY = `-----BEGIN RSA PRIVATE KEY-----
 MIIEogIBAAKCAQEA0rd9wqANUeG5z9ott9qwlXgg/IiMn5+tdVCS+MyuWUIP+SJZ
 /c+AcGTXCP0T0jHxNjbl9uZBMt5aNtfiHKTQYUMatd+ywDQbXsS3UAxVwTozRXf7
 PRQRFqCVJdIGKTX/7qJtXh66YCtlK0lUQriThthS0YbStj6m5ZmplC5obxsS2T/S

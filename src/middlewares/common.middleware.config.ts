@@ -1,14 +1,14 @@
-import {CustomResponse} from '../types/controller.types'
+import { CustomResponse } from '../types/controller.types';
 
 export class CommonMiddlewareConfig {
-    private name : string
+    private name: string;
 
-    constructor(name :string) {
-        this.name = name
+    constructor(name: string) {
+        this.name = name;
     }
 
     getName() {
-      return this.name
+        return this.name;
     }
 
     /**
@@ -18,7 +18,7 @@ export class CommonMiddlewareConfig {
      * @param data
      * @param status
      */
-    s(msg : string,data : any,status=200) : CustomResponse {
-        return {message:msg,data:data,status:status}
+    s(msg: string, data: any, status = 200): CustomResponse {
+        return { message: msg, data: data, status: status };
     }
 }
