@@ -4,13 +4,14 @@ import Joi from 'joi';
 import bcrypt from 'bcryptjs';
 import models from '../database/postgresSql/models/index';
 import { PrivilegesController } from './privilege.controller';
+import { CallbackError } from 'mongoose';
 
-import User from '../models/user.model';
+import User, { UserDoc } from '../models/user.model';
 import { Request, Response } from 'express';
 const App = models.App;
 
 // initiating debugger
-const d = debug('UserController');
+const _d = debug('UserController');
 
 export class UsersController extends CommonControllerConfig {
     constructor() {
@@ -18,10 +19,10 @@ export class UsersController extends CommonControllerConfig {
     }
 
     //get all users
-    all = (req: Request, res: Response) => {
+    all = async (req: Request, res: Response): Promise<void> => {
         const s = super.s;
 
-        const users = User.find((err: any, user: any) => {
+        await User.find((err: CallbackError, users: UserDoc[]) => {
             if (err) res.send(s('failed', err, 500));
             else if (users === null) res.send(s('success', users, 404));
             else res.send(s('success', users));
@@ -29,7 +30,7 @@ export class UsersController extends CommonControllerConfig {
     };
 
     //create user
-    create = async (req: Request, res: Response) => {
+    create = async (req: Request, res: Response): Promise<void> => {
         const s = this.s;
 
         //validator format
@@ -53,7 +54,7 @@ export class UsersController extends CommonControllerConfig {
                 const salt = bcrypt.genSaltSync(10);
                 req.body.password = bcrypt.hashSync(req.body.password, salt);
 
-                const createdUser = User.create(req.body, (err: any, user: any) => {
+                const createdUser = User.create(req.body, (err: CallbackError, user: UserDoc) => {
                     if (err) res.send(s('failed', err, 500));
                     else res.send(s('success', user));
                 });
@@ -62,43 +63,43 @@ export class UsersController extends CommonControllerConfig {
     };
 
     //get user with id
-    get(req: Request, res: Response) {
+    get = async (req: Request, res: Response): Promise<void> => {
         const s = super.s;
 
-        const user = User.findById(req.params.userId, (err: any, user: any) => {
+        await User.findById(req.params.userId, (err: CallbackError, user: UserDoc) => {
             if (err) res.send(s('server error', err, 500));
             else if (user === null) res.send(s('no found', user, 404));
             else res.send(s('found', user));
         });
-    }
+    };
 
     // update user
-    update(req: Request, res: Response) {
+    update = async (req: Request, res: Response): Promise<void> => {
         const s = super.s;
 
         const id = req.body.id; //get id from body
         delete req.body.id; //delete id in body
 
-        const user = User.findByIdAndUpdate(id, req.body, { new: true }, (err: any, user: any) => {
+        await User.findByIdAndUpdate(id, req.body, { new: true }, (err: CallbackError, user: UserDoc | null) => {
             if (err) res.send(s('not updated', err, 500));
             else if (user === null) res.send(s('no user found', user, 404));
             else res.send(s('found', user));
         });
-    }
+    };
 
     // delete user
-    delete(req: Request, res: Response) {
+    delete = async (req: Request, res: Response): Promise<void> => {
         const s = super.s;
 
-        const user = User.findByIdAndDelete(req.params.userId, {}, (err: any, user: any) => {
+        await User.findByIdAndDelete(req.params.userId, {}, (err: CallbackError, user: UserDoc | null) => {
             if (err) res.send(s('not deleted', err, 500));
             else if (user === null) res.send(s('no user found', user, 404));
             else res.send(s('deleted', user));
         });
-    }
+    };
 
     //get user by token
-    get_user_by_token = async (req: Request, res: Response) => {
+    get_user_by_token = async (req: Request, res: Response): Promise<void> => {
         const { userToken, secretKey, appId } = req.body;
 
         try {

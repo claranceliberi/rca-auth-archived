@@ -19,7 +19,8 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
 });
-interface UserDoc extends Document, User {}
+
+export interface UserDoc extends Document, User {}
 
 const User: Model<UserDoc> = mongoose.model('User', userSchema);
 
