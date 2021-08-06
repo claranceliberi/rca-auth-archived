@@ -12,7 +12,7 @@ export class AppsController extends CommonControllerConfig {
     }
 
     //get all apps
-    all = async (req: Request, res: Response) => {
+    all = async (_req: Request, res: Response): Promise<void> => {
         try {
             const apps = await App.findAll();
             res.send(this.s('success', apps));
@@ -22,7 +22,7 @@ export class AppsController extends CommonControllerConfig {
     };
 
     //create client
-    create = async (req: Request, res: Response) => {
+    create = async (req: Request, res: Response): Promise<void> => {
         const { name, redirectUrl } = req.body;
 
         try {
@@ -62,7 +62,7 @@ export class AppsController extends CommonControllerConfig {
     };
 
     //get app by id
-    getById = async (req: Request, res: Response) => {
+    getById = async (req: Request, res: Response): Promise<void> => {
         try {
             const app = await App.findOne({ where: { id: req.params.id } });
 
@@ -73,7 +73,7 @@ export class AppsController extends CommonControllerConfig {
     };
 
     //get app by app id
-    getByAppId = async (req: Request, res: Response) => {
+    getByAppId = async (req: Request, res: Response): Promise<void> => {
         try {
             const app = await App.findOne({ where: { appId: req.params.appId } });
 
@@ -84,7 +84,7 @@ export class AppsController extends CommonControllerConfig {
     };
 
     //get client by creator based on his id
-    getByClient = async (req: Request, res: Response) => {
+    getByClient = async (req: Request, res: Response): Promise<void> => {
         try {
             const apps = await App.findAll({ where: { clientId: req.params.clientId } });
 
@@ -95,7 +95,7 @@ export class AppsController extends CommonControllerConfig {
     };
 
     // update app
-    generateNewSecretKey = async (req: Request, res: Response) => {
+    generateNewSecretKey = async (req: Request, res: Response): Promise<void> => {
         try {
             //extract user object
             const { appId } = req.body;
@@ -135,7 +135,7 @@ export class AppsController extends CommonControllerConfig {
     };
 
     // update app
-    put = async (req: Request, res: Response) => {
+    put = async (req: Request, res: Response): Promise<void> => {
         try {
             //extract user object
             const { name, redirectUrl, appId } = req.body;
@@ -177,7 +177,7 @@ export class AppsController extends CommonControllerConfig {
     };
 
     //delete client
-    delete = async (req: Request, res: Response) => {
+    delete = async (req: Request, res: Response): Promise<void> => {
         try {
             const deletedApp = await App.destroy({ where: { appId: req.params.appId } });
 
