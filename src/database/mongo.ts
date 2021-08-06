@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import debug from 'debug';
 
-const uri = 'mongodb://localhost:27018/rca_auth';
+const uri = `mongodb://${process.env.MONGO_HOST}/rca_auth`;
 const debugLog = debug('mongodb');
 const { connect } = mongoose;
 
