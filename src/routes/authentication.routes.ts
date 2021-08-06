@@ -10,7 +10,7 @@ export class AuthenticationRoutes extends CommonRoutesConfig {
         super(app, 'AuthenticationRoutes');
     }
 
-    configureRoutes() {
+    configureRoutes(): Express {
         const auth = new AuthenticationController();
 
         this.app.post('/v1/auth/login', auth.login);

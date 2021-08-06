@@ -9,7 +9,7 @@ export class OpenRoutes extends CommonRoutesConfig {
         super(app, 'Openroutes');
     }
 
-    configureRoutes() {
+    configureRoutes(): Express {
         this.app
             .route('/v1/o/user/info')
             .all((req, res, next) => {

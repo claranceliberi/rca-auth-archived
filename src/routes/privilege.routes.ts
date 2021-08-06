@@ -9,7 +9,7 @@ export class PrivilegesRoutes extends CommonRoutesConfig {
         super(app, 'PrivilegeRoutes');
     }
 
-    configureRoutes() {
+    configureRoutes(): Express {
         this.app
             .route('/v1/privileges')
             .all((req: Request, res: Response, next: NextFunction) => {

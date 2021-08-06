@@ -10,7 +10,7 @@ export class AppsRoutes extends CommonRoutesConfig {
         super(app, 'AppsRoutes');
     }
 
-    configureRoutes() {
+    configureRoutes(): Express {
         //creating apps
         this.app
             .route('/v1/apps')
