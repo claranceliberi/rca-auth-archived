@@ -1,8 +1,23 @@
 {
   "development": {
-    "use_env_variable": "DATABASE_URL"
+    "username": "liberi",
+    "password": "liberI@111",
+    "database": "rca_auth",
+    "host": "postgres",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "liberi",
+    "password": "liberI@111",
+    "database": "rca_auth",
+    "host": "postgres",
+    "dialect": "postgres"
   },
   "production": {
-    "use_env_variable": "DATABASE_URL"
+    "username": "liberi",
+    "password": "liberI@111",
+    "database": "rca_auth",
+    "host": "postgres",
+    "dialect": "postgres"
   }
 }

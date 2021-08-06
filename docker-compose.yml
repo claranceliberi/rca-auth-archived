@@ -29,13 +29,13 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./postgresdata:/var/lib/postgresql/rca-auth
+      - ./postgresdata:/var/lib/postgresql/rca_auth
       - ./src/migrations/dbinit.sql:/docker-entrypoint-initdb.d/dbinit.sql
     restart: always
     environment:
       POSTGRES_USER: liberi
       POSTGRES_PASSWORD: liberI@111
-      POSTGRES_DB: rca-auth
+      POSTGRES_DB: rca_auth
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
