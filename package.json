@@ -28,7 +28,7 @@
     "express": "^4.17.1",
     "joi": "^17.3.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.11.8",
+    "mongoose": "^6.0.0",
     "node-rsa": "^1.1.1",
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
